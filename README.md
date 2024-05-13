@@ -1,6 +1,6 @@
 <div align="center">
 
-![banner](https://github.com/krowley011/SWU-Command-Center/assets/100614517/cc821e22-614a-41b5-bd2a-17c21eaa0a2d)
+![banner](https://github.com/TristanPisani-Blair/swu-command-center/assets/100614517/1c54a8aa-e79b-4b82-9485-0b03ed895352)
 
 [Introduction](#introduction) • [Features](#features) • [Technologies](#technologies) • [Installation](#installation) • [Development Setup](#development-setup)
 

@@ -1,9 +1,9 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import './Navbar.css';
 import logo from '../Assets/command-center-logo.png';
 import arrow from '../Assets/down-arrow.png';
 import usericon from '../Assets/people.png';
-import spacebkgd from '../Assets/hyperspace.jpg';
 
 const Navbar = () => {
   return (
@@ -17,20 +17,20 @@ const Navbar = () => {
       </div>
       <nav>
         <ul className="nav-menu">
-          <li><a href="#">Home</a></li>
-          <li><a href="#">How to Play</a></li>
-          <li className="dropdown">
+          <li><Link to="/home"><a href="#">Home</a></Link></li>
+          <li><Link to="/how-to-play"><a href="#">How to Play</a></Link></li>
+          <li className="dropdown"><Link to="/collection">
             <a href="#">Collection</a>
-            <img id="dropdown-arrow" src={arrow} alt="Drop Down Arrow" />
+            <img id="dropdown-arrow" src={arrow} alt="Drop Down Arrow" /></Link>
             <div className="dropdown-content">
               <a href="#">My Collection</a>
               <a href="#">Build a Deck</a>
               <a href="#">Card Database</a>
             </div>
           </li>
-          <li className="dropdown">
-            <a href="#">Blog</a>
-            <img id="dropdown-arrow" src={arrow} alt="Drop Down Arrow" />
+          <li className="dropdown"><Link to="/blogs">
+            <a href="#">Blogs</a>
+            <img id="dropdown-arrow" src={arrow} alt="Drop Down Arrow" /></Link>
             <div className="dropdown-content">
               <a href="#">News</a>
               <a href="#">Explore</a>
@@ -40,10 +40,10 @@ const Navbar = () => {
           </li>
         </ul>
       </nav>
-      <div class="username">
+      <Link to="/account" class="username">
         <span>Username</span>
         <img id="user-icon" src={usericon} alt="User Icon" />
-      </div>
+      </Link>
     </div>
   );
 }

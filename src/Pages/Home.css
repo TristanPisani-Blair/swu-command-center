@@ -10,6 +10,8 @@ body{
     flex-direction: column;
     justify-content: center;
     margin-bottom: 60px;
+    margin-left: 100px;
+    margin-right: 100px;
 }
 
 .banner {
@@ -146,7 +148,7 @@ body{
     font-size: 50px;
     text-align: center;
     justify-content: center; 
-    align-items: center;
+    align-items: right;
     float: right;
     margin-top: -20px;
     width: calc(50% - (width_of_left_box + gap_between_boxes) / 2);

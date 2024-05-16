@@ -1,9 +1,15 @@
 import React from "react";
+import './HowToPlay.css';
+import Navbar from '../Components/Navbar/Navbar';
+import Footer from '../Components/Footer/Footer';
+
 
 const HowToPlay = () => {
     return (
       <div>
-        <h1>How to Play page</h1>
+        <Navbar />
+            <h1>How to Play page</h1>
+        <Footer />
       </div>
     );
   }

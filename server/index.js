@@ -1,4 +1,4 @@
-/* const express = require('express');
+const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
 require('dotenv').config();
@@ -46,30 +46,3 @@ app.use('/users', userRoutes);
 app.listen(PORT, () => {
   console.log(`Server is running on port: ${PORT}`);
 });
-*/
-
-const { MongoClient } = require('mongodb');
-require('dotenv').config();
-
-const uri = process.env.MONGODB_URI;
-
-if (!uri) {
-  console.error("MONGODB_URI is not defined in .env file");
-  process.exit(1);
-}
-
-const client = new MongoClient(uri);
-
-async function testConnection() {
-  try {
-    await client.connect();
-    await client.db("admin").command({ ping: 1 });
-    console.log("Successfully connected to MongoDB!");
-  } catch (err) {
-    console.error("Error connecting to MongoDB:", err);
-  } finally {
-    await client.close();
-  }
-}
-
-testConnection().catch(console.dir);

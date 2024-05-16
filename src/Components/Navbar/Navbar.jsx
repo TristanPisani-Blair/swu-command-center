@@ -17,10 +17,10 @@ const Navbar = () => {
       </div>
       <nav>
         <ul className="nav-menu">
-          <li><Link to="/home"><a href="#">Home</a></Link></li>
-          <li><Link to="/how-to-play"><a href="#">How to Play</a></Link></li>
+          <li><Link to="/home">Home</Link></li>
+          <li><Link to="/how-to-play">How to Play</Link></li>
           <li className="dropdown"><Link to="/collection">
-            <a href="#">Collection</a>
+            Collection
             <img id="dropdown-arrow" src={arrow} alt="Drop Down Arrow" /></Link>
             <div className="dropdown-content">
               <a href="#">My Collection</a>

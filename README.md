@@ -1,70 +1,74 @@
-# Getting Started with Create React App
+<div align="center">
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+![banner](https://github.com/TristanPisani-Blair/swu-command-center/assets/100614517/1c54a8aa-e79b-4b82-9485-0b03ed895352)
 
-## Available Scripts
+[Introduction](#introduction) • [Features](#features) • [Technologies](#technologies) • [Installation](#installation) • [Development Setup](#development-setup)
 
-In the project directory, you can run:
+[Hosting](#hosting) • [License](#license) • [Contributors](#contributors) • [Project Status](#project-status)
 
-### `npm start`
+</div>
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## Introduction
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+### Purpose
+SWU Command Center is a platform designed to serve as a comprehensive and interactive hub for Star Wars: Unlimited enthusiasts to manage their collections, connect with others, and access strategic content. The application aims to create an experience for card management while fostering a community through a clean, intuitive user interface.
 
-### `npm test`
+### Goal
+The goal of the “Command Center” platform is to address the challenges faced by the trading card game community by providing multiple functions:
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+1. **Efficient Management:** Enabling the Star Wars: Unlimited community to easily manage, organize, and track their card collection in a centralized digital space.
+2. **Community Engagement:** “Command Center” offers a dedicated platform to connect and share decklists as well as collections with other users through JSON files and/or URL links.
 
-### `npm run build`
+## Features
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+- **Card Management:** Easily manage, organize, and track your Star Wars: Unlimited card collection.
+- **Decklist Sharing:** Share your decklists and collections with other users through JSON files and/or URL links.
+- **Community Interaction:** Connect with fellow Star Wars: Unlimited enthusiasts to discuss strategies, trade cards, and participate in tournaments through blogs and comment sections.
+- **Live Prices:** Access live prices of cards, decks, and collections through integration with the TCGplayer API.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## Technologies
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### Library Dependencies
 
-### `npm run eject`
+- **Node.js**: Runtime environment.
+- **React**: Frontend development for creating a dynamic user interface.
+- **Express.js**: Web application framework for server-side operations.
+- **MongoDB**: NoSQL database for scalable and easy maintenance.
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+### APIs Leveraged
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+- **Star Wars: Unlimited API**: Provides assets related to the cards.
+- **TCGplayer API**: Offers live marketplace prices for cards, decks, and collections.
+- **Auth0**: Handles user authentication and management.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+## Installation
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+To use SWU Command Center:
 
-## Learn More
+ - SWU Command Center will be available to use through any web browser once we have a hosting website established.
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+## Development Setup
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+1. Install [Node.js](https://nodejs.org).
+2. Clone repository.
+3. Open Terminal.
+4. Install dependencies using `npm install express`.
+5. After making changes, run `npm start` in Terminal.
+6. Open http://localhost:3000 to view it in your browser.
 
-### Code Splitting
+## Hosting
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+Hosting website has yet to be established.
 
-### Analyzing the Bundle Size
+## License
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+This project is licensed under the MIT License.
 
-### Making a Progressive Web App
+## Contributors
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+- Krista Stevens
+- Tristan Pisani-Blair
 
-### Advanced Configuration
+## Project Status
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+SWU Command Center is currently in the Alpha stage of development.

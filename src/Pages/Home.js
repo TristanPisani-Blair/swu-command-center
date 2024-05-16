@@ -19,8 +19,8 @@ const Home = () => {
               <div className="banner-contents">
                 <div className="banner-contents-left">
                   <h2>Featured Decks</h2>
-                  <h3>Deck Name</h3>
-                  <p>Published by User</p>
+                  <h3 className="featured-deck-name">Deck Name</h3>
+                  <p className="featured-deck-publisher">Published by User</p>
                 </div>
                 <div className="banner-contents-right">
                   <img src={featuredeckimg} alt="Featured Deck" className="featured-deck" />

@@ -2,7 +2,7 @@ import React from "react";
 import './HowToPlay.css';
 import Navbar from '../Components/Navbar/Navbar';
 import Footer from '../Components/Footer/Footer';
-import setupimg from '../Components/Assets/large_SWH_Web_Diagram7_480f2f6c88.png'
+import setupimg from '../Components/Assets/setup-diagram.png'
 
 
 const HowToPlay = () => {

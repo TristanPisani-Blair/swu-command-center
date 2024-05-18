@@ -23,19 +23,19 @@ const Navbar = () => {
             Collection
             <img id="dropdown-arrow" src={arrow} alt="Drop Down Arrow" /></Link>
             <div className="dropdown-content">
-              <a href="#">My Collection</a>
-              <a href="#">Build a Deck</a>
-              <a href="#">Card Database</a>
+              <Link to="/collection">My Collection</Link>
+              <Link to="/collection/build-a-deck">Build a Deck</Link>
+              <Link to="/collection/card-database">Card Database</Link>
             </div>
           </li>
           <li className="dropdown"><Link to="/blogs">
-            <a href="#">Blogs</a>
+            Blogs
             <img id="dropdown-arrow" src={arrow} alt="Drop Down Arrow" /></Link>
             <div className="dropdown-content">
-              <a href="#">News</a>
-              <a href="#">Explore</a>
-              <a href="#">My Blogs</a>
-              <a href="#">New Blog Post</a>
+              <Link to="/blogs/news">News</Link>
+              <Link to="/blogs">Explore</Link>
+              <Link to="/blogs/my-blogs">My Blogs</Link>
+              <Link to="/blogs/new-blog-post">New Blog Post</Link>
             </div>
           </li>
         </ul>

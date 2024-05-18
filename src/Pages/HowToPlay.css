@@ -1,0 +1,117 @@
+@import url('https://fonts.googleapis.com/css2?family=Red+Hat+Display:wght@400;500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans+Condensed:wght@300&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body{
+    font-family: 'Red Hat Display', sans-serif;
+    margin-bottom: 60px;
+}
+
+.wrapper{
+    display: grid;
+    grid-template-columns: 150px auto 200px;
+    grid-auto-rows: auto 1fr auto;
+}
+
+.leftNav, .rightNav {
+    position: fixed;
+    font-size: 18px;
+    font-weight: 700;
+}
+
+.leftNav{
+    font-family: 'Open Sans Condensed', sans-serif;
+    padding: 15px;
+    grid-column: 1;
+    left: 0;
+    padding-left: 20px;
+}
+
+.rightNav{
+    font-family: 'Open Sans Condensed', sans-serif;
+    padding: 15px;
+    padding-left: 30px;
+    grid-column: 3;
+    right: 0;
+}
+
+.jumpTo{
+    padding-bottom: 10px;
+    text-decoration: underline;
+}
+
+.leftNav li, .rightNav li{
+    text-decoration: none;
+    list-style: none;
+    margin-bottom: 10px;
+}
+
+.rightNav li{
+    padding-left: 20px;
+}
+
+.how-to-play-body{
+    padding: 15px;
+    grid-column: 2;
+}
+
+.how-to-play-body h1{
+    font-family: 'Open Sans Condensed', sans-serif;
+    font-size: 30px;
+}
+
+.rules-header, .setup-header{
+    font-size: 25px;
+    padding-bottom: 10px;
+    text-decoration: underline;
+    letter-spacing: 1px;
+}
+
+.how-to-play-body h2{
+    font-size: 20px;
+}
+
+.divider{
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.rules-section{
+    margin-bottom: 20px;
+}
+
+.rules-section p{
+    margin-bottom: 10px;
+}
+
+.setup-section {
+    display: grid; /* Use grid layout */
+}
+
+.setup-section img{
+    max-width: 50%;
+    justify-self: center;
+    margin-bottom: 15px;
+}
+
+.setup-section h1{
+    font-size: 22px;
+    margin-bottom: 10px;
+}
+
+.setup-section p{
+    margin-bottom: 15px;
+}
+
+a:visited {
+    color: inherit;
+}
+
+.end-body{
+    text-align: center;
+}

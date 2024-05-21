@@ -97,7 +97,7 @@ body{
 .left-boxes{
     display: flex;
     flex-direction: column;
-    width: calc(50% - (width_of_right_box + gap_between_boxes) / 2);
+    width: calc(50% - (var(--width-of-right-box) + var(--gap-between-boxes)) / 2);
     font-size: 50px;
     text-align: center;
     justify-content: space-between;

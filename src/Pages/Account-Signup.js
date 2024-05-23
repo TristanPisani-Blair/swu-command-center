@@ -27,6 +27,9 @@ const Signup = () => {
                   <div className="form-group">
                     <input type="password" id="password" placeholder="Password" />
                   </div>
+                  <div className="form-group">
+                    <input type="password" id="confirm-password" placeholder="Confirm Password" />
+                  </div>
                   <div>
                     <button className="signup-button">Sign Up</button>
                   </div>

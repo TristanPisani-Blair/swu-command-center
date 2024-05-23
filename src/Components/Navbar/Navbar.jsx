@@ -11,36 +11,40 @@ const Navbar = () => {
       <div className="nav-logo">
         <img src={logo} alt='SWU Command Center Logo' />
         <div id="name">
-          <div class="main">SWU</div>
-          <div class="sub">Command Center</div>
+          <div className="main">SWU</div>
+          <div className="sub">Command Center</div>
         </div>
       </div>
       <nav>
         <ul className="nav-menu">
-          <li><Link to="/home"><a href="#">Home</a></Link></li>
-          <li><Link to="/how-to-play"><a href="#">How to Play</a></Link></li>
-          <li className="dropdown"><Link to="/collection">
-            <a href="#">Collection</a>
-            <img id="dropdown-arrow" src={arrow} alt="Drop Down Arrow" /></Link>
+          <li><Link to="/home">Home</Link></li>
+          <li><Link to="/how-to-play">How to Play</Link></li>
+          <li className="dropdown">
+            <Link to="/collection">
+              Collection
+              <img id="dropdown-arrow" src={arrow} alt="Drop Down Arrow" />
+            </Link>
             <div className="dropdown-content">
-              <a href="#">My Collection</a>
-              <a href="#">Build a Deck</a>
-              <a href="#">Card Database</a>
+              <Link to="/my-collection">My Collection</Link>
+              <Link to="/build-a-deck">Build a Deck</Link>
+              <Link to="/card-database">Card Database</Link>
             </div>
           </li>
-          <li className="dropdown"><Link to="/blogs">
-            <a href="#">Blogs</a>
-            <img id="dropdown-arrow" src={arrow} alt="Drop Down Arrow" /></Link>
+          <li className="dropdown">
+            <Link to="/blogs">
+              Blogs
+              <img id="dropdown-arrow" src={arrow} alt="Drop Down Arrow" />
+            </Link>
             <div className="dropdown-content">
-              <a href="#">News</a>
-              <a href="#">Explore</a>
-              <a href="#">My Blogs</a>
-              <a href="#">New Blog Post</a>
+              <Link to="/news">News</Link>
+              <Link to="/explore">Explore</Link>
+              <Link to="/my-blogs">My Blogs</Link>
+              <Link to="/new-blog-post">New Blog Post</Link>
             </div>
           </li>
         </ul>
       </nav>
-      <Link to="/account" class="username">
+      <Link to="/account" className="username">
         <span>Username</span>
         <img id="user-icon" src={usericon} alt="User Icon" />
       </Link>

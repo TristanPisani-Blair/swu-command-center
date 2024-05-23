@@ -1,11 +1,19 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { useAuth0 } from '@auth0/auth0-react';
 import './Navbar.css';
 import logo from '../Assets/command-center-logo.png';
 import arrow from '../Assets/down-arrow.png';
 import usericon from '../Assets/people.png';
 
 const Navbar = () => {
+  const { loginWithRedirect, logout, isAuthenticated, user } = useAuth0();
+
+  console.log('isAuthenticated:', isAuthenticated);
+  if (isAuthenticated) {
+    console.log('User:', user);
+  }
+
   return (
     <div className='navbar'>
       <div className="nav-logo">
@@ -44,10 +52,22 @@ const Navbar = () => {
           </li>
         </ul>
       </nav>
-      <Link to="/account" className="username">
-        <span>Username</span>
-        <img id="user-icon" src={usericon} alt="User Icon" />
-      </Link>
+      {isAuthenticated ? (
+        <div className="auth-buttons">
+          <Link to="/account" className="username">
+            <span>{user.name}</span>
+            <img id="user-icon" src={usericon} alt="User Icon" />
+          </Link>
+          <button onClick={() => logout({ returnTo: window.location.origin + '/home' })} className="username">
+            <span>Logout</span>
+          </button>
+        </div>
+      ) : (
+        <button onClick={() => loginWithRedirect()} className="username">
+          <span>Login</span>
+          <img id="user-icon" src={usericon} alt="User Icon" />
+        </button>
+      )}
     </div>
   );
 }

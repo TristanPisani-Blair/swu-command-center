@@ -63,10 +63,35 @@ body {
 .username {
     display: flex;
     align-items: center;
-    margin-right: 20px;
     text-decoration: none;
     color: white;
-}
+    cursor: pointer;
+    margin-right: 20px;
+  }
+  
+  .auth-buttons {
+    display: flex;
+    align-items: center;
+  }
+  
+  .auth-buttons .username {
+    margin-right: 10px;
+  }
+  
+  #user-icon {
+    width: 20px;
+    height: auto;
+    margin-left: 5px;
+  }
+  
+  button.username {
+    background: none;
+    border: none;
+    color: white;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+  }
 
 #dropdown-arrow {
     width: 12px;

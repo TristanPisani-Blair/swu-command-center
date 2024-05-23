@@ -81,6 +81,14 @@ const HowToPlay = () => {
                   <p>This phase consists of drawing cards, resourcing a card, and readying cards. Draw 2 cards, optionally resource a card from your hand, and 
                     then ready all exhausted cards. Once complete, return to the action phase with the player holding the initiative counter taking the first action.</p>
                   <br />
+
+                  <iframe id="Video" width="560" height="315" src="https://www.youtube.com/embed/F02bX67faIY?si=yxzW6m60YRBxEAUH" 
+                    title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; 
+                    encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" 
+                    allowfullscreen>
+                  </iframe>
+                  <br />
+
                   <p className="end-body"><strong>That's the basics of Star Wars: Unlimited gameplay. Simple yet strategic, with endless possibilities for creative play!</strong></p>
               </div>
             </div>
@@ -95,6 +103,7 @@ const HowToPlay = () => {
                 <li><a href="#Using an Action Ability">Using an Action Ability</a></li>
                 <li><a href="#Take Initiative/Pass">Take Initiative/Pass</a></li>
                 <li><a href="#Regroup Phase">Regroup Phase</a></li>
+                <li><a href="#Video">Video Guide</a></li>
               </ul>
             </div>
 

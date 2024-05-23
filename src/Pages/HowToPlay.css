@@ -123,3 +123,9 @@ a:visited {
 .end-body{
     text-align: center;
 }
+
+.setup-section iframe{
+    display: block;
+    justify-self: center;
+    margin-bottom: 10px;
+}

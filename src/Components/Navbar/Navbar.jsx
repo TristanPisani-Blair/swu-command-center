@@ -40,8 +40,8 @@ const Navbar = () => {
           </li>
         </ul>
       </nav>
-      <Link to="/account" class="username">
-        <span>Username</span>
+      <Link to="/account" className="account">
+        <span>Login</span>
         <img id="user-icon" src={usericon} alt="User Icon" />
       </Link>
     </div>

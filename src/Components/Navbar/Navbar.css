@@ -11,6 +11,10 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1000;
 }
 
 .nav-logo {
@@ -34,10 +38,28 @@ body {
     margin-right: 20px;
 }
 
-.nav-menu a {
+.nav-menu li {
+    position: relative;
     color: white;
     text-decoration: none;
 }
+
+.nav-menu li::before{
+    content: "";
+    position: absolute;
+    display: block;
+    width: 100%;
+    height: 2px;
+    bottom: 0;
+    left: 0;
+    background-color: #fff;
+    transform: scaleX(0);
+    transition: transform 0.3s ease;
+}
+
+.nav-menu li:hover::before {
+    transform: scaleX(1);
+  }
 
 .dropdown-content {
     display: none;
@@ -86,4 +108,9 @@ body {
 
 .sub {
     font-size: 24px; /* Adjust the font size as needed */
+}
+
+.account{
+    display: flex;
+    align-items: center;
 }

@@ -10,6 +10,7 @@
 body{
     font-family: 'Red Hat Display', sans-serif;
     margin-bottom: 60px;
+    margin-top: 110px;
 }
 
 .wrapper{
@@ -21,7 +22,7 @@ body{
 .leftNav, .rightNav {
     position: fixed;
     font-size: 18px;
-    font-weight: 700;
+    font-weight: 500;
 }
 
 .leftNav{
@@ -42,6 +43,7 @@ body{
 
 .jumpTo{
     padding-bottom: 10px;
+    font-weight: 600;
     text-decoration: underline;
 }
 
@@ -85,12 +87,18 @@ body{
     margin-bottom: 20px;
 }
 
-.rules-section p{
+.rules-section a{
+    display: block;
+    color: blue;
     margin-bottom: 10px;
 }
 
+.rules-section a:visited{
+    color: purple;
+}
+
 .setup-section {
-    display: grid; /* Use grid layout */
+    display: grid;
 }
 
 .setup-section img{

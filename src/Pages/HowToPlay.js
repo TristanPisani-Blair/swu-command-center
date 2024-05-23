@@ -9,7 +9,7 @@ const HowToPlay = () => {
     return (
       <div>
           <Navbar />
-
+      
         <div className="container" class="wrapper">
           <div className="leftNav">
             <ul>
@@ -25,8 +25,10 @@ const HowToPlay = () => {
               </div>
               <div className="rules-section">
                 <h2 className="rules-header" id="Rules">Rules</h2>
-                <p>Quickstart Rules<a href="https://images-cdn.fantasyflightgames.com/filer_public/36/f6/36f6e0a5-a7a9-4cbe-8d73-70e61fe6f548/sw_unlimited_quickstart_rules.pdf" target="_blank" rel="noopener noreferrer" /></p>
-                <p>Comprehensive Rules<a href="https://cdn.starwarsunlimited.com//SWH_Comp_Rules_v1_1_304cb9bb9c.pdf" target="_blank" rel="noopener noreferrer" /></p>
+                  <a href="https://images-cdn.fantasyflightgames.com/filer_public/36/f6/36f6e0a5-a7a9-4cbe-8d73-70e61fe6f548/sw_unlimited_quickstart_rules.pdf" 
+                    target="_blank" rel="noopener noreferrer">Quickstart Rules</a>
+                  <a href="https://cdn.starwarsunlimited.com//SWH_Comp_Rules_v1_1_304cb9bb9c.pdf" target="_blank" rel="noopener noreferrer">
+                    Comprehensive Rules</a>             
               </div>
 
               <div className="setup-section">
@@ -92,7 +94,7 @@ const HowToPlay = () => {
                 <li><a href="#Attacking With a Unit">Attacking With a Unit</a></li>
                 <li><a href="#Using an Action Ability">Using an Action Ability</a></li>
                 <li><a href="#Take Initiative/Pass">Take Initiative/Pass</a></li>
-                <li><a href="#Regroup Phase">Regoup Phase</a></li>
+                <li><a href="#Regroup Phase">Regroup Phase</a></li>
               </ul>
             </div>
 

@@ -40,10 +40,17 @@ const Navbar = () => {
           </li>
         </ul>
       </nav>
-      <Link to="/account" className="account">
+      
+      {/* Will need to change this when we implement functionality
+      to check if user is signed in. */}
+      <div className="account">
+      <Link to="/login" className="login-link">
         <span>Login</span>
+      </Link>
+      <Link to="/account" className="account-link">
         <img id="user-icon" src={usericon} alt="User Icon" />
       </Link>
+    </div>
     </div>
   );
 }

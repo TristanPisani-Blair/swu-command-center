@@ -114,3 +114,14 @@ body {
     display: flex;
     align-items: center;
 }
+
+.login-link {
+    margin-right: 10px;
+    text-decoration: none;
+    color: inherit;
+  }
+  
+  #user-icon {
+    width: 20px;
+    height: auto;
+  }

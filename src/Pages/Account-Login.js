@@ -9,14 +9,33 @@ const Login = () => {
       <div>
         <Navbar />
 
-            <div class="wrapper">
+            <div className="container" class="wrapper">
+              <div className="login-header">
                 <h1>Login</h1>
-            </div>
-            <div>
-                <hr className="divider" />
-            </div>
-            <div class="form-box login">
-                
+                <div>
+                  <hr className="divider" />
+                </div>
+                </div>
+
+                <div className="container-2">
+                  <div className="form-group">
+                    <input type="username" id="username" placeholder="Username" />
+                  </div>
+                  <div className="form-group">
+                    <input type="password" id="password" placeholder="Password" />
+                  </div>
+                  <div className="form-group-checkbox">
+                    <input type="checkbox" id="stay-logged-in" name="stay-logged-in" />
+                    <label htmlFor="stay-logged-in">Stay logged in</label>
+                  </div>
+                  <div>
+                    <button className="login-button">Login</button>
+                  </div>
+                  <div className="sign-up-link">
+                    <a href="/signup">Don't have an account? Sign up here!</a>
+                  </div>
+              </div>
+              
             </div>
 
         <Footer />

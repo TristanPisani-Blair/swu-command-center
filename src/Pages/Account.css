@@ -51,9 +51,10 @@ body{
 }
 
 .account-information h1{
+    font-weight: 100;
     font-size: 20px;
-    padding-bottom: 10px;
     text-decoration: underline;
+    padding-bottom: 10px;
     letter-spacing: 1px;
 }
 
@@ -68,9 +69,10 @@ body{
 }
 
 .share-settings h1{
+    font-weight: 100;
     font-size: 20px;
-    padding-bottom: 10px;
     text-decoration: underline;
+    padding-bottom: 10px;
     letter-spacing: 1px;
 }
 
@@ -157,6 +159,7 @@ input:checked + .slider:before {
 
 .account-actions button.logout {
     background-color: #2196F3;
+    width: 125px;
 }
 
 .account-actions button:hover {

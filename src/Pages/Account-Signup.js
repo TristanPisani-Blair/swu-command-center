@@ -8,7 +8,35 @@ const Signup = () => {
     return (
       <div>
         <Navbar />
-            <h1>Signup page</h1>
+
+        <div className="container" class="wrapper">
+              <div className="signup-header">
+                <h1>Sign Up</h1>
+                <div>
+                  <hr className="divider" />
+                </div>
+                </div>
+
+                <div className="container-2">
+                <div className="form-group">
+                    <input type="email" id="email" placeholder="Email" />
+                  </div>
+                  <div className="form-group">
+                    <input type="username" id="username" placeholder="Username" />
+                  </div>
+                  <div className="form-group">
+                    <input type="password" id="password" placeholder="Password" />
+                  </div>
+                  <div>
+                    <button className="signup-button">Sign Up</button>
+                  </div>
+                  <div className="login-link">
+                    <a href="/login">Already have an account? Log in here!</a>
+                  </div>
+              </div>
+              
+            </div>
+
         <Footer />
       </div>
     );

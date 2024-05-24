@@ -45,7 +45,7 @@ The goal of the “Command Center” platform is to address the challenges faced
 
 To use SWU Command Center:
 
- - SWU Command Center will be available to use through any web browser once we have a hosting website established.
+ - Visit [https://swu-command-center.vercel.app/](https://swu-command-center.vercel.app/) on the web browser of your choice.
 
 ## Development Setup
 
@@ -58,7 +58,7 @@ To use SWU Command Center:
 
 ## Hosting
 
-Hosting website has yet to be established.
+Hosting through [Vercel.com](Vercel.com).
 
 ## License
 

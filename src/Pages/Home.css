@@ -3,6 +3,7 @@
 
 body{
     font-family: 'Red Hat Display', sans-serif;
+    margin: 0;
 }
 
 .home-content {
@@ -21,7 +22,7 @@ body{
     position: relative;
 }
 
-/* Box overlay */
+/* Banner overlay box */
 .banner-contents {
     position: absolute;
     top: 50%;
@@ -44,6 +45,7 @@ body{
     display: flex;
     flex-direction: column;
     justify-content: center;
+    text-align: left;
     line-height: 0;
     padding-left: 40px;
     letter-spacing: 2px;
@@ -94,7 +96,7 @@ body{
 .left-boxes{
     display: flex;
     flex-direction: column;
-    width: calc(50% - (width_of_right_box + gap_between_boxes) / 2);
+    width: calc(50% - (var(--width-of-right-box) + var(--gap-between-boxes)) / 2);
     font-size: 50px;
     text-align: center;
     justify-content: space-between;
@@ -148,7 +150,7 @@ body{
     align-items: right;
     float: right;
     margin-top: -20px;
-    width: calc(50% - (width_of_left_box + gap_between_boxes) / 2);
+    width: calc(50% - (var(--width-of-right-box) + var(--gap-between-boxes)) / 2);
 }
 
 .build-a-deck-box{

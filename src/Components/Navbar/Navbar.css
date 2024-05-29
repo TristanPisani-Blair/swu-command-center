@@ -59,7 +59,7 @@ body {
 
 .nav-menu li:hover::before {
     transform: scaleX(1);
-  }
+}
 
 .dropdown-content {
     display: none;

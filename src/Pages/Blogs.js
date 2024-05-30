@@ -1,10 +1,37 @@
-import React from "react";
+import React, { useState } from "react";
 import './Blogs.css';
 import Navbar from '../Components/Navbar/Navbar';
 import Footer from '../Components/Footer/Footer';
 
 
 const Blogs = () => {
+  const [showModal, setShowModal] = useState(false);
+  const [blogTitle, setBlogTitle] = useState("");
+  const [blogContent, setBlogContent] = useState("");
+
+  const handleNewBlogPostClick = () => {
+    setShowModal(true);
+  };
+
+  const handleCloseModal = () => {
+    setShowModal(false);
+    setBlogTitle("");
+    setBlogContent("");
+  };
+
+  const handleSaveBlogPost = () => {
+    // Get the current date and time
+    const currentDate = new Date();
+    const dateTime = currentDate.toLocaleString();
+
+    // Log the date and time along with the blog title and content
+    console.log("Date and Time:", dateTime);
+    console.log("Title:", blogTitle);
+    console.log("Content:", blogContent);
+
+    handleCloseModal();
+  };
+
     return (
       <div>
         <Navbar />
@@ -15,7 +42,7 @@ const Blogs = () => {
               <li><a href="#NewBlogs">New Blogs</a></li>
               <li><a href="#Trending">Trending</a></li>
               <li><a href="#MyBlogs">My Blogs</a></li>
-              <li><a href="#NewBlogPost">New Blog Post</a></li>
+              <li><a href="#" onClick={handleNewBlogPostClick}>New Blog Post</a></li>
             </ul>
           </div>
 
@@ -49,6 +76,31 @@ const Blogs = () => {
             </ul>
           </div>
         </div>
+
+        {showModal && (
+          <div className="blogModal">
+            <div className="blog-modal-content">
+              <span className="close-button" onClick={handleCloseModal}>&times;</span>
+              <h2>New Blog Post</h2>
+              <form>
+                <label htmlFor="blog-title">Title</label>
+                <input
+                  type="text"
+                  id="blog-title"
+                  value={blogTitle}
+                  onChange={(e) => setBlogTitle(e.target.value)}
+                />
+                <label htmlFor="blog-content">Blog Post</label>
+                <textarea
+                  id="blog-content"
+                  value={blogContent}
+                  onChange={(e) => setBlogContent(e.target.value)}
+                ></textarea>
+                <button type="button" onClick={handleSaveBlogPost}>Save</button>
+              </form>
+            </div>
+          </div>
+        )}
 
         <Footer />
       </div>

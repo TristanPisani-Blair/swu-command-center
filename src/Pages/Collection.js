@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import './Collection.css';
 import Navbar from '../Components/Navbar/Navbar';
 import Footer from '../Components/Footer/Footer';
+import searchIMG from '../Components/Assets/search.png';
 
 
 const Collection = () => {
@@ -44,8 +45,13 @@ const Collection = () => {
 
             <div className="collection-search">
               <p className="collection-value">Collection Value: </p>
-              <input type="text" id="card-search" placeholder="Search for a card" />
-                  
+              <div className="search-bar">
+                <input type="text" id="card-search" placeholder="Search for a card" />
+                <button type="button" className="search-button">
+                  <img src={searchIMG} alt="Search" className="search" />
+                </button>
+              </div>    
+
                 <div className="collection-view">
                   <p>View:</p>
                   <div className="collection-form-group-checkbox">

@@ -5,7 +5,8 @@ import HowToPlay from './Pages/HowToPlay';
 import Collection from './Pages/Collection';
 import Blogs from './Pages/Blogs';
 import Account from './Pages/Account';
-import Navbar from './Components/Navbar/Navbar.jsx';
+/* import Navbar from './Components/Navbar'; */
+import { useAuth0 } from '@auth0/auth0-react';
 import { Route, Routes } from 'react-router-dom'; // URL router
 
 function App() {
@@ -13,7 +14,6 @@ function App() {
 
   return (
     <div>
-    <Profile />
     <Routes>
       <Route path='/' element={<Home/>} />
       <Route path="/home" element={<Home/>} />

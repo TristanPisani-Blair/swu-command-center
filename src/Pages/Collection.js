@@ -8,7 +8,6 @@ import searchIMG from '../Components/Assets/search.png';
 const Collection = () => {
   const [showSortingOptions, setShowSortingOptions] = useState(false);
   const [showFilteringOptions, setShowFilteringOptions] = useState(false);
-  const [showFilteringChoices, setShowFilteringChoices] = useState(false);
   const [selectedFilters, setSelectedFilters] = useState([]);
 
   const [showAspectChoices, setShowAspectChoices] = useState(false);
@@ -89,7 +88,7 @@ const Collection = () => {
                 {showFilteringOptions && (
                   <div className="filtering-options">
                     <ul>
-                      <li className="clickable" onClick={() => setShowAspectChoices(!showAspectChoices)}>Aspect</li>
+                      <li className="clickable" onClick={() => setShowAspectChoices(!showAspectChoices)}>Aspect ▼</li>
                         {showAspectChoices && (
                           <div className="aspect-options">
                             <li>
@@ -119,7 +118,7 @@ const Collection = () => {
                           </div>
                         )}
 
-                      <li className="clickable" onClick={() => setShowTypeChoices(!showTypeChoices)}>Type</li>
+                      <li className="clickable" onClick={() => setShowTypeChoices(!showTypeChoices)}>Type ▼</li>
                         {showTypeChoices && (
                           <div className="type-options">
                             <li>
@@ -149,7 +148,7 @@ const Collection = () => {
                           </div>
                         )}
 
-                      <li className="clickable" onClick={() => setShowCostChoices(!showCostChoices)}>Cost</li>
+                      <li className="clickable" onClick={() => setShowCostChoices(!showCostChoices)}>Cost ▼</li>
                         {showCostChoices && (
                           <div className="cost-options">
                             <li>
@@ -187,7 +186,7 @@ const Collection = () => {
                           </div>
                         )}
 
-                      <li className="clickable" onClick={() => setShowSetChoices(!showSetChoices)}>Set</li>
+                      <li className="clickable" onClick={() => setShowSetChoices(!showSetChoices)}>Set ▼</li>
                         {showSetChoices && (
                           <div className="set-options">
                             <li>

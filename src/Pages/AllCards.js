@@ -1,5 +1,5 @@
 import React from "react";
-import './Card-Database.css';
+import './AllCards.css';
 import Navbar from '../Components/Navbar/Navbar';
 import Footer from '../Components/Footer/Footer';
 

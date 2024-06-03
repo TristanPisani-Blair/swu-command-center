@@ -1,8 +1,9 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom"; 
 import './Blogs.css';
 import Navbar from '../Components/Navbar/Navbar';
 import Footer from '../Components/Footer/Footer';
-
+import blogData from './temp-Blog-Data';
 
 const Blogs = () => {
   const [showModal, setShowModal] = useState(false);
@@ -46,25 +47,34 @@ const Blogs = () => {
             </ul>
           </div>
 
+          
           <div className="blogs-body">
             <h1>Blogs</h1>
             <div>
               <hr className="divider" />
             </div>
-            <div className="blog-post">
-              <div className="blog-post-top">
-                <h2 className="blog-title">Blog Title</h2>
-                <h2 className="blog-date">Date</h2>
+            {blogData.map((post) => (
+               <div className="blog-post" key={post.id}>
+                <Link to={{
+                    pathname: `/blog/${encodeURIComponent(post.publisher)}/${encodeURIComponent(post.title)}`,
+                    state: { post }
+                  }}
+                  className="blog-link">
+                  <div className="blog-post-top">
+                    <h2 className="blog-title">{post.title}</h2>
+                    <h2 className="blog-date">{post.date}</h2>
+                  </div>
+                  <div className="blog-body">
+                    <p>{post.content}</p>
+                  </div>
+                  <div className="blog-post-bottom">
+                    <p className="blog-publisher">{post.publisher}</p>
+                    <p> - </p>
+                    <p className="blog-comments">{post.comments} comments</p>
+                  </div>
+                </Link>
               </div>
-              <div className="blog-body">
-                <p>This is a blog post.</p>
-              </div>
-              <div className="blog-post-bottom">
-                <p className="blog-publisher">Publisher</p>
-                <p> - </p>
-                <p className="blog-comments">0 comments</p>
-              </div>
-            </div>
+            ))}
           </div>
 
           <div className="blogs-rightNav">

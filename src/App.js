@@ -6,13 +6,18 @@ import Collection from './Pages/Collection';
 import Blogs from './Pages/Blogs';
 import Account from './Pages/Account';
 /* import Navbar from './Components/Navbar'; */
+import LoginPage from './Pages/Account-Login';
+import SignupPage from './Pages/Account-Signup';
+import CardDatabase from './Pages/Card-Database';
+import BuildADeck from './Pages/Build-A-Deck';
 import { useAuth0 } from '@auth0/auth0-react';
-import { Route, Routes } from 'react-router-dom'; // URL router
+import { BrowserRouter, Route, Routes } from 'react-router-dom'; // URL router
 
 function App() {
   const { loginWithRedirect, logout, isAuthenticated } = useAuth0();
 
   return (
+  <BrowserRouter>
     <div>
     <Routes>
       <Route path='/' element={<Home/>} />
@@ -21,6 +26,10 @@ function App() {
       <Route path="/collection" element={<Collection/>} />
       <Route path="/blogs" element={<Blogs/>} />
       <Route path="/account" element={<Account/>} />
+        <Route path="/login" element={<LoginPage/>} />
+        <Route path="/signup" element={<SignupPage/>} />
+        <Route path="/card-database" element={<CardDatabase />} />
+        <Route path="/build-a-deck" element={<BuildADeck />} />
     </Routes>
       {/* Test Buttons */}
       <div>
@@ -28,6 +37,7 @@ function App() {
         <button onClick={() => logout({ returnTo: window.location.origin })}>Test Logout</button>
       </div>
     </div>
+  </BrowserRouter>
   );
 }
 

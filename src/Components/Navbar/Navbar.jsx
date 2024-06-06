@@ -27,27 +27,22 @@ const Navbar = () => {
         <ul className="nav-menu">
           <li><Link to="/home">Home</Link></li>
           <li><Link to="/how-to-play">How to Play</Link></li>
-          <li className="dropdown">
-            <Link to="/collection">
-              Collection
-              <img id="dropdown-arrow" src={arrow} alt="Drop Down Arrow" />
-            </Link>
+          <li className="dropdown"><Link to="/collection">
+            Collection
+            <img id="dropdown-arrow" src={arrow} alt="Drop Down Arrow" /></Link>
             <div className="dropdown-content">
-              <Link to="/my-collection">My Collection</Link>
-              <Link to="/build-a-deck">Build a Deck</Link>
-              <Link to="/card-database">Card Database</Link>
+              <Link to="/collection">My Collection</Link>
+              <Link to="/collection/build-a-deck">Build a Deck</Link>
+              <Link to="/collection/card-database">Card Database</Link>
             </div>
           </li>
-          <li className="dropdown">
-            <Link to="/blogs">
-              Blogs
-              <img id="dropdown-arrow" src={arrow} alt="Drop Down Arrow" />
-            </Link>
+          <li className="dropdown"><Link to="/blogs">
+            Blogs
+            <img id="dropdown-arrow" src={arrow} alt="Drop Down Arrow" /></Link>
             <div className="dropdown-content">
-              <Link to="/news">News</Link>
-              <Link to="/explore">Explore</Link>
-              <Link to="/my-blogs">My Blogs</Link>
-              <Link to="/new-blog-post">New Blog Post</Link>
+              <Link to="/blogs/news">News</Link>
+              <Link to="/blogs">Explore</Link>
+              <Link to="/blogs/my-blogs">My Blogs</Link>
             </div>
           </li>
         </ul>
@@ -68,6 +63,7 @@ const Navbar = () => {
           <img id="user-icon" src={usericon} alt="User Icon" />
         </button>
       )}
+    </div>
     </div>
   );
 }

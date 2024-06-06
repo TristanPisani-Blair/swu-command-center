@@ -11,7 +11,6 @@ const container = document.getElementById('root');
 const root = createRoot(container);
 
 root.render(
-  <Router>
     <Auth0Provider
       domain={domain}
       clientId={clientId}
@@ -19,5 +18,4 @@ root.render(
     >
       <App />
     </Auth0Provider>
-  </Router>
 );

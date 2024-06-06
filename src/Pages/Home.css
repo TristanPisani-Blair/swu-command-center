@@ -3,6 +3,7 @@
 
 body{
     font-family: 'Red Hat Display', sans-serif;
+    margin: 0;
 }
 
 .home-content {
@@ -10,8 +11,6 @@ body{
     flex-direction: column;
     justify-content: center;
     margin-bottom: 60px;
-    margin-left: 200px;
-    margin-right: 200px;
 }
 
 .banner {
@@ -23,7 +22,7 @@ body{
     position: relative;
 }
 
-/* Box overlay */
+/* Banner overlay box */
 .banner-contents {
     position: absolute;
     top: 50%;

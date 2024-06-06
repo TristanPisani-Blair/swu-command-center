@@ -10,6 +10,7 @@ import LoginPage from './Pages/Account-Login';
 import SignupPage from './Pages/Account-Signup';
 import CardDatabase from './Pages/Card-Database';
 import BuildADeck from './Pages/Build-A-Deck';
+import CardList from './Pages/CardList';
 import { useAuth0 } from '@auth0/auth0-react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom'; // URL router
 
@@ -26,16 +27,13 @@ function App() {
       <Route path="/collection" element={<Collection/>} />
       <Route path="/blogs" element={<Blogs/>} />
       <Route path="/account" element={<Account/>} />
-        <Route path="/login" element={<LoginPage/>} />
-        <Route path="/signup" element={<SignupPage/>} />
-        <Route path="/card-database" element={<CardDatabase />} />
-        <Route path="/build-a-deck" element={<BuildADeck />} />
+      <Route path="/cardlist" element={<CardList/>} />
+      <Route path="/login" element={<LoginPage/>} />
+      <Route path="/signup" element={<SignupPage/>} />
+      <Route path="/card-database" element={<CardDatabase />} />
+      <Route path="/build-a-deck" element={<BuildADeck />} />
+      <Route path="/test" element={<test/>}/>
     </Routes>
-      {/* Test Buttons */}
-      <div>
-        <button onClick={() => loginWithRedirect()}>Test Login</button>
-        <button onClick={() => logout({ returnTo: window.location.origin })}>Test Logout</button>
-      </div>
     </div>
   </BrowserRouter>
   );

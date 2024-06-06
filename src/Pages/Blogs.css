@@ -62,7 +62,7 @@ body{
     padding-left: 15px;
     padding-right: 15px;
     padding-top: 10px;
-    padding-bottom: 10px;
+    padding-bottom: 3px;
     margin-bottom: 20px;
 }
 
@@ -78,6 +78,17 @@ body{
 .blog-post h2{
     font-family: 'Open Sans Condensed', sans-serif;
     font-size: 24px;
+}
+
+.blog-body {
+    max-height: 170px;
+    display: block;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: normal;
 }
 
 .blog-post p{

@@ -36,6 +36,7 @@ body{
 
 .blog-page-leftNav a{
     color: #000000;
+    text-decoration: none;
 }
 
 .blog-page-body{
@@ -51,5 +52,17 @@ body{
 }
 
 .blog-page-body hr{
-    margin-bottom: 25px;
+    margin-bottom: 10px;
+}
+
+.blog-page-info{
+    font-size: 20px;
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    color: #818181;
+}
+
+.blog-page-content{
+    font-size: 20px;
 }

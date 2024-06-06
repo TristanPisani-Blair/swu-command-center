@@ -1,21 +1,24 @@
 import React, { useState } from "react";
-import { useLocation } from 'react-router-dom';
+import { useParams } from "react-router-dom";
 import './BlogPage.css';
 import Navbar from '../Components/Navbar/Navbar';
 import Footer from '../Components/Footer/Footer';
+import blogData from './temp-Blog-Data';
 
 
 const BlogPage = () => {
-  const location = useLocation();
-  const blogPost = location.state.post;
+  const params = useParams();
+
+  const blogPost = blogData.find(blog => 
+    blog.publisher === decodeURIComponent(params.publisher) &&
+    blog.title === decodeURIComponent(params.title)
+  );
+
+  console.log("Blog post data: ", blogPost);
 
   const [showModal, setShowModal] = useState(false);
   const [blogTitle, setBlogTitle] = useState("");
   const [blogContent, setBlogContent] = useState("");
-
-  if (!blogPost) {
-    return <div>Blog post not found</div>;
-  }
 
   const handleNewBlogPostClick = () => {
     setShowModal(true);
@@ -57,13 +60,13 @@ const BlogPage = () => {
           <div className="blog-page-body">
             <div className="blog-page-header">
               <h1>{blogPost.title}</h1>
-              <h1>{blogPost.date}</h1>
             </div>
             <div>
               <hr className="divider" />
             </div>
-            <div className="blog-page-publisher">
+            <div className="blog-page-info">
               <p>{blogPost.publisher}</p>
+              <p>{blogPost.date}</p>
             </div>
             <div className="blog-page-content">
               <p>{blogPost.content}</p>

@@ -4,11 +4,28 @@ import './Blogs.css';
 import Navbar from '../Components/Navbar/Navbar';
 import Footer from '../Components/Footer/Footer';
 import blogData from './temp-Blog-Data';
+import BlogList from "./BlogList";
 
 const Blogs = () => {
   const [showModal, setShowModal] = useState(false);
   const [blogTitle, setBlogTitle] = useState("");
   const [blogContent, setBlogContent] = useState("");
+
+  const [sortBy, setSortBy] = useState("");
+
+  const handleSort = (option) => {
+    const sortedBlogs = [...blogData]; // Create a copy of the original data
+
+    setSortBy(option);
+    // Sort the blogs array based on the selected option
+    if (option === 'newest') {
+        sortedBlogs.sort((a, b) => new Date(b.date) - new Date(a.date)); // Sort by newest date
+    } else if (option === 'oldest') {
+        sortedBlogs.sort((a, b) => new Date(a.date) - new Date(b.date)); // Sort by oldest date
+    }
+
+    setBlogContent(sortedBlogs);
+  };
 
   const handleNewBlogPostClick = () => {
     setShowModal(true);
@@ -46,42 +63,20 @@ const Blogs = () => {
               <li><a href="#" onClick={handleNewBlogPostClick}>New Blog Post</a></li>
             </ul>
           </div>
-
           
           <div className="blogs-body">
             <h1>Blogs</h1>
             <div>
               <hr className="divider" />
             </div>
-            {blogData.map((post) => (
-               <div className="blog-post" key={post.id}>
-                <Link to={{
-                    pathname: `/blog/${encodeURIComponent(post.publisher)}/${encodeURIComponent(post.title)}`,
-                    state: { post }
-                  }}
-                  className="blog-link">
-                  <div className="blog-post-top">
-                    <h2 className="blog-title">{post.title}</h2>
-                    <h2 className="blog-date">{post.date}</h2>
-                  </div>
-                  <div className="blog-body">
-                    <p>{post.content}</p>
-                  </div>
-                  <div className="blog-post-bottom">
-                    <p className="blog-publisher">{post.publisher}</p>
-                    <p> - </p>
-                    <p className="blog-comments">{post.comments} comments</p>
-                  </div>
-                </Link>
-              </div>
-            ))}
+            <BlogList blogs={blogData} />
           </div>
 
           <div className="blogs-rightNav">
             <ul>
               <p>Sort</p>
-              <li><a href="#Newest">Newest</a></li>
-              <li><a href="#Oldest">Oldest</a></li>
+              <li><a href="#Newest" onClick={() => handleSort('newest')}>Newest</a></li>
+              <li><a href="#Oldest" onClick={() => handleSort('oldest')}>Oldest</a></li>
               <li><a href="#MostPopular">Most Popular</a></li>
             </ul>
           </div>

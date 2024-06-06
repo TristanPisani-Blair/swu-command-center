@@ -10,6 +10,7 @@ const Blogs = () => {
   const [showModal, setShowModal] = useState(false);
   const [blogTitle, setBlogTitle] = useState("");
   const [blogContent, setBlogContent] = useState("");
+  const [blogs, setBlogs] = useState(blogData);
 
   const [sortBy, setSortBy] = useState("");
 
@@ -22,9 +23,11 @@ const Blogs = () => {
         sortedBlogs.sort((a, b) => new Date(b.date) - new Date(a.date)); // Sort by newest date
     } else if (option === 'oldest') {
         sortedBlogs.sort((a, b) => new Date(a.date) - new Date(b.date)); // Sort by oldest date
-    }
+    } else if (option === 'mostPopular') {
+      sortedBlogs.sort((a, b) => b.comments - a.comments); // Sort by most comments
+  }
 
-    setBlogContent(sortedBlogs);
+    setBlogs(sortedBlogs);
   };
 
   const handleNewBlogPostClick = () => {
@@ -69,7 +72,7 @@ const Blogs = () => {
             <div>
               <hr className="divider" />
             </div>
-            <BlogList blogs={blogData} />
+            <BlogList blogs={blogs} />
           </div>
 
           <div className="blogs-rightNav">
@@ -77,7 +80,7 @@ const Blogs = () => {
               <p>Sort</p>
               <li><a href="#Newest" onClick={() => handleSort('newest')}>Newest</a></li>
               <li><a href="#Oldest" onClick={() => handleSort('oldest')}>Oldest</a></li>
-              <li><a href="#MostPopular">Most Popular</a></li>
+              <li><a href="#MostPopular" onClick={() => handleSort('mostPopular')}>Most Popular</a></li>
             </ul>
           </div>
         </div>

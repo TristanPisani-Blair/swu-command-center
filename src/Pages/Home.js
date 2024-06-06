@@ -54,7 +54,7 @@ const Home = () => {
                   <Link to="/blogs">
                     <div className="blogs-box-contents">
                       <img src={chewbacca} alt="Blogs" />
-                      <p>Blogs</p>
+                      <p>Explore Blogs</p>
                     </div>
                   </Link>
                 </div>

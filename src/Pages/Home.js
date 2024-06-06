@@ -43,7 +43,7 @@ const Home = () => {
             <div className="home-boxes">
               <div className="left-box">
                 <div className="news-box">
-                  <Link to="/blogs/news">
+                  <Link to="/blogs?filter=news">
                     <div className="news-box-contents">
                       <p>News</p>
                       <img src={bobafett} alt="News" />

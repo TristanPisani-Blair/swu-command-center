@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom"; 
 import './Blogs.css';
 import Navbar from '../Components/Navbar/Navbar';
@@ -11,8 +12,9 @@ const Blogs = () => {
   const [blogTitle, setBlogTitle] = useState("");
   const [blogContent, setBlogContent] = useState("");
   const [blogs, setBlogs] = useState(blogData);
-
   const [sortBy, setSortBy] = useState("");
+  const location = useLocation();
+  const navigate = useNavigate();
 
   const handleSort = (option) => {
     const sortedBlogs = [...blogData]; // Create a copy of the original data
@@ -28,6 +30,21 @@ const Blogs = () => {
   }
 
     setBlogs(sortedBlogs);
+  };
+
+  useEffect(() => {
+    const queryParams = new URLSearchParams(location.search);
+    const filter = queryParams.get('filter');
+    
+    if (filter === 'news') {
+      setBlogs(blogData.filter(blog => blog.isNews));
+    } else {
+      setBlogs(blogData); // Reset to show all blogs
+    }
+  }, [location]);
+
+  const handleFilter = (filter) => {
+    navigate(`?filter=${filter}`);
   };
 
   const handleNewBlogPostClick = () => {
@@ -59,7 +76,7 @@ const Blogs = () => {
         <div className="container" class="wrapper">
           <div className="blogs-leftNav">
             <ul>
-              <li><a href="#News">News</a></li>
+              <li><a href="#News" onClick={() => handleFilter('news')}>News</a></li>
               <li><a href="#NewBlogs">New Blogs</a></li>
               <li><a href="#Trending">Trending</a></li>
               <li><a href="#MyBlogs">My Blogs</a></li>

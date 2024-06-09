@@ -4,17 +4,19 @@ import Home from './Pages/Home';
 import HowToPlay from './Pages/HowToPlay';
 import Collection from './Pages/Collection';
 import Blogs from './Pages/Blogs';
+import BlogPage from './Pages/BlogPage';
 import Account from './Pages/Account';
 /* import Navbar from './Components/Navbar'; */
 import LoginPage from './Pages/Account-Login';
 import SignupPage from './Pages/Account-Signup';
-import CardDatabase from './Pages/Card-Database';
+import AllCards from './Pages/AllCards';
 import BuildADeck from './Pages/Build-A-Deck';
 import CardList from './Pages/CardList';
 import { useAuth0 } from '@auth0/auth0-react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom'; // URL router
 
 function App() {
+
   const { loginWithRedirect, logout, isAuthenticated } = useAuth0();
 
   return (
@@ -28,6 +30,7 @@ function App() {
       <Route path="/blogs" element={<Blogs/>} />
       <Route path="/account" element={<Account/>} />
       <Route path="/cardlist" element={<CardList/>} />
+      <Route path="/all-cards" element={<AllCards/>} />
       <Route path="/login" element={<LoginPage/>} />
       <Route path="/signup" element={<SignupPage/>} />
       <Route path="/card-database" element={<CardDatabase />} />

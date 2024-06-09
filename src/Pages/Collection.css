@@ -36,6 +36,7 @@ body{
 
 .collection-leftNav a{
     color: #000000;
+    text-decoration: none;
 }
 
 .collection-body{
@@ -115,6 +116,7 @@ body{
     border-radius: 20px;
     outline: none;
     margin-right: 10px;
+    background-color: #D9D9D9;
 }
 
 .collection-form-group-checkbox input:checked {

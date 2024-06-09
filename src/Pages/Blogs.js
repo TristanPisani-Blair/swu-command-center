@@ -1,13 +1,51 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom"; 
 import './Blogs.css';
 import Navbar from '../Components/Navbar/Navbar';
 import Footer from '../Components/Footer/Footer';
-
+import blogData from './temp-Blog-Data';
+import BlogList from "./BlogList";
 
 const Blogs = () => {
   const [showModal, setShowModal] = useState(false);
   const [blogTitle, setBlogTitle] = useState("");
   const [blogContent, setBlogContent] = useState("");
+  const [blogs, setBlogs] = useState(blogData);
+  const [sortBy, setSortBy] = useState("");
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  const handleSort = (option) => {
+    const sortedBlogs = [...blogData]; // Create a copy of the original data
+
+    setSortBy(option);
+    // Sort the blogs array based on the selected option
+    if (option === 'newest') {
+        sortedBlogs.sort((a, b) => new Date(b.date) - new Date(a.date)); // Sort by newest date
+    } else if (option === 'oldest') {
+        sortedBlogs.sort((a, b) => new Date(a.date) - new Date(b.date)); // Sort by oldest date
+    } else if (option === 'mostPopular') {
+      sortedBlogs.sort((a, b) => b.comments - a.comments); // Sort by most comments
+  }
+
+    setBlogs(sortedBlogs);
+  };
+
+  useEffect(() => {
+    const queryParams = new URLSearchParams(location.search);
+    const filter = queryParams.get('filter');
+    
+    if (filter === 'news') {
+      setBlogs(blogData.filter(blog => blog.isNews));
+    } else {
+      setBlogs(blogData); // Reset to show all blogs
+    }
+  }, [location]);
+
+  const handleFilter = (filter) => {
+    navigate(`?filter=${filter}`);
+  };
 
   const handleNewBlogPostClick = () => {
     setShowModal(true);
@@ -38,41 +76,28 @@ const Blogs = () => {
         <div className="container" class="wrapper">
           <div className="blogs-leftNav">
             <ul>
-              <li><a href="#News">News</a></li>
+              <li><a href="#News" onClick={() => handleFilter('news')}>News</a></li>
               <li><a href="#NewBlogs">New Blogs</a></li>
               <li><a href="#Trending">Trending</a></li>
               <li><a href="#MyBlogs">My Blogs</a></li>
               <li><a href="#" onClick={handleNewBlogPostClick}>New Blog Post</a></li>
             </ul>
           </div>
-
+          
           <div className="blogs-body">
             <h1>Blogs</h1>
             <div>
               <hr className="divider" />
             </div>
-            <div className="blog-post">
-              <div className="blog-post-top">
-                <h2 className="blog-title">Blog Title</h2>
-                <h2 className="blog-date">Date</h2>
-              </div>
-              <div className="blog-body">
-                <p>This is a blog post.</p>
-              </div>
-              <div className="blog-post-bottom">
-                <p className="blog-publisher">Publisher</p>
-                <p> - </p>
-                <p className="blog-comments">0 comments</p>
-              </div>
-            </div>
+            <BlogList blogs={blogs} />
           </div>
 
           <div className="blogs-rightNav">
             <ul>
               <p>Sort</p>
-              <li><a href="#Newest">Newest</a></li>
-              <li><a href="#Oldest">Oldest</a></li>
-              <li><a href="#MostPopular">Most Popular</a></li>
+              <li><a href="#Newest" onClick={() => handleSort('newest')}>Newest</a></li>
+              <li><a href="#Oldest" onClick={() => handleSort('oldest')}>Oldest</a></li>
+              <li><a href="#MostPopular" onClick={() => handleSort('mostPopular')}>Most Popular</a></li>
             </ul>
           </div>
         </div>

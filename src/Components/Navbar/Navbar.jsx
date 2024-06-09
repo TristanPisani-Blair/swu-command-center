@@ -34,14 +34,14 @@ const Navbar = () => {
             <div className="dropdown-content">
               <Link to="/collection">My Collection</Link>
               <Link to="/collection/build-a-deck">Build a Deck</Link>
-              <Link to="/collection/card-database">Card Database</Link>
+              <Link to="/collection/all-cards">All Cards</Link>
             </div>
           </li>
           <li className="dropdown"><Link to="/blogs">
             Blogs
             <img id="dropdown-arrow" src={arrow} alt="Drop Down Arrow" /></Link>
             <div className="dropdown-content">
-              <Link to="/blogs/news">News</Link>
+              <Link to="/blogs?filter=news">News</Link>
               <Link to="/blogs">Explore</Link>
               <Link to="/blogs/my-blogs">My Blogs</Link>
             </div>

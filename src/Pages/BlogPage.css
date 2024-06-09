@@ -1,0 +1,68 @@
+@import url('https://fonts.googleapis.com/css2?family=Red+Hat+Display:wght@400;500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans+Condensed:wght@300&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body{
+    font-family: 'Red Hat Display', sans-serif;
+    margin-bottom: 60px;
+    margin-top: 110px;
+}
+
+.wrapper{
+    display: grid;
+    grid-template-columns: 150px auto 200px;
+}
+
+.blog-page-leftNav{
+    position: fixed;
+    font-size: 18px;
+    font-weight: 500;
+    font-family: 'Open Sans Condensed', sans-serif;
+    padding: 15px;
+    grid-column: 1;
+    padding-left: 20px;
+}
+
+.blog-page-leftNav li{
+    list-style: none;
+    margin-bottom: 10px;
+    text-decoration: none;
+}
+
+.blog-page-leftNav a{
+    color: #000000;
+    text-decoration: none;
+}
+
+.blog-page-body{
+    grid-column: 2;
+    display: flex;
+    flex-direction: column;
+    padding: 15px;
+}
+
+.blog-page-body h1{
+    font-family: 'Open Sans Condensed', sans-serif;
+    font-size: 30px;
+}
+
+.blog-page-body hr{
+    margin-bottom: 10px;
+}
+
+.blog-page-info{
+    font-size: 20px;
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    color: #818181;
+}
+
+.blog-page-content{
+    font-size: 20px;
+}

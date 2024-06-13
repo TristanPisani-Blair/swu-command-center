@@ -55,7 +55,7 @@ const Navbar = () => {
             <img id="user-icon" src={usericon} alt="User Icon" />
           </Link>
           <button onClick={() => logout({ returnTo: window.location.origin })} className="username">
-            <span>Logout</span>
+            <span className="logout-button">Logout</span>
           </button>
         </div>
       ) : (

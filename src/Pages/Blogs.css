@@ -232,6 +232,7 @@ body{
     position: relative;
     left: 50%;
     transform: translateX(-50%);
+    margin-top: 20px;
     padding-bottom: 20px;
     background-color: #2196F3;
     color: white;

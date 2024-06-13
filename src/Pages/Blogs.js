@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { Link } from "react-router-dom"; 
+import { useAuth0 } from '@auth0/auth0-react';
+import axios from 'axios';
 import './Blogs.css';
 import Navbar from '../Components/Navbar/Navbar';
 import Footer from '../Components/Footer/Footer';
@@ -9,10 +10,12 @@ import BlogList from "./BlogList";
 
 const Blogs = () => {
   const [showModal, setShowModal] = useState(false);
-  const [blogTitle, setBlogTitle] = useState("");
-  const [blogContent, setBlogContent] = useState("");
+  const [blogTitle, setBlogTitle] = useState('');
+  const [blogContent, setBlogContent] = useState('');
   const [blogs, setBlogs] = useState(blogData);
-  const [sortBy, setSortBy] = useState("");
+  const [sortBy, setSortBy] = useState('');
+  const [error, setError] = useState('');
+  const { user, isAuthenticated } = useAuth0();
   const location = useLocation();
   const navigate = useNavigate();
 
@@ -53,21 +56,61 @@ const Blogs = () => {
 
   const handleCloseModal = () => {
     setShowModal(false);
-    setBlogTitle("");
-    setBlogContent("");
+    setBlogTitle('');
+    setBlogContent('');
+    setError('');
   };
 
-  const handleSaveBlogPost = () => {
+  const handleSaveBlogPost = async (e) => {
+    e.preventDefault();
+
     // Get the current date and time
     const currentDate = new Date();
     const dateTime = currentDate.toLocaleString();
 
-    // Log the date and time along with the blog title and content
-    console.log("Date and Time:", dateTime);
-    console.log("Title:", blogTitle);
-    console.log("Content:", blogContent);
+    // Generate a random ID
+    const randomId = Math.floor(Math.random() * 100000000);
 
-    handleCloseModal();
+    // Grab logged in users username
+    if (!isAuthenticated) {
+      setError(<p>You must be logged in to post a blog.</p>);
+      return;
+    }
+
+    // Check if title or post are empty, show error if true
+    if (!blogTitle || !blogContent) {
+      setError(<p className="post-required">Title or post cannot be empty.</p>);
+      return;
+    } else {
+      setError('');
+    }
+
+    // Create the new blog post object
+    const newBlogPost = {
+      id: randomId,
+      title: blogTitle,
+      content: blogContent,
+      date: dateTime,
+      author: user.name,
+      comments: 0,
+      isNews: false
+    };
+
+    console.log("New Blog Post:", newBlogPost);
+
+    try {
+      // Send the new blog post to the server
+      const response = await axios.post('http://localhost:5000/blogs', newBlogPost);
+      console.log("Response from server:", response.data);
+
+      // Add the new blog post to the state
+      setBlogs([...blogs, response.data]);
+
+      handleCloseModal();
+    } catch (error) {
+      console.error("There was an error saving the blog post.", error);
+      setError("There was an error saving the blog post.");
+    }
   };
 
     return (
@@ -119,8 +162,11 @@ const Blogs = () => {
                 <textarea
                   id="blog-content"
                   value={blogContent}
-                  onChange={(e) => setBlogContent(e.target.value)}
-                ></textarea>
+                  onChange={(e) => setBlogContent(e.target.value)}>
+                </textarea>
+
+                {error && <p className="error-message">{error}</p>}
+
                 <button type="button" onClick={handleSaveBlogPost}>Save</button>
               </form>
             </div>

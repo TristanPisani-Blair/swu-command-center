@@ -93,31 +93,31 @@ body {
     color: white;
     cursor: pointer;
     margin-right: 20px;
-  }
+}
   
-  .auth-buttons {
+.auth-buttons {
     display: flex;
     align-items: center;
-  }
+}
   
-  .auth-buttons .username {
+.auth-buttons .username {
     margin-right: 10px;
-  }
-  
-  #user-icon {
+}
+
+#user-icon {
     width: 20px;
     height: auto;
     margin-left: 5px;
-  }
+}
   
-  button.username {
+button.username {
     background: none;
     border: none;
     color: white;
     cursor: pointer;
     display: flex;
     align-items: center;
-  }
+}
 
 #dropdown-arrow {
     width: 12px;
@@ -132,11 +132,11 @@ body {
 }
 
 .main {
-    font-size: 24px; /* Adjust the font size as needed */
+    font-size: 24px;
 }
 
 .sub {
-    font-size: 24px; /* Adjust the font size as needed */
+    font-size: 24px;
 }
 
 .account{
@@ -148,9 +148,9 @@ body {
     margin-right: 10px;
     text-decoration: none;
     color: inherit;
-  }
+}
   
-  #user-icon {
+#user-icon {
     width: 20px;
     height: auto;
-  }
+}

@@ -5,7 +5,8 @@ const blogData = [
       content: "This is the content of sample blog post 1.",
       date: "June 1, 2024",
       publisher: "John Doe",
-      comments: 5,
+      commentCount: 5,
+      comments: '',
       isNews: false
     },
     {
@@ -14,7 +15,8 @@ const blogData = [
       content: "This is the content of sample blog post 2.",
       date: "May 30, 2024",
       publisher: "Jane Smith",
-      comments: 10,
+      commentCount: 10,
+      comments: '',
       isNews: false
     },
     {
@@ -23,7 +25,8 @@ const blogData = [
       content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
       date: "June 6, 2000",
       publisher: "Unknown",
-      comments: 2,
+      commentCount: 2,
+      comments: '',
       isNews: true
     }
   ];

@@ -30,7 +30,9 @@ const BlogPage = () => {
     setBlogContent("");
   };
 
-  const handleSaveBlogPost = () => {
+  const handleSaveBlogPost = (e) => {
+    e.preventDefault();
+
     // Get the current date and time
     const currentDate = new Date();
     const dateTime = currentDate.toLocaleString();

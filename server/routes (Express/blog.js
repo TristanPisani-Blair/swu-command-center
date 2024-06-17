@@ -13,7 +13,7 @@ router.get('/blogs', async (req, res) => {
     }
 });
 
-router.post('/blogs', async (req, res) => {
+router.post('/blogdata', async (req, res) => {
     const { 
         id, 
         title, 

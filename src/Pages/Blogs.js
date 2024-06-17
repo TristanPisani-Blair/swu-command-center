@@ -5,22 +5,35 @@ import axios from 'axios';
 import './Blogs.css';
 import Navbar from '../Components/Navbar/Navbar';
 import Footer from '../Components/Footer/Footer';
-import blogData from './temp-Blog-Data';
 import BlogList from "./BlogList";
 
 const Blogs = () => {
   const [showModal, setShowModal] = useState(false);
   const [blogTitle, setBlogTitle] = useState('');
   const [blogContent, setBlogContent] = useState('');
-  const [blogs, setBlogs] = useState(blogData);
+  const [blogs, setBlogs] = useState([]);
   const [sortBy, setSortBy] = useState('');
   const [error, setError] = useState('');
   const { user, isAuthenticated } = useAuth0();
   const location = useLocation();
   const navigate = useNavigate();
 
+  // Fetch blog data from the database
+  useEffect(() => {
+    const fetchBlogs = async () => {
+      try {
+        const response = await axios.get('http://localhost:4000/blogs');
+        setBlogs(response.data);
+      } catch (error) {
+        console.error('Error fetching blogs:', error);
+      }
+    };
+
+    fetchBlogs();
+  }, []);
+
   const handleSort = (option) => {
-    const sortedBlogs = [...blogData]; // Create a copy of the original data
+    const sortedBlogs = [...blogs]; // Create a copy of the original data
 
     setSortBy(option);
     // Sort the blogs array based on the selected option
@@ -29,7 +42,7 @@ const Blogs = () => {
     } else if (option === 'oldest') {
         sortedBlogs.sort((a, b) => new Date(a.date) - new Date(b.date)); // Sort by oldest date
     } else if (option === 'mostPopular') {
-      sortedBlogs.sort((a, b) => b.comments - a.comments); // Sort by most comments
+      sortedBlogs.sort((a, b) => b.commentCount - a.commentCount); // Sort by most comments
   }
 
     setBlogs(sortedBlogs);
@@ -40,9 +53,9 @@ const Blogs = () => {
     const filter = queryParams.get('filter');
     
     if (filter === 'news') {
-      setBlogs(blogData.filter(blog => blog.isNews));
+      setBlogs(blogs.filter(blog => blog.isNews));
     } else {
-      setBlogs(blogData); // Reset to show all blogs
+      setBlogs(blogs); // Reset to show all blogs
     }
   }, [location]);
 
@@ -92,7 +105,8 @@ const Blogs = () => {
       content: blogContent,
       date: dateTime,
       author: user.name,
-      comments: 0,
+      commentCount: 0,
+      comments: [],
       isNews: false
     };
 
@@ -100,7 +114,7 @@ const Blogs = () => {
 
     try {
       // Send the new blog post to the server
-      const response = await axios.post('http://localhost:5000/blogs', newBlogPost);
+      const response = await axios.post('http://localhost:4000/blogs', newBlogPost);
       console.log("Response from server:", response.data);
 
       // Add the new blog post to the state

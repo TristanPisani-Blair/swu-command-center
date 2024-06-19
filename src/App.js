@@ -4,6 +4,7 @@ import Home from './Pages/Home';
 import HowToPlay from './Pages/HowToPlay';
 import Collection from './Pages/Collection';
 import Blogs from './Pages/Blogs';
+import BlogPage from './Pages/BlogPage';
 import Account from './Pages/Account';
 /* import Navbar from './Components/Navbar'; */
 import CardDatabase from './Pages/CardDatabase';
@@ -25,6 +26,7 @@ function App() {
       <Route path="/how-to-play" element={<HowToPlay/>} />
       <Route path="/collection" element={<Collection/>} />
       <Route path="/blogs" element={<Blogs/>} />
+      <Route path="/blog/:author/:title" element={<BlogPage/>} />
       <Route path="/account" element={<Account/>} />
       <Route path="/cardlist" element={<CardList/>} />
       <Route path="/card-database" element={<CardDatabase/>} />

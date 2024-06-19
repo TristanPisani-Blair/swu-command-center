@@ -1,24 +1,43 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import './BlogPage.css';
 import Navbar from '../Components/Navbar/Navbar';
 import Footer from '../Components/Footer/Footer';
-import blogData from './temp-Blog-Data';
-
+import axios from 'axios';
 
 const BlogPage = () => {
-  const params = useParams();
-
-  const blogPost = blogData.find(blog => 
-    blog.publisher === decodeURIComponent(params.publisher) &&
-    blog.title === decodeURIComponent(params.title)
-  );
+  const { author, title } = useParams();
+  const [blogPost, setBlogPost] = useState(null);
 
   console.log("Blog post data: ", blogPost);
 
   const [showModal, setShowModal] = useState(false);
   const [blogTitle, setBlogTitle] = useState("");
   const [blogContent, setBlogContent] = useState("");
+
+  useEffect(() => {
+    const fetchBlogPost = async () => {
+      try {
+        const encodedAuthor = encodeURIComponent(author);
+        const encodedTitle = encodeURIComponent(title);
+        const response = await axios.get(`http://localhost:4000/blogs/${encodedAuthor}/${encodedTitle}`);
+        setBlogPost(response.data);
+      } catch (error) {
+        console.error('Error fetching blog post:', error);
+      }
+    };
+
+    fetchBlogPost();
+  }, [author, title]);
+
+  const formatDate = (dateStr) => {
+    const options = { year: 'numeric', month: 'long', day: 'numeric' };
+    return new Date(dateStr).toLocaleDateString('en-US', options);
+  };
+
+  if (!blogPost) {
+    return <p>Loading...</p>;
+  }
 
   const handleNewBlogPostClick = () => {
     setShowModal(true);
@@ -67,8 +86,8 @@ const BlogPage = () => {
               <hr className="divider" />
             </div>
             <div className="blog-page-info">
-              <p>{blogPost.publisher}</p>
-              <p>{blogPost.date}</p>
+              <p>{blogPost.author}</p>
+              <p>{formatDate(blogPost.date)}</p>
             </div>
             <div className="blog-page-content">
               <p>{blogPost.content}</p>

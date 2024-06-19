@@ -16,13 +16,13 @@ const BlogList = (props) => {
     return (
         <div className='blog-list'>
             {blogs.map((blog) => (
-                <div className="blog-post" key={blog.id}>
+                <div className="blog-post" key={blog._id}>
                     <Link to={{
                         pathname: `/blog/${encodeURIComponent(blog.author)}/${encodeURIComponent(blog.title)}`,
                         state: { blog: blog },
                     }} className="blog-link"
                     onClick={() => handleClick(blog)}>
-                        <div className="blog-post" key={blog.id}>
+                        <div className="blog-post" key={blog._id}>
                             <div className="blog-post-top">
                                 <h2 className="blog-title">{blog.title}</h2>
                                 <h2 className="blog-date">{formatDate(blog.date)}</h2>

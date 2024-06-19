@@ -61,11 +61,11 @@ router.get('/blogs/:author/:title', async (req, res) => {
       console.error('Error fetching blog:', error);
       res.status(500).json({ error: 'Error fetching blog', details: error.message });
     }
-  });
+});
+
 
 router.post('/blogs', async(req, res) => {
     const { 
-        id, 
         title, 
         content, 
         author, 
@@ -75,7 +75,6 @@ router.post('/blogs', async(req, res) => {
         isNews } = req.body;
 
     const blogData = {
-        id: id,
         title: title,
         content: content,
         author: author,
@@ -95,6 +94,6 @@ router.post('/blogs', async(req, res) => {
     }
 
     res.end();
-})
+});
 
 module.exports = router;

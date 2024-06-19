@@ -80,10 +80,7 @@ const Blogs = () => {
     // Get the current date and time
     const currentDate = new Date();
     const dateTime = currentDate.toLocaleString();
-
-    // Generate a random ID
-    const randomId = Math.floor(Math.random() * 100000000);
-
+    
     // Grab logged in users username
     if (!isAuthenticated) {
       setError(<p>You must be logged in to post a blog.</p>);
@@ -100,7 +97,6 @@ const Blogs = () => {
 
     // Create the new blog post object
     const newBlogPost = {
-      id: randomId,
       title: blogTitle,
       content: blogContent,
       date: dateTime,

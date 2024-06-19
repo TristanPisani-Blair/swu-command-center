@@ -10,7 +10,6 @@ const userSchema = new Schema({
 });
   
 const blogSchema = new Schema({
-    id: {type: Number, required: true },
     title: { type: String, required: true },
     content: { type: String, required: true },
     date: { type: Date, default: Date.now },

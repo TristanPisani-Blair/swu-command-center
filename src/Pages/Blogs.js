@@ -12,6 +12,7 @@ const Blogs = () => {
   const [blogTitle, setBlogTitle] = useState('');
   const [blogContent, setBlogContent] = useState('');
   const [blogs, setBlogs] = useState([]);
+  const [originalBlogs, setOriginalBlogs] = useState([]);
   const [sortBy, setSortBy] = useState('');
   const [error, setError] = useState('');
   const { user, isAuthenticated } = useAuth0();
@@ -24,6 +25,7 @@ const Blogs = () => {
       try {
         const response = await axios.get('http://localhost:4000/blogs');
         setBlogs(response.data);
+        setOriginalBlogs(response.data);
       } catch (error) {
         console.error('Error fetching blogs:', error);
       }
@@ -33,19 +35,21 @@ const Blogs = () => {
   }, []);
 
   const handleSort = (option) => {
-    const sortedBlogs = [...blogs]; // Create a copy of the original data
+    console.log('Sorting by:', option);
 
-    setSortBy(option);
+    // Create a copy of the original data
+    const sortedBlogs = [...blogs];
+
     // Sort the blogs array based on the selected option
     if (option === 'newest') {
-        sortedBlogs.sort((a, b) => new Date(b.date) - new Date(a.date)); // Sort by newest date
+      sortedBlogs.sort((a, b) => new Date(b.date) - new Date(a.date)); // Sort by newest date
     } else if (option === 'oldest') {
-        sortedBlogs.sort((a, b) => new Date(a.date) - new Date(b.date)); // Sort by oldest date
+      sortedBlogs.sort((a, b) => new Date(a.date) - new Date(b.date)); // Sort by oldest date
     } else if (option === 'mostPopular') {
       sortedBlogs.sort((a, b) => b.commentCount - a.commentCount); // Sort by most comments
-  }
+    }
 
-    setBlogs(sortedBlogs);
+    setBlogs(() => [...sortedBlogs]);
   };
 
   useEffect(() => {
@@ -53,11 +57,17 @@ const Blogs = () => {
     const filter = queryParams.get('filter');
     
     if (filter === 'news') {
-      setBlogs(blogs.filter(blog => blog.isNews));
+      setBlogs(originalBlogs.filter(blog => blog.isNews));
+    } else if (filter === 'allBlog') {
+      setBlogs(originalBlogs);
+    } else if (filter === 'myBlogs' && isAuthenticated) {
+      console.log("User's name:", user?.name);
+      setBlogs(originalBlogs);
+      setBlogs(originalBlogs.filter(blog => blog.author === user?.name));
     } else {
-      setBlogs(blogs); // Reset to show all blogs
+      setBlogs(originalBlogs); // Reset to show all blogs
     }
-  }, [location]);
+  }, [location, originalBlogs]);
 
   const handleFilter = (filter) => {
     navigate(`?filter=${filter}`);
@@ -80,7 +90,7 @@ const Blogs = () => {
     // Get the current date and time
     const currentDate = new Date();
     const dateTime = currentDate.toLocaleString();
-    
+
     // Grab logged in users username
     if (!isAuthenticated) {
       setError(<p>You must be logged in to post a blog.</p>);
@@ -129,10 +139,9 @@ const Blogs = () => {
         <div className="container" class="wrapper">
           <div className="blogs-leftNav">
             <ul>
+              <li><a href="#AllBlogs" onClick={() => handleFilter('allBlogs')}>All Blogs</a></li>
               <li><a href="#News" onClick={() => handleFilter('news')}>News</a></li>
-              <li><a href="#NewBlogs">New Blogs</a></li>
-              <li><a href="#Trending">Trending</a></li>
-              <li><a href="#MyBlogs">My Blogs</a></li>
+              <li><a href="#MyBlogs" onClick={() => handleFilter('myBlogs')}>My Blogs</a></li>
               <li><a href="#" onClick={handleNewBlogPostClick}>New Blog Post</a></li>
             </ul>
           </div>

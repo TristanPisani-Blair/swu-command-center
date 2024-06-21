@@ -96,4 +96,32 @@ router.post('/blogs', async(req, res) => {
     res.end();
 });
 
+// Update a blog post by ID
+router.patch('/blogs/:id', async (req, res) => {
+    try {
+        const updatedBlog = await schemas.Blogs.findByIdAndUpdate(req.params.id, req.body, { new: true, runValidators: true });
+        if (!updatedBlog) {
+          return res.status(404).send('Blog post not found');
+        }
+        res.send(updatedBlog);
+      } catch (error) {
+        console.error('Error updating blog post:', error);
+        res.status(500).send(error);
+      }
+});
+
+// Delete a blog post by ID
+router.delete('/blogs/:id', async (req, res) => {
+    try {
+        const deletedBlog = await schemas.Blogs.findByIdAndDelete(req.params.id);
+        if (!deletedBlog) {
+          return res.status(404).send('Blog post not found');
+        }
+         res.send(deletedBlog);
+    } catch (error) {
+        console.error('Error deleting blog post:', error);
+        res.status(500).send(error);
+    }
+});
+
 module.exports = router;

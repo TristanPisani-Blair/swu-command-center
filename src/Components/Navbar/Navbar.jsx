@@ -42,8 +42,8 @@ const Navbar = () => {
             <img id="dropdown-arrow" src={arrow} alt="Drop Down Arrow" /></Link>
             <div className="dropdown-content">
               <Link to="/blogs?filter=news">News</Link>
-              <Link to="/blogs">Explore</Link>
-              <Link to="/blogs/my-blogs">My Blogs</Link>
+              <Link to="/blogs?filter=allBlogs">Explore</Link>
+              <Link to="/blogs?filter=myBlogs">My Blogs</Link>
             </div>
           </li>
         </ul>

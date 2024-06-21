@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useParams, Link, useNavigate } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { useAuth0 } from '@auth0/auth0-react';
 import './BlogPage.css';
 import Navbar from '../Components/Navbar/Navbar';
@@ -35,30 +35,11 @@ const BlogPage = () => {
     fetchBlogPost();
   }, [author, title]);
 
-  const handleNewBlogPostClick = () => {
-    setShowModal(true);
-  };
-
-  const handleCloseNewBlogModal = () => {
+  const handleCloseModal = () => {
     setShowModal(false);
     setBlogTitle("");
     setBlogContent("");
     setError("");
-  };
-
-  const handleSaveBlogPost = (e) => {
-    e.preventDefault();
-
-    // Get the current date and time
-    const currentDate = new Date();
-    const dateTime = currentDate.toLocaleString();
-
-    // Log the date and time along with the blog title and content
-    console.log("Date and Time:", dateTime);
-    console.log("Title:", blogTitle);
-    console.log("Content:", blogContent);
-
-    handleCloseNewBlogModal();
   };
 
   const formatDate = (dateStr) => {
@@ -115,7 +96,6 @@ const BlogPage = () => {
               <li><a href="/blogs?filter=allBlogs">All Blogs</a></li>
               <li><a href="/blogs?filter=news">News</a></li>
               <li><a href="/blogs?filter=myBlogs">My Blogs</a></li>
-              <li><a href="#" onClick={handleNewBlogPostClick}>New Blog Post</a></li>
             </ul>
           </div>
 
@@ -142,7 +122,7 @@ const BlogPage = () => {
         {showModal && (
         <div className="edit-modal">
           <div className="edit-modal-content">
-            <span className="close" onClick={() => setShowModal(false)}>&times;</span>
+            <span className="close" onClick={handleCloseModal}>&times;</span>
             <h2>Edit Blog Post</h2>
             <label htmlFor="edit-title">Title:</label>
             <input id="edit-title" type="text" value={modalTitle} onChange={(e) => setModalTitle(e.target.value)} />

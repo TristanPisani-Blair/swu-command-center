@@ -12,7 +12,6 @@ const Blogs = () => {
   const [blogTitle, setBlogTitle] = useState('');
   const [blogContent, setBlogContent] = useState('');
   const [blogs, setBlogs] = useState([]);
-  const [originalBlogs, setOriginalBlogs] = useState([]);
   const [sortBy, setSortBy] = useState('');
   const [error, setError] = useState('');
   const { user, isAuthenticated } = useAuth0();
@@ -20,17 +19,17 @@ const Blogs = () => {
   const navigate = useNavigate();
 
   // Fetch blog data from the database
-  useEffect(() => {
-    const fetchBlogs = async () => {
-      try {
-        const response = await axios.get('http://localhost:4000/blogs');
-        setBlogs(response.data);
-        setOriginalBlogs(response.data);
-      } catch (error) {
-        console.error('Error fetching blogs:', error);
-      }
-    };
+  const fetchBlogs = async () => {
+    try {
+      const response = await axios.get('http://localhost:4000/blogs');
+      setBlogs(response.data);
+    } catch (error) {
+      console.error('Error fetching blogs:', error);
+    }
+  };
 
+  // Fetch blog data from the database on component mount
+  useEffect(() => {
     fetchBlogs();
   }, []);
 
@@ -52,25 +51,31 @@ const Blogs = () => {
     setBlogs(() => [...sortedBlogs]);
   };
 
-  useEffect(() => {
-    const queryParams = new URLSearchParams(location.search);
-    const filter = queryParams.get('filter');
-    
-    if (filter === 'news') {
-      setBlogs(originalBlogs.filter(blog => blog.isNews));
-    } else if (filter === 'allBlog') {
-      setBlogs(originalBlogs);
-    } else if (filter === 'myBlogs' && isAuthenticated) {
-      console.log("User's name:", user?.name);
-      setBlogs(originalBlogs);
-      setBlogs(originalBlogs.filter(blog => blog.author === user?.name));
-    } else {
-      setBlogs(originalBlogs); // Reset to show all blogs
-    }
-  }, [location, originalBlogs]);
+  // Function to handle filtering of blogs
+  const handleFilter = async (filter) => {
+    try {
+      let filteredBlogs = [];
 
-  const handleFilter = (filter) => {
+      if (filter === 'news') {
+        const response = await axios.get('http://localhost:4000/blogs');
+        filteredBlogs = response.data.filter(blog => blog.isNews === true);
+      } else if (filter === 'allBlogs') {
+        const response = await axios.get('http://localhost:4000/blogs');
+        filteredBlogs = response.data;
+      } else if (filter === 'myBlogs' && isAuthenticated) {
+        const response = await axios.get('http://localhost:4000/blogs');
+        filteredBlogs = response.data.filter(blog => blog.author === user?.name);
+      }
+
+      setBlogs([...filteredBlogs]);
+    } catch (error) {
+      console.error('Error filtering blogs:', error);
+    }
+  };
+
+  const handleFilterClick = (filter) => {
     navigate(`?filter=${filter}`);
+    handleFilter(filter);
   };
 
   const handleNewBlogPostClick = () => {
@@ -139,9 +144,9 @@ const Blogs = () => {
         <div className="container" class="wrapper">
           <div className="blogs-leftNav">
             <ul>
-              <li><a href="#AllBlogs" onClick={() => handleFilter('allBlogs')}>All Blogs</a></li>
-              <li><a href="#News" onClick={() => handleFilter('news')}>News</a></li>
-              <li><a href="#MyBlogs" onClick={() => handleFilter('myBlogs')}>My Blogs</a></li>
+              <li><a href="#AllBlogs" onClick={() => handleFilterClick('allBlogs')}>All Blogs</a></li>
+              <li><a href="#News" onClick={() => handleFilterClick('news')}>News</a></li>
+              <li><a href="#MyBlogs" onClick={() => handleFilterClick('myBlogs')}>My Blogs</a></li>
               <li><a href="#" onClick={handleNewBlogPostClick}>New Blog Post</a></li>
             </ul>
           </div>

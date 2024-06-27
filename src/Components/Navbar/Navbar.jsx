@@ -15,7 +15,6 @@ const Navbar = () => {
   }
 
   return (
-
     <div className='navbar'>
       <div className="nav-logo">
         <img src={logo} alt='SWU Command Center Logo' />
@@ -28,18 +27,23 @@ const Navbar = () => {
         <ul className="nav-menu">
           <li><Link to="/home">Home</Link></li>
           <li><Link to="/how-to-play">How to Play</Link></li>
-          <li className="dropdown"><Link to="/collection">
-            Collection
-            <img id="dropdown-arrow" src={arrow} alt="Drop Down Arrow" /></Link>
+          <li><Link to="/my-decks">My Decks</Link></li>
+          <li className="dropdown">
+            <Link to="/collection">
+              Collection
+              <img id="dropdown-arrow" src={arrow} alt="Drop Down Arrow" />
+            </Link>
             <div className="dropdown-content">
               <Link to="/collection">My Collection</Link>
-              <Link to="/collection/build-a-deck">Build a Deck</Link>
+              <Link to="/build-a-deck">Build a Deck</Link>
               <Link to="/collection/all-cards">All Cards</Link>
             </div>
           </li>
-          <li className="dropdown"><Link to="/blogs">
-            Blogs
-            <img id="dropdown-arrow" src={arrow} alt="Drop Down Arrow" /></Link>
+          <li className="dropdown">
+            <Link to="/blogs">
+              Blogs
+              <img id="dropdown-arrow" src={arrow} alt="Drop Down Arrow" />
+            </Link>
             <div className="dropdown-content">
               <Link to="/blogs?filter=news">News</Link>
               <Link to="/blogs">Explore</Link>

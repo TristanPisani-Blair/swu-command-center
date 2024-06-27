@@ -32,8 +32,8 @@ const BlogList = (props) => {
                             </div>
                             <div className="blog-post-bottom">
                                 <p className="blog-author">{blog.author}</p>
-                                <span className="blog-separator"> - </span>
-                                <p className="blog-comments">{blog.commentCount} comments</p>
+                                {/* <span className="blog-separator"> - </span>
+                                <p className="blog-comments">{blog.commentCount} comments</p> */}
                             </div>
                         </div>
                     </Link>

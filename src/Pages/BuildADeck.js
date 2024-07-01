@@ -1,15 +1,22 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
+import axios from 'axios';
+import { useAuth0 } from '@auth0/auth0-react';
 import './BuildADeck.css';
 import Navbar from '../Components/Navbar/Navbar';
 import Footer from '../Components/Footer/Footer';
 
 const BuildADeck = () => {
   const { deckId } = useParams();
+  const { user, getAccessTokenSilently } = useAuth0();
   const [cards, setCards] = useState([]);
   const [deck, setDeck] = useState({
     id: deckId,
+    userId: user?.sub,
+    leader: null,
+    base: null,
     mainBoard: [],
+    sideBoard: [],
   });
   const [error, setError] = useState(null);
 
@@ -80,6 +87,21 @@ const BuildADeck = () => {
 
   const cardCount = countCardOccurrences(deck.mainBoard);
 
+  const saveDeck = async () => {
+    try {
+      const token = await getAccessTokenSilently();
+      await axios.post('/api/decks', deck, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      alert('Deck saved successfully!');
+    } catch (err) {
+      console.error(err);
+      setError('Error saving deck');
+    }
+  };
+
   return (
     <div>
       <Navbar />
@@ -99,6 +121,7 @@ const BuildADeck = () => {
                 ))}
               </ul>
             </div>
+            <button className="save-deck-button" onClick={saveDeck}>Save Deck</button>
           </div>
         </div>
 
@@ -146,4 +169,3 @@ const BuildADeck = () => {
 };
 
 export default BuildADeck;
-

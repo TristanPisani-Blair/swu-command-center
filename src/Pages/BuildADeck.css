@@ -19,11 +19,16 @@
     margin-bottom: 20px;
   }
   
-  .deck-details img {
-    width: 100px;
-    height: auto;
-    display: block;
+  .deck-details ul {
+    list-style-type: none;
+    padding-left: 0;
+  }
+  
+  .deck-details li {
     margin-bottom: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
   }
   
   .deck-details button {
@@ -40,6 +45,22 @@
   
   .deck-details button:hover {
     background-color: #c82333;
+  }
+  
+  .save-deck-button {
+    display: block;
+    margin-top: 20px;
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: #28a745;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .save-deck-button:hover {
+    background-color: #218838;
   }
   
   .cardlist-body {

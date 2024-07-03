@@ -115,7 +115,7 @@ const Blogs = () => {
       title: blogTitle,
       content: blogContent,
       date: dateTime,
-      author: user.name,
+      author: user.nickname,
       commentCount: 0,
       comments: [],
       isNews: false

@@ -5,6 +5,8 @@ import './Navbar.css';
 import logo from '../Assets/command-center-logo.png';
 import arrow from '../Assets/down-arrow.png';
 import usericon from '../Assets/people.png';
+import logouticon from '../Assets/logout.png';
+import loginicon from '../Assets/login.png'
 
 const Navbar = () => {
   const { loginWithRedirect, logout, isAuthenticated, user } = useAuth0();
@@ -51,17 +53,16 @@ const Navbar = () => {
       {isAuthenticated ? (
         <div className="auth-buttons">
           <Link to="/account" className="username">
-            <span>{user.name}</span>
-            <img id="user-icon" src={usericon} alt="User Icon" />
+            <span>{user.nickname ? user.nickname : user.name}</span>
           </Link>
           <button onClick={() => logout({ returnTo: window.location.origin })} className="username">
-            <span className="logout-button">Logout</span>
+            <img src={logouticon} alt="Logout" className="logout-icon" />
           </button>
         </div>
       ) : (
         <button onClick={() => loginWithRedirect()} className="username">
-          <span>Login</span>
-          <img id="user-icon" src={usericon} alt="User Icon" />
+          <p className="login-span">Login</p>
+          <img src={loginicon} alt="Login" className="login-icon" />
         </button>
       )}
     </div>

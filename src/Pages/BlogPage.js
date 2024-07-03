@@ -102,7 +102,7 @@ const BlogPage = () => {
           <div className="blog-page-body">
             <div className="blog-page-header">
               <h1>{blogPost.title}</h1>
-              {user.name === blogPost.author && (
+              {user.nickname === blogPost.author && (
                 <img src={editBTN} alt="Edit" onClick={handleEditClick} className="edit-button"/>
               )}
               </div>

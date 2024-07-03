@@ -1,7 +1,7 @@
 const client = require('../config/database');
 
 const saveUser = async (user) => {
-  const db = client.db('SWUCCusers');  
+  const db = client.db('SWUCommandCenter');  
   const usersCollection = db.collection('Users');
 
   const existingUser = await usersCollection.findOne({ userId: user.id });
@@ -16,7 +16,7 @@ const saveUser = async (user) => {
 };
 
 const saveDeck = async (userId, deck) => {
-  const db = client.db('SWUCCusers');
+  const db = client.db('SWUCommandCenter');
   const usersCollection = db.collection('Users');
 
   await usersCollection.updateOne(
@@ -26,7 +26,7 @@ const saveDeck = async (userId, deck) => {
 };
 
 const getUserDecks = async (userId) => {
-  const db = client.db('SWUCCusers');  
+  const db = client.db('SWUCommandCenter');  
   const usersCollection = db.collection('Users');
 
   const user = await usersCollection.findOne({ userId: userId });

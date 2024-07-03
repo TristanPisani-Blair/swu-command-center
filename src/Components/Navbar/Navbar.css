@@ -131,11 +131,7 @@ button.username {
     margin-left: 5px;
 }
 
-.main {
-    font-size: 24px;
-}
-
-.sub {
+.main, .sub {
     font-size: 24px;
 }
 
@@ -153,4 +149,14 @@ button.username {
 #user-icon {
     width: 20px;
     height: auto;
+}
+
+.login-icon, .logout-icon {
+    width: 25px;
+    height: auto;
+}
+
+.login-span {
+    font-size: 15px;
+    margin-right: 5px;
 }

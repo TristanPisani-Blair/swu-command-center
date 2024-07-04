@@ -6,15 +6,19 @@ import Navbar from '../Components/Navbar/Navbar';
 import Footer from '../Components/Footer/Footer';
 import axios from 'axios';
 import editBTN from '../Components/Assets/edit-button.png';
+import addComment from '../Components/Assets/message.png';
+import shareBTN from '../Components/Assets/share.png';
 
 const BlogPage = () => {
   const { author, title } = useParams();
   const [blogPost, setBlogPost] = useState(null);
-  const [showModal, setShowModal] = useState(false);
+  const [showEditModal, setShowEditModal] = useState(false);
+  const [showCommentModal, setShowCommentModal] = useState(false);
   const [blogTitle, setBlogTitle] = useState("");
   const [blogContent, setBlogContent] = useState("");
   const [modalTitle, setModalTitle] = useState('');
   const [modalContent, setModalContent] = useState('');
+  const [newComment, setNewComment] = useState('');
   const [error, setError] = useState('');
   const { user, isAuthenticated } = useAuth0();
   const navigate = useNavigate();
@@ -35,12 +39,18 @@ const BlogPage = () => {
     fetchBlogPost();
   }, [author, title]);
 
-  const handleCloseModal = () => {
-    setShowModal(false);
+  const handleCloseEditModal = () => {
+    setShowEditModal(false);
     setBlogTitle("");
     setBlogContent("");
     setError("");
   };
+
+  const handleCloseCommentModal = () => {
+    setShowCommentModal(false);
+    setNewComment("");
+    setError("");
+  }
 
   const formatDate = (dateStr) => {
     const options = { year: 'numeric', month: 'long', day: 'numeric' };
@@ -50,7 +60,62 @@ const BlogPage = () => {
   const handleEditClick = () => {
     setModalTitle(blogPost.title);
     setModalContent(blogPost.content);
-    setShowModal(true);
+    setShowEditModal(true);
+  };
+
+  const copyToClipboard = () => {
+    const el = document.createElement('textarea');
+    el.value = window.location.href;
+    document.body.appendChild(el);
+    el.select();
+    document.execCommand('copy');
+    document.body.removeChild(el);
+    alert('Link copied to clipboard!');
+  };
+  
+
+  const handleAddComment = async (e) => {
+    e.preventDefault();
+
+    // Get the current date and time
+    const currentDate = new Date();
+    const dateTime = currentDate.toLocaleString();
+
+    // Grab logged in users username
+    if (!isAuthenticated) {
+      setError(<p>You must be logged in to post a comment.</p>);
+      return;
+    }
+
+    // Check if title or post are empty, show error if true
+    if (!newComment) {
+      setError(<p className="comment-required">Comment cannot be empty.</p>);
+      return;
+    } else {
+      setError('');
+    }
+
+    const comment = {
+      blogID: blogPost._id,
+      author: user.nickname,
+      content: newComment,
+      date: new Date().toISOString(),
+    };
+
+    console.log("New Comment:", comment);
+
+    try {
+      const response = await axios.post(`http://localhost:4000/blogs/${blogPost._id}/comments`, comment);
+      if (response.status === 200) {
+        setBlogPost(response.data);
+        setShowCommentModal(false);
+      } else {
+        setError(`Error adding comment: ${response.statusText}`);
+      }
+    } catch (error) {
+      console.error("There was an error adding the comment.", error);
+      setError("There was an error adding the comment.");
+    }
   };
 
   const handleSaveChanges = async () => {
@@ -59,7 +124,7 @@ const BlogPage = () => {
       const response = await axios.patch(`http://localhost:4000/blogs/${blogPost._id}`, updatedBlogPost);
       if (response.status === 200) {
         setBlogPost(response.data);
-        setShowModal(false);
+        setShowEditModal(false);
       } else {
         setError(`Error updating blog post: ${response.statusText}`);
       }
@@ -102,10 +167,13 @@ const BlogPage = () => {
           <div className="blog-page-body">
             <div className="blog-page-header">
               <h1>{blogPost.title}</h1>
-              {user.nickname === blogPost.author && (
-                <img src={editBTN} alt="Edit" onClick={handleEditClick} className="edit-button"/>
-              )}
+              <div className="blog-header-buttons">
+                <img src={shareBTN} alt="Share" onClick={copyToClipboard} className="copy-button"/>
+                {user.nickname === blogPost.author && (
+                  <img src={editBTN} alt="Edit" onClick={handleEditClick} className="edit-button"/>
+                )}
               </div>
+            </div>
             <div>
               <hr className="divider" />
             </div>
@@ -116,13 +184,37 @@ const BlogPage = () => {
             <div className="blog-page-content">
               <p>{blogPost.content}</p>
             </div>
+
+          <div className="blog-page-comments">
+              <div className="comments-header">
+                <h1>Comments</h1>
+                <img src={addComment} alt="Add Comment" onClick={() => setShowCommentModal(true)} className="add-comment-button" />
+              </div>
+              <div>
+                <hr className="divider" />
+              </div>
+              <div className="comments">
+                {blogPost.comments && blogPost.comments.length > 0 ? (
+                  blogPost.comments.map((comment, index) => (
+                    <div key={index} className="comment">
+                      <p><strong>{comment.author}</strong></p>
+                      <p>{comment.text}</p>
+                      <p>{formatDate(comment.date)}</p>
+                    </div>
+                  ))
+                ) : (
+                  <p>No comments yet.</p>
+                )}
+              </div>
+          </div>
+
           </div>
         </div>
 
-        {showModal && (
+        {showEditModal && (
         <div className="edit-modal">
           <div className="edit-modal-content">
-            <span className="close" onClick={handleCloseModal}>&times;</span>
+            <span className="close" onClick={handleCloseEditModal}>&times;</span>
             <h2>Edit Blog Post</h2>
             <label htmlFor="edit-title">Title:</label>
             <input id="edit-title" type="text" value={modalTitle} onChange={(e) => setModalTitle(e.target.value)} />
@@ -137,7 +229,25 @@ const BlogPage = () => {
             </div>
           </div>
         </div>
-      )}
+        )}
+
+        {showCommentModal && (
+        <div className="comment-modal">
+          <div className="comment-modal-content">
+            <span className="close" onClick={handleCloseCommentModal}>&times;</span>
+            <h2>Add Comment</h2>
+            <textarea
+              id="new-comment"
+              value={newComment}
+              onChange={(e) => setNewComment(e.target.value)}
+              placeholder="Enter your comment" />
+            {error && <p className="error-message">{error}</p>}
+            <div classname="comment-model-button">
+              <button className="submit-button" onClick={handleAddComment}>Submit</button>
+            </div>
+          </div>
+        </div>
+        )}
 
         <Footer />
       </div>

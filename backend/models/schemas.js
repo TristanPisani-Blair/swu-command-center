@@ -20,10 +20,10 @@ const blogSchema = new Schema({
 });
 
 const commentSchema = new Schema({
-    blogID: { type: Number, required: true },
+    blogID: { type: Schema.Types.ObjectId, ref: 'Blog', required: true },
     author: { type: String, required: true },
+    content: { type: String, required: true },
     date: { type: Date, default: Date.now },
-    content: { type: String, required: true }
 });
 
 const Users = mongoose.model('Users', userSchema, 'Users');

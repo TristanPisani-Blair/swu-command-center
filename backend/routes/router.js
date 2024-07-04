@@ -2,6 +2,12 @@ const express = require('express');
 const router = express.Router();
 const schemas = require('../models/schemas');
 
+/////////////////
+//             //
+// User Routes //
+//             //
+/////////////////
+
 router.get('/users', (req, res) =>{
     const userData = {
         "username": "Username",
@@ -35,6 +41,13 @@ router.post('/users', async (req, res) => {
 
     res.end();
   });
+
+
+/////////////////
+//             //
+// Blog Routes //
+//             //
+/////////////////
 
 router.get('/blogs', async (req, res) => {
     try {
@@ -96,6 +109,21 @@ router.post('/blogs', async(req, res) => {
     res.end();
 });
 
+// Fetch a single blog post by ID
+router.get('/blogs/:id', async (req, res) => {
+  try {
+    const blogId = req.params.id;
+    const blog = await schemas.Blogs.findById(blogId).populate('comments').exec();
+    if (!blog) {
+      return res.status(404).json({ error: 'Blog post not found' });
+    }
+    res.status(200).json(blog);
+  } catch (error) {
+    console.error('Error fetching blog post:', error);
+    res.status(500).json({ error: 'Error fetching blog post' });
+  }
+});
+
 // Update a blog post by ID
 router.patch('/blogs/:id', async (req, res) => {
     try {
@@ -122,6 +150,39 @@ router.delete('/blogs/:id', async (req, res) => {
         console.error('Error deleting blog post:', error);
         res.status(500).send(error);
     }
+});
+
+////////////////////
+//                //
+// Comment Routes //
+//                //
+////////////////////
+
+// Add a comment to a blog post
+router.post('/blogs/:id/comments', async (req, res) => {
+  try {
+    const blogId = req.params.id;
+    const { author, content } = req.body;
+
+    const newComment = new Comment({
+      blogID: blogId,
+      author,
+      content,
+      date: new Date()
+    });
+
+    await newComment.save();
+
+    // Update the blog post with the new comment
+    const blog = await schemas.Blogs.findById(blogId);
+    blog.comments.push(newComment);
+    blog.commentCount += 1;
+    await blog.save();
+
+    res.status(200).json(blog);
+  } catch (error) {
+    res.status(500).json({ error: 'Error adding comment' });
+  }
 });
 
 module.exports = router;

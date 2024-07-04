@@ -74,10 +74,47 @@ body{
     align-items: center;
 }
 
+.blog-header-buttons {
+    display: flex;
+    gap: 10px;
+}
+
 .edit-button {
     width: 24px;
     height: 24px;
     cursor: pointer;
+}
+
+.copy-button {
+    width: 24px;
+    height: 24px;
+    cursor: pointer;
+}
+
+/* Comment section */
+.blog-page-comments {
+    margin-top: 100px;
+}
+
+.comments-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.comments-header h1 {
+    font-family: 'Open Sans Condensed', sans-serif;
+    font-size: 30px;
+}
+
+.add-comment-button {
+    max-height: 30px;
+    cursor: pointer;
+}
+
+.comments p {
+    font-size: 20px;
+    margin-top: 20px;
 }
 
 /* Modal styles */
@@ -187,4 +224,84 @@ body{
 .edit-modal-content input, .edit-modal-content textarea{
     font-family: 'Red Hat Display', sans-serif;
     font-size: 15px;
+}
+
+/* Comment Modal */
+.comment-modal {
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.comment-modal-content {
+    position: relative;
+    left: 50%;
+    top: 50%;
+    width: 95%;
+    max-width: 500px;
+    max-height: 90%;
+    transform: translate(-50%, -50%);
+    color: white;
+    padding: 20px;
+    border-radius: 20px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    background-color: #010715;
+}
+
+.comment-modal-content h2{
+    font-family: 'Open Sans Condensed', sans-serif;
+}
+
+.comment-modal-content textarea{
+    width: 100%;
+    height: 200px;
+    padding: 10px;
+    margin-top: 15px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    resize: none; 
+    outline: none;
+    font-family: 'Red Hat Display', sans-serif;
+    font-size: 15px;
+}
+
+.close {
+    position: absolute;
+    top: 10px;
+    right: 20px;
+    color: #ffffff;
+    font-size: 30px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: #2196F3;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.submit-button {
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%);
+    margin-top: 20px;
+    padding-bottom: 20px;
+    background-color: #2196F3;
+    color: white;
+    padding: 8px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-family: 'Red Hat Display', sans-serif;
+    font-size: 15px;
+}
+
+.comment-model-button button:hover {
+    background-color: #0b7dda;
 }

@@ -64,7 +64,7 @@ const Blogs = () => {
         filteredBlogs = response.data;
       } else if (filter === 'myBlogs' && isAuthenticated) {
         const response = await axios.get('http://localhost:4000/blogs');
-        filteredBlogs = response.data.filter(blog => blog.author === user?.name);
+        filteredBlogs = response.data.filter(blog => blog.author === user?.nickname);
       }
 
       setBlogs([...filteredBlogs]);

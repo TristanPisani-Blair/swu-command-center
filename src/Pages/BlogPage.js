@@ -64,15 +64,24 @@ const BlogPage = () => {
   };
 
   const copyToClipboard = () => {
+    // Show alert for link copied
     const el = document.createElement('textarea');
     el.value = window.location.href;
     document.body.appendChild(el);
     el.select();
     document.execCommand('copy');
     document.body.removeChild(el);
-    alert('Link copied to clipboard!');
+
+    const alertMessage = document.createElement('div');
+    alertMessage.textContent = 'Link copied to clipboard!';
+    alertMessage.classList.add('alert-message');
+    document.body.appendChild(alertMessage);
+
+    // Remove alert after 2 seconds
+    setTimeout(() => {
+      alertMessage.remove();
+    }, 2000);
   };
-  
 
   const handleAddComment = async (e) => {
     e.preventDefault();
@@ -96,7 +105,6 @@ const BlogPage = () => {
     }
 
     const comment = {
-      blogID: blogPost._id,
       author: user.nickname,
       content: newComment,
       date: new Date().toISOString(),
@@ -186,26 +194,28 @@ const BlogPage = () => {
             </div>
 
           <div className="blog-page-comments">
-              <div className="comments-header">
-                <h1>Comments</h1>
-                <img src={addComment} alt="Add Comment" onClick={() => setShowCommentModal(true)} className="add-comment-button" />
-              </div>
-              <div>
-                <hr className="divider" />
-              </div>
-              <div className="comments">
-                {blogPost.comments && blogPost.comments.length > 0 ? (
-                  blogPost.comments.map((comment, index) => (
-                    <div key={index} className="comment">
-                      <p><strong>{comment.author}</strong></p>
-                      <p>{comment.text}</p>
-                      <p>{formatDate(comment.date)}</p>
+            <div className="comments-header">
+              <h1>Comments</h1>
+              <img src={addComment} alt="Add Comment" onClick={() => setShowCommentModal(true)} className="add-comment-button" />
+            </div>
+            <div>
+              <hr className="divider" />
+            </div>
+            <div className="comments">
+              {blogPost.comments.length > 0 ? (
+                blogPost.comments.map((comment) => (
+                  <div key={comment._id} className="comment">
+                    <div className="comment-header">
+                      <h2>{comment.author}</h2>
+                      <h2>{new Date(comment.date).toLocaleString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}</h2>
                     </div>
-                  ))
-                ) : (
-                  <p>No comments yet.</p>
-                )}
-              </div>
+                    <p className="comment-content">{comment.content}</p>
+                  </div>
+                ))
+              ) : (
+                <p>No comments yet.</p>
+              )}
+            </div>
           </div>
 
           </div>

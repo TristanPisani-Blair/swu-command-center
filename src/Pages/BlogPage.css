@@ -91,6 +91,19 @@ body{
     cursor: pointer;
 }
 
+.alert-message {
+    position: fixed;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #2196F3;
+    color: white;
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.5);
+    z-index: 1000;
+}
+
 /* Comment section */
 .blog-page-comments {
     margin-top: 100px;
@@ -112,9 +125,34 @@ body{
     cursor: pointer;
 }
 
-.comments p {
+.comment {
+    background-color: #D9D9D9;
+    padding: 20px;
+    border-radius: 20px;
+    padding-left: 15px;
+    padding-right: 15px;
+    padding-top: 0px;
+    padding-bottom: 3px;
+    margin-bottom: 20px;
+    margin-top: 20px;
+}
+
+.comment-header {
+    display: flex;
+    justify-content: space-between;
+}
+
+.comments h2, .comments p {
     font-size: 20px;
     margin-top: 20px;
+}
+
+.comments h2 {
+    font-weight: 500;
+}
+
+.comment-content {
+    margin-bottom: 20px;
 }
 
 /* Modal styles */

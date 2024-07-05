@@ -15,12 +15,11 @@ const blogSchema = new Schema({
     date: { type: Date, default: Date.now },
     author: { type: String, required: true },
     commentCount: { type: Number, default: 0 },
-    comments: [{ type: Schema.Types.ObjectId, ref: 'Comment' }],
+    comments: [{ type: Schema.Types.ObjectId, ref: 'Comments' }],
     isNews: { type: Boolean, default: false }
 });
 
 const commentSchema = new Schema({
-    blogID: { type: Schema.Types.ObjectId, ref: 'Blog', required: true },
     author: { type: String, required: true },
     content: { type: String, required: true },
     date: { type: Date, default: Date.now },
@@ -28,7 +27,7 @@ const commentSchema = new Schema({
 
 const Users = mongoose.model('Users', userSchema, 'Users');
 const Blogs = mongoose.model('Blogs', blogSchema, 'Blogs');
-const Comment = mongoose.model('Comment', commentSchema, 'Comment');
-const mySchemas = {'Users':Users, 'Blogs':Blogs, 'Comment':Comment};
+const Comments = mongoose.model('Comments', commentSchema, 'Comments');
+const mySchemas = {'Users':Users, 'Blogs':Blogs, 'Comments':Comments};
 
 module.exports = mySchemas;

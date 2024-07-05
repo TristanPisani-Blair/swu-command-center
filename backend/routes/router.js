@@ -164,7 +164,14 @@ router.post('/blogs/:id/comments', async (req, res) => {
     const blogId = req.params.id;
     const { author, content } = req.body;
 
-    const newComment = new Comment({
+    // Check if the blog exists
+    const blog = await schemas.Blogs.findById(blogId);
+    if (!blog) {
+      return res.status(404).json({ error: 'Blog not found' });
+    }
+
+    // Create a new comment
+    const newComment = new schemas.Comments({
       blogID: blogId,
       author,
       content,
@@ -173,13 +180,18 @@ router.post('/blogs/:id/comments', async (req, res) => {
 
     await newComment.save();
 
-    // Update the blog post with the new comment
-    const blog = await schemas.Blogs.findById(blogId);
-    blog.comments.push(newComment);
-    blog.commentCount += 1;
-    await blog.save();
+    // Update the blog post with the new comment using $push
+    await schemas.Blogs.updateOne(
+      { _id: blogId },
+      {
+        $push: { comments: newComment },
+        $inc: { commentCount: 1 }
+      }
+    );
 
-    res.status(200).json(blog);
+    const updatedBlog = await schemas.Blogs.findById(blogId).populate('comments').exec();
+
+    res.status(200).json(updatedBlog);
   } catch (error) {
     res.status(500).json({ error: 'Error adding comment' });
   }

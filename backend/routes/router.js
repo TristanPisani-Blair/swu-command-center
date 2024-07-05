@@ -49,6 +49,7 @@ router.post('/users', async (req, res) => {
 //             //
 /////////////////
 
+// Fetch all blogs
 router.get('/blogs', async (req, res) => {
     try {
         const blogs = await schemas.Blogs.find().populate('comments').exec();

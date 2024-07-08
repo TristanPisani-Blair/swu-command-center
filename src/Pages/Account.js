@@ -16,6 +16,8 @@ const Account = () => {
   const [commentsOnDecks, setCommentsOnDecks] = useState(false);
   const [commentsOnBlogs, setCommentsOnBlogs] = useState(false);
 
+  const { logout } = useAuth0();
+
   const handleChangeUsername = async () => {
     try {
       const token = await getAccessTokenSilently();
@@ -112,7 +114,7 @@ const Account = () => {
 
             <div className="account-actions">
               <button className="delete-account">Delete Account</button>
-              <button className="logout">Logout</button>
+              <button className="logout" onClick={() => logout({ returnTo: window.location.origin })}>Logout</button>
             </div>
 
           </div>  

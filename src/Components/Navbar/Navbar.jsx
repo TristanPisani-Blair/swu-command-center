@@ -1,20 +1,41 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import axios from 'axios';
 import { useAuth0 } from '@auth0/auth0-react';
 import './Navbar.css';
 import logo from '../Assets/command-center-logo.png';
 import arrow from '../Assets/down-arrow.png';
-import usericon from '../Assets/people.png';
 import logouticon from '../Assets/logout.png';
 import loginicon from '../Assets/login.png'
 
 const Navbar = () => {
   const { loginWithRedirect, logout, isAuthenticated, user } = useAuth0();
+  const [username, setUsername] = useState('');
 
   console.log('isAuthenticated:', isAuthenticated);
   if (isAuthenticated) {
     console.log('User:', user);
   }
+
+  useEffect(() => {
+    const fetchUsername = async () => {
+      try {
+        if (isAuthenticated && user) {
+          const response = await axios.get('http://localhost:4000/get-username', {
+            params: { email: user.email }
+          });
+
+          console.log("Username: ", response.data.username);
+          
+          setUsername(response.data.username);
+        }
+      } catch (error) {
+        console.error('Error fetching username:', error);
+      }
+    };
+
+    fetchUsername();
+  }, [isAuthenticated, user]);
 
   return (
 
@@ -53,7 +74,7 @@ const Navbar = () => {
       {isAuthenticated ? (
         <div className="auth-buttons">
           <Link to="/account" className="username">
-            <span>{user.nickname ? user.nickname : user.name}</span>
+            <span>{username}</span>
           </Link>
           <button onClick={() => logout({ returnTo: window.location.origin })} className="username">
             <img src={logouticon} alt="Logout" className="logout-icon" />

@@ -8,40 +8,52 @@ const schemas = require('../models/schemas');
 //             //
 /////////////////
 
-router.get('/users', (req, res) =>{
-    const userData = {
-        "username": "Username",
-        "email": "Email@email.com", 
-        "password": "Password"
-    }
-
-    res.send(userData);
+// Check if user exists
+router.get('/check-users', async (req, res) =>{
+  const { email } = req.query;
+    const user = await schemas.Users.findOne({ email });
+    res.json({ exists: !!user });
 });
 
-router.post('/users', async (req, res) => {
-    const { 
-        username, 
-        email, 
-        password } = req.body;
+// Check if a username already exists
+router.get('/check-username', async (req, res) => {
+  const { username } = req.query;
 
-    const userData = {
-        username: username,
-        email: email,
-        password: password
+  try {
+    const user = await schemas.Users.findOne({ username });
+    if (user) {
+      return res.json({ exists: true });
     }
+    res.json({ exists: false });
+  } catch (error) {
+    console.error('Error checking username:', error);
+    res.status(500).json({ error: 'Server error' });
+  }
+});
 
-    const newUser = new schemas.Users(userData);
-    const saveUser = await newUser.save();
+// Create username
+router.post('/create-username', async (req, res) => {
+    const { email, username } = req.body;
+    const newUser = new schemas.Users({ email, username });
+    await newUser.save();
+    res.status(201).send('User saved.');
+});
 
-    if (saveUser) {
-        res.send('User saved.');
-    } else {
-        console.log("User not added to database.");
+// Fetch username based on logged-in user's email
+router.get('/get-username', async (req, res) => {
+  const { email } = req.query;
+
+  try {
+    const user = await schemas.Users.findOne({ email });
+    if (!user) {
+      return res.status(404).json({ error: 'User not found' });
     }
-
-    res.end();
-  });
-
+    res.json({ username: user.username }); // Respond with the username found
+  } catch (error) {
+    console.error('Error fetching username:', error);
+    res.status(500).json({ error: 'Server error' });
+  }
+});
 
 /////////////////
 //             //

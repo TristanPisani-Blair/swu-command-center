@@ -21,9 +21,28 @@ const BlogPage = () => {
   const [newComment, setNewComment] = useState('');
   const [error, setError] = useState('');
   const { user, isAuthenticated } = useAuth0();
+  const [username, setUsername] = useState('');
   const navigate = useNavigate();
 
+  // Fetch username
+  useEffect(() => {
+    const fetchUsername = async () => {
+      try {
+        if (isAuthenticated && user) {
+          const response = await axios.get('http://localhost:4000/get-username', {
+            params: { email: user.email }
+          });
+          setUsername(response.data.username);
+        }
+      } catch (error) {
+        console.error('Error fetching username:', error);
+      }
+    };
 
+    fetchUsername();
+  }, [isAuthenticated, user]);
+
+  // Fetch blog data from the database
   useEffect(() => {
     const fetchBlogPost = async () => {
       try {
@@ -105,7 +124,7 @@ const BlogPage = () => {
     }
 
     const comment = {
-      author: user.nickname,
+      author: username,
       content: newComment,
       date: new Date().toISOString(),
     };
@@ -177,7 +196,7 @@ const BlogPage = () => {
               <h1>{blogPost.title}</h1>
               <div className="blog-header-buttons">
                 <img src={shareBTN} alt="Share" onClick={copyToClipboard} className="copy-button"/>
-                {user.nickname === blogPost.author && (
+                {username === blogPost.author && (
                   <img src={editBTN} alt="Edit" onClick={handleEditClick} className="edit-button"/>
                 )}
               </div>

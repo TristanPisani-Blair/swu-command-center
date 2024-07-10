@@ -14,9 +14,28 @@ const Blogs = () => {
   const [blogs, setBlogs] = useState([]);
   const [sortBy, setSortBy] = useState('');
   const [error, setError] = useState('');
+  const [username, setUsername] = useState('');
   const { user, isAuthenticated } = useAuth0();
   const location = useLocation();
   const navigate = useNavigate();
+
+  // Fetch username
+  useEffect(() => {
+    const fetchUsername = async () => {
+      try {
+        if (isAuthenticated && user) {
+          const response = await axios.get('http://localhost:4000/get-username', {
+            params: { email: user.email }
+          });
+          setUsername(response.data.username);
+        }
+      } catch (error) {
+        console.error('Error fetching username:', error);
+      }
+    };
+
+    fetchUsername();
+  }, [isAuthenticated, user]);
 
   // Fetch blog data from the database
   const fetchBlogs = async () => {
@@ -64,7 +83,7 @@ const Blogs = () => {
         filteredBlogs = response.data;
       } else if (filter === 'myBlogs' && isAuthenticated) {
         const response = await axios.get('http://localhost:4000/blogs');
-        filteredBlogs = response.data.filter(blog => blog.author === user?.nickname);
+        filteredBlogs = response.data.filter(blog => blog.author === username);
       }
 
       setBlogs([...filteredBlogs]);
@@ -115,7 +134,7 @@ const Blogs = () => {
       title: blogTitle,
       content: blogContent,
       date: dateTime,
-      author: user.nickname,
+      author: username,
       commentCount: 0,
       comments: [],
       isNews: false

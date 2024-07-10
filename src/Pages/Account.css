@@ -255,8 +255,7 @@ input:checked + .slider:before {
     background-color: #1976D2;
 }
 
-/* Attributes Modal */
-/* Modal styles */
+/* Credits Modal */
 .credits-modal {
     position: fixed;
     z-index: 1000;

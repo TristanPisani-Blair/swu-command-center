@@ -82,8 +82,7 @@ router.patch('/update-username', async (req, res) => {
     // Update the user's username
     const user = await schemas.Users.findOneAndUpdate(
       { email: email },
-      { username: newUsername },
-      { new: true }
+      { username: newUsername }
     );
 
     if (!user) {
@@ -176,6 +175,23 @@ router.get('/public-blogs', async (req, res) => {
   }
 });
 
+// Fetch blogs by author
+router.get('/get-blogs-by-author', async (req, res) => {
+  const { author } = req.params;
+
+  try {
+    const blogs = await schemas.Blogs.find({ author });
+    if (!blogs) {
+      return res.status(404).json({ error: 'Blog not found' });
+    }
+
+    res.status(200).json(blogs);
+  } catch (error) {
+    console.error('Error fetching blog:', error);
+    res.status(500).json({ error: 'Error fetching blog', details: error.message });
+  }
+});
+
 // Fetch a specific blog by author and title
 router.get('/blogs/:author/:title', async (req, res) => {
     const { author, title } = req.params;
@@ -259,6 +275,23 @@ router.patch('/blogs/:id', async (req, res) => {
       }
 });
 
+// Update blog author when user changes username
+router.patch('/update-blog-author', async (req, res) => {
+  const { prevUsername, newUsername } = req.body;
+
+  try {
+    const updatedBlog = await schemas.Blogs.updateMany(
+      { author: prevUsername },
+      { $set: { author: newUsername } }
+    );
+
+    res.json({ updatedCount: updatedBlog.nModified });
+  } catch (err) {
+    console.error('Error updating blogs with new username:', err);
+    res.status(500).json({ error: 'Server error' });
+  }
+});
+
 // Delete a blog post by ID
 router.delete('/blogs/:id', async (req, res) => {
     try {
@@ -278,7 +311,7 @@ router.patch('/update-public-blogs', async (req, res) => {
   const { username, isPublic } = req.body;
 
   try {
-      await Blogs.updateMany({ author: username }, { $set: { isPublic } });
+      await schemas.Blogs.updateMany({ author: username }, { $set: { isPublic } });
       res.status(200).json({ message: 'Blog settings updated successfully' });
   } catch (error) {
       console.error('Error updating blog settings:', error);
@@ -291,7 +324,7 @@ router.patch('/update-public-blog-comments', async (req, res) => {
   const { username, allowComments } = req.body;
 
   try {
-      await Blogs.updateMany({ author: username }, { $set: { allowComments } });
+      await schemas.Blogs.updateMany({ author: username }, { $set: { allowComments } });
       res.status(200).json({ message: 'Blog settings updated successfully' });
   } catch (error) {
       console.error('Error updating blog settings:', error);

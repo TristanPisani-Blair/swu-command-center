@@ -204,7 +204,7 @@ input:checked + .slider:before {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 20px;
+    margin-bottom: 10px;
 }
 
 .username-modal-header h2{
@@ -215,6 +215,7 @@ input:checked + .slider:before {
     color: #ffffff;
     font-size: 30px;
     font-weight: bold;
+    padding-bottom: 10px;
 }
   
 .username-close-button:hover,
@@ -229,7 +230,7 @@ input:checked + .slider:before {
     font-size: 15px;
     width: 100%;
     padding: 10px;
-    margin-bottom: 20px;
+    margin-bottom: 15px;
     border: 1px solid #ccc;
     border-radius: 5px;
     box-sizing: border-box;
@@ -237,7 +238,7 @@ input:checked + .slider:before {
 
 .submit-button-container {
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
 }
   
 .submit-button {

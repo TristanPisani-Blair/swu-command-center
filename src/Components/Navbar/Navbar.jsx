@@ -26,7 +26,7 @@ const Navbar = () => {
           });
 
           console.log("Username: ", response.data.username);
-          
+
           setUsername(response.data.username);
         }
       } catch (error) {

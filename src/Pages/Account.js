@@ -16,6 +16,8 @@ const Account = () => {
   const [publicBlogs, setPublicBlogs] = useState(true);
   const [commentsOnDecks, setCommentsOnDecks] = useState(true);
   const [commentsOnBlogs, setCommentsOnBlogs] = useState(true);
+  const [usernameError, setUsernameError] = useState('');
+  const [refreshNavbar, setRefreshNavbar] = useState(false);
 
   const { logout } = useAuth0();
 
@@ -47,16 +49,41 @@ const Account = () => {
 
   const handleChangeUsername = async () => {
     try {
+      const response = await axios.patch('http://localhost:4000/update-username', {
+        email: user.email,
+        newUsername: newUsername
+      });
       
-      setShowUsernameModal(false);
+      if (response.status === 200) {
+        console.log(response.data.message);
+        handleCloseUsernameModal();
+
+        // Update each blog's author to the new username
+        await axios.patch('http://localhost:4000/update-blog-author', {
+          prevUsername: username,
+          newUsername: newUsername
+        });
+
+        // Trigger Navbar refresh
+        setRefreshNavbar(prev => !prev);
+
+      } else {
+        setError(`Error: ${response.data.error}`);
+      }
     } catch (error) {
-      console.error('Error updating username:', error);
+      if (error.response && error.response.status === 400) {
+        setUsernameError(`${error.response.data.error}`);
+      } else {
+        console.error('Error updating username:', error);
+        setError('Failed to update username. Please try again.');
+      }
     }
   };
 
   const handleCloseUsernameModal = () => {
     setShowUsernameModal(false);
     setNewUsername('');
+    setUsernameError('');
   };
 
   const handleShowCreditsModal = () => {
@@ -208,6 +235,9 @@ const Account = () => {
               placeholder="Enter new username"
               className="username-input"
             />
+            <div className="username-error">
+              {usernameError && <p className="error-message">{usernameError}</p>}
+            </div>
             <div className="submit-button-container">
               <button onClick={handleChangeUsername} className="submit-button">Submit</button>
             </div>          

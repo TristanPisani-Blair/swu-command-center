@@ -1,60 +1,59 @@
 .my-decks {
-    padding: 20px;
-  }
-  
-  .my-decks h1 {
-    font-size: 24px;
-    margin-bottom: 20px;
-  }
-  
-  .create-deck-button {
-    padding: 10px 20px;
-    font-size: 16px;
-    margin-bottom: 20px;
-    background-color: #007bff;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-  }
-  
-  .create-deck-button:hover {
-    background-color: #0056b3;
-  }
-  
-  .my-decks ul {
-    list-style-type: none;
-    padding: 0;
-  }
-  
-  .my-decks li {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 10px;
-  }
-  
-  .my-decks a {
-    color: #007bff;
-    text-decoration: none;
-    font-size: 18px;
-  }
-  
-  .my-decks a:hover {
-    text-decoration: underline;
-  }
-  
-  .delete-deck-button {
-    padding: 5px 10px;
-    font-size: 14px;
-    background-color: #dc3545;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-  }
-  
-  .delete-deck-button:hover {
-    background-color: #c82333;
-  }
-  
+  padding: 20px;
+}
+
+.my-decks h1 {
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+.create-deck-button {
+  padding: 10px 20px;
+  font-size: 16px;
+  margin-bottom: 20px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.create-deck-button:hover {
+  background-color: #0056b3;
+}
+
+.my-decks ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.my-decks li {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.my-decks a {
+  color: #007bff;
+  text-decoration: none;
+  font-size: 18px;
+}
+
+.my-decks a:hover {
+  text-decoration: underline;
+}
+
+.delete-deck-button {
+  padding: 5px 10px;
+  font-size: 14px;
+  background-color: #dc3545;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.delete-deck-button:hover {
+  background-color: #c82333;
+}

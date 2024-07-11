@@ -238,7 +238,7 @@ const BlogPage = () => {
               <hr className="divider" />
             </div>
             <div className="comments">
-              {blogPost.comments.length > 0 ? (
+              {blogPost.allowComments && blogPost.comments.length > 0 ? (
                 blogPost.comments.map((comment) => (
                   <div key={comment._id} className="comment">
                     <div className="comment-header">

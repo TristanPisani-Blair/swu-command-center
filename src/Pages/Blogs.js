@@ -12,6 +12,7 @@ const Blogs = () => {
   const [blogTitle, setBlogTitle] = useState('');
   const [blogContent, setBlogContent] = useState('');
   const [blogs, setBlogs] = useState([]);
+  const [userSettings, setUserSettings] = useState({});
   const [sortBy, setSortBy] = useState('');
   const [error, setError] = useState('');
   const [username, setUsername] = useState('');
@@ -37,10 +38,20 @@ const Blogs = () => {
     fetchUsername();
   }, [isAuthenticated, user]);
 
+  // Fetch user settings
+  const fetchUserSettings = async () => {
+    try {
+      const response = await axios.get('http://localhost:4000/user-settings');
+      setUserSettings(response.data);
+    } catch (error) {
+      console.error('Error fetching user settings:', error);
+    }
+  };
+
   // Fetch blog data from the database
   const fetchBlogs = async () => {
     try {
-      const response = await axios.get('http://localhost:4000/blogs');
+      const response = await axios.get('http://localhost:4000/public-blogs');
       setBlogs(response.data);
     } catch (error) {
       console.error('Error fetching blogs:', error);
@@ -50,6 +61,7 @@ const Blogs = () => {
   // Fetch blog data from the database on component mount
   useEffect(() => {
     fetchBlogs();
+    fetchUserSettings();
   }, []);
 
   const handleSort = (option) => {
@@ -76,10 +88,10 @@ const Blogs = () => {
       let filteredBlogs = [];
 
       if (filter === 'news') {
-        const response = await axios.get('http://localhost:4000/blogs');
+        const response = await axios.get('http://localhost:4000/public-blogs');
         filteredBlogs = response.data.filter(blog => blog.isNews === true);
       } else if (filter === 'allBlogs') {
-        const response = await axios.get('http://localhost:4000/blogs');
+        const response = await axios.get('http://localhost:4000/public-blogs');
         filteredBlogs = response.data;
       } else if (filter === 'myBlogs' && isAuthenticated) {
         const response = await axios.get('http://localhost:4000/blogs');
@@ -137,7 +149,9 @@ const Blogs = () => {
       author: username,
       commentCount: 0,
       comments: [],
-      isNews: false
+      isNews: false,
+      isPublic: true,
+      allowComments: true
     };
 
     console.log("New Blog Post:", newBlogPost);

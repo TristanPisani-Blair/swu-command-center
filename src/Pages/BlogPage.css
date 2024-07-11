@@ -151,6 +151,10 @@ body{
     font-weight: 500;
 }
 
+.comments p {
+    font-size: 20px;
+}
+
 .comment-content {
     margin-bottom: 20px;
 }

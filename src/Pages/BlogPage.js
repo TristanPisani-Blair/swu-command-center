@@ -22,6 +22,7 @@ const BlogPage = () => {
   const [error, setError] = useState('');
   const { user, isAuthenticated } = useAuth0();
   const [username, setUsername] = useState('');
+  const [userSettings, setUserSettings] = useState({});
   const navigate = useNavigate();
 
   // Fetch username
@@ -41,6 +42,20 @@ const BlogPage = () => {
 
     fetchUsername();
   }, [isAuthenticated, user]);
+
+  // Fetch user settings
+  useEffect(() => {
+    const fetchUserSettings = async () => {
+      try {
+        const response = await axios.get('http://localhost:4000/user-settings');
+        setUserSettings(response.data);
+      } catch (error) {
+        console.error('Error fetching user settings:', error);
+      }
+    };
+
+    fetchUserSettings();
+  }, []);
 
   // Fetch blog data from the database
   useEffect(() => {
@@ -215,7 +230,9 @@ const BlogPage = () => {
           <div className="blog-page-comments">
             <div className="comments-header">
               <h1>Comments</h1>
+              {blogPost.allowComments && (
               <img src={addComment} alt="Add Comment" onClick={() => setShowCommentModal(true)} className="add-comment-button" />
+            )}          
             </div>
             <div>
               <hr className="divider" />
@@ -232,6 +249,13 @@ const BlogPage = () => {
                   </div>
                 ))
               ) : (
+                null // Render nothing if no comments
+              )}
+
+              {!blogPost.allowComments && (
+              <p>User has disabled comments.</p>
+              )}
+              {blogPost.allowComments && blogPost.comments.length === 0 && (
                 <p>No comments yet.</p>
               )}
             </div>

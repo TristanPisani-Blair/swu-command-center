@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect  } from "react";
 import { useAuth0 } from '@auth0/auth0-react';
 import axios from 'axios';
 import './Account.css';
@@ -6,34 +6,48 @@ import Navbar from '../Components/Navbar/Navbar';
 import Footer from '../Components/Footer/Footer';
 
 const Account = () => {
-  const { user, getAccessTokenSilently } = useAuth0();
+  const { user, isAuthenticated } = useAuth0();
+  const [username, setUsername] = useState('');
   const [showUsernameModal, setShowUsernameModal] = useState(false);
   const [showCreditsModal, setShowCreditsModal] = useState(false);
   const [newUsername, setNewUsername] = useState('');
-
-  const [publicDecks, setPublicDecks] = useState(false);
-  const [publicBlogs, setPublicBlogs] = useState(false);
-  const [commentsOnDecks, setCommentsOnDecks] = useState(false);
-  const [commentsOnBlogs, setCommentsOnBlogs] = useState(false);
+  const [error, setError] = useState('');
+  const [publicDecks, setPublicDecks] = useState(true);
+  const [publicBlogs, setPublicBlogs] = useState(true);
+  const [commentsOnDecks, setCommentsOnDecks] = useState(true);
+  const [commentsOnBlogs, setCommentsOnBlogs] = useState(true);
 
   const { logout } = useAuth0();
 
+  // Fetch username and user settings
+  useEffect(() => {
+    const fetchUserData = async () => {
+      try {
+        if (isAuthenticated && user) {
+          const usernameResponse = await axios.get('http://localhost:4000/get-username', {
+            params: { email: user.email }
+          });
+          setUsername(usernameResponse.data.username);
+
+          const settingsResponse = await axios.get('http://localhost:4000/user-settings', {
+            params: { email: user.email }
+          });
+          setPublicDecks(settingsResponse.data.publicDecks);
+          setPublicBlogs(settingsResponse.data.publicBlogs);
+          setCommentsOnDecks(settingsResponse.data.commentsOnDecks);
+          setCommentsOnBlogs(settingsResponse.data.commentsOnBlogs);
+        }
+      } catch (error) {
+        console.error('Error fetching user data:', error);
+      }
+    };
+
+    fetchUserData();
+  }, [isAuthenticated, user]);
+
   const handleChangeUsername = async () => {
     try {
-      const token = await getAccessTokenSilently();
-      const response = await axios.patch('/api/update-username', {
-        userId: user.sub,
-        newUsername,
-      }, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-
-      // Update the user object locally if needed
-      // Logic to update local user object here
-
-      // Close the modal
+      
       setShowUsernameModal(false);
     } catch (error) {
       console.error('Error updating username:', error);
@@ -53,6 +67,64 @@ const Account = () => {
     setShowCreditsModal(false);
   };
 
+  const updateUserSettings = async (updates) => {
+    try {
+      if (isAuthenticated) {
+        await axios.patch('http://localhost:4000/update-user-settings', {
+          username: username,
+          updates
+        });
+      }
+    } catch (error) {
+      console.error('Error updating user settings:', error);
+      setError('Failed to update user settings.');
+    }
+  };
+
+  const handlePublicDecksChange = () => {
+    const newValue = !publicDecks;
+    setPublicDecks(newValue);
+    updateUserSettings({ publicDecks: newValue });
+  };
+
+  const handlePublicBlogsChange = async () => {
+    const newValue = !publicBlogs;
+    setPublicBlogs(newValue);
+    updateUserSettings({ publicBlogs: newValue });
+
+    try {
+      await axios.patch('http://localhost:4000/update-public-blogs', {
+          username,
+          isPublic: newValue
+      });
+    } catch (error) {
+        console.error('Error updating blog settings:', error);
+        setError('Failed to update blog settings.');
+    }
+  };
+
+  const handleCommentsOnDecksChange = () => {
+    const newValue = !commentsOnDecks;
+    setCommentsOnDecks(newValue);
+    updateUserSettings({ commentsOnDecks: newValue });
+  };
+
+  const handleCommentsOnBlogsChange = async () => {
+    const newValue = !commentsOnBlogs;
+    setCommentsOnBlogs(newValue);
+    updateUserSettings({ commentsOnBlogs: newValue });
+
+    try {
+      await axios.patch('http://localhost:4000/update-public-blog-comments', {
+          username,
+          allowComments: newValue
+      });
+    } catch (error) {
+        console.error('Error updating blog settings:', error);
+        setError('Failed to update blog settings.');
+    }
+  };
+
     return (
       <div>
         <Navbar />
@@ -60,9 +132,9 @@ const Account = () => {
         <div className="container" class="wrapper">
           <div className="account-settings-header">
             <h1>Account Settings</h1>
-                  <div>
-                    <hr className="divider" />
-                  </div>
+              <div>
+                <hr className="divider" />
+              </div>
           </div>
 
         <div className="container-2">
@@ -78,7 +150,7 @@ const Account = () => {
               <div className="setting-item">
                 <p>Public decks</p>
                   <label  className="switch">
-                    <input type="checkbox" checked={publicDecks} onChange={() => setPublicDecks(!publicDecks)} />
+                    <input type="checkbox" checked={publicDecks} onChange={handlePublicDecksChange} />
                     <span className="slider"></span>
                   </label>
               </div>
@@ -86,7 +158,7 @@ const Account = () => {
               <div className="setting-item">
                 <p>Public blogs</p>
                   <label className="switch">
-                    <input type="checkbox" checked={publicBlogs} onChange={() => setPublicBlogs(!publicBlogs)} />
+                    <input type="checkbox" checked={publicBlogs} onChange={handlePublicBlogsChange} />
                     <span className="slider"></span>
                   </label>
               </div>
@@ -94,7 +166,7 @@ const Account = () => {
               <div className="setting-item">
                 <p>Allow comments on decks</p>
                   <label className="switch">
-                    <input type="checkbox" checked={commentsOnDecks} onChange={() => setCommentsOnDecks(!commentsOnDecks)} />
+                    <input type="checkbox" checked={commentsOnDecks} onChange={handleCommentsOnDecksChange} />
                     <span className="slider"></span>
                   </label>
               </div>
@@ -102,14 +174,14 @@ const Account = () => {
               <div className="setting-item">
                 <p>Allow comments on blogs</p>
                   <label className="switch">
-                    <input type="checkbox" checked={commentsOnBlogs} onChange={() => setCommentsOnBlogs(!commentsOnBlogs)} />
+                    <input type="checkbox" checked={commentsOnBlogs} onChange={handleCommentsOnBlogsChange} />
                     <span className="slider"></span>
                   </label>
               </div>
             </div>
 
-            <div className="attributes">
-              <h1 onClick={handleShowCreditsModal} style={{ cursor: 'pointer' }}>Attributes</h1>
+            <div className="credits">
+              <h1 onClick={handleShowCreditsModal} style={{ cursor: 'pointer' }}>Credits</h1>
             </div>
 
             <div className="account-actions">
@@ -148,7 +220,7 @@ const Account = () => {
         <div className="credits-modal">
           <div className="credits-modal-content">
             <div className="credits-modal-header">
-              <h2>Attributes</h2>
+              <h2>Credits</h2>
               <span className="credits-close-button" onClick={handleCloseCreditsModal}>&times;</span>
             </div>
             <ul>

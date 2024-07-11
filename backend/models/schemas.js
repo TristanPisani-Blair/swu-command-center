@@ -3,7 +3,11 @@ const Schema = mongoose.Schema;
 
 const userSchema = new Schema({
     email: { type: String, required: true, unique: true },
-    username: { type: String, required: true, unique: true  }
+    username: { type: String, required: true, unique: true  },
+    publicDecks: { type: Boolean, default: true },
+    publicBlogs: { type: Boolean, default: true },
+    commentsOnDecks: { type: Boolean, default: true },
+    commentsOnBlogs: { type: Boolean, default: true }
 });
   
 const blogSchema = new Schema({
@@ -13,7 +17,9 @@ const blogSchema = new Schema({
     author: { type: String, required: true },
     commentCount: { type: Number, default: 0 },
     comments: [{ type: Schema.Types.ObjectId, ref: 'Comments' }],
-    isNews: { type: Boolean, default: false }
+    isNews: { type: Boolean, default: false },
+    isPublic: { type: Boolean, default: true },
+    allowComments: { type: Boolean, default: true }
 });
 
 const commentSchema = new Schema({

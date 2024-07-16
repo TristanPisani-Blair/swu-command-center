@@ -58,12 +58,6 @@ const Blogs = () => {
     }
   };
 
-  // Fetch blog data from the database on component mount
-  useEffect(() => {
-    fetchBlogs();
-    fetchUserSettings();
-  }, []);
-
   const handleSort = (option) => {
     console.log('Sorting by:', option);
 
@@ -84,6 +78,8 @@ const Blogs = () => {
 
   // Function to handle filtering of blogs
   const handleFilter = async (filter) => {
+    console.log("Username: ", username);
+
     try {
       let filteredBlogs = [];
 
@@ -94,8 +90,10 @@ const Blogs = () => {
         const response = await axios.get('http://localhost:4000/public-blogs');
         filteredBlogs = response.data;
       } else if (filter === 'myBlogs' && isAuthenticated) {
-        const response = await axios.get('http://localhost:4000/blogs');
-        filteredBlogs = response.data.filter(blog => blog.author === username);
+        const response = await axios.get('http://localhost:4000/get-blogs-by-author', {
+          params: { author: username }
+        });
+        filteredBlogs = response.data;
       }
 
       setBlogs([...filteredBlogs]);
@@ -171,15 +169,21 @@ const Blogs = () => {
     }
   };
 
+  // Fetch blog data from the database on component mount
+  useEffect(() => {
+    fetchBlogs();
+    fetchUserSettings();
+  }, []);
+
     return (
       <div>
         <Navbar />
         <div className="container" class="wrapper">
           <div className="blogs-leftNav">
             <ul>
-              <li><a href="#AllBlogs" onClick={() => handleFilterClick('allBlogs')}>All Blogs</a></li>
-              <li><a href="#News" onClick={() => handleFilterClick('news')}>News</a></li>
-              <li><a href="#MyBlogs" onClick={() => handleFilterClick('myBlogs')}>My Blogs</a></li>
+              <li><a onClick={() => handleFilterClick('allBlogs')}>All Blogs</a></li>
+              <li><a onClick={() => handleFilterClick('news')}>News</a></li>
+              <li><a onClick={() => handleFilterClick('myBlogs')}>My Blogs</a></li>
               <li><a href="#" onClick={handleNewBlogPostClick}>New Blog Post</a></li>
             </ul>
           </div>

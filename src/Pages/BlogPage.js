@@ -200,7 +200,7 @@ const BlogPage = () => {
         <div className="container" class="wrapper">
           <div className="blog-page-leftNav">
             <ul>
-              <li><a href="/blogs?filter=allBlogs">All Blogs</a></li>
+              <li><a href="/blogs">All Blogs</a></li>
               <li><a href="/blogs?filter=news">News</a></li>
               <li><a href="/blogs?filter=myBlogs">My Blogs</a></li>
             </ul>

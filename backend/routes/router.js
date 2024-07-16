@@ -177,7 +177,7 @@ router.get('/public-blogs', async (req, res) => {
 
 // Fetch blogs by author
 router.get('/get-blogs-by-author', async (req, res) => {
-  const { author } = req.params;
+  const { author } = req.query;
 
   try {
     const blogs = await schemas.Blogs.find({ author });

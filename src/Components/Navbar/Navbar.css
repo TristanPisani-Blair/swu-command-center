@@ -11,6 +11,10 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1000;
 }
 
 .nav-logo {
@@ -32,11 +36,35 @@ body {
 
 .nav-menu li {
     margin-right: 20px;
-}
-
-.nav-menu a {
+    position: relative;
     color: white;
     text-decoration: none;
+}
+
+.nav-menu a{
+    color: white;
+    text-decoration: none;
+}
+
+.nav-menu a:hover {
+    text-decoration: none;
+}
+
+.nav-menu li::before{
+    content: "";
+    position: absolute;
+    display: block;
+    width: 100%;
+    height: 2px;
+    bottom: 0;
+    left: 0;
+    background-color: #fff;
+    transform: scaleX(0);
+    transition: transform 0.3s ease;
+}
+
+.nav-menu li:hover::before {
+    transform: scaleX(1);
 }
 
 .dropdown-content {
@@ -63,9 +91,34 @@ body {
 .username {
     display: flex;
     align-items: center;
-    margin-right: 20px;
     text-decoration: none;
     color: white;
+    cursor: pointer;
+    margin-right: 20px;
+}
+  
+.auth-buttons {
+    display: flex;
+    align-items: center;
+}
+  
+.auth-buttons .username {
+    margin-right: 10px;
+}
+
+#user-icon {
+    width: 20px;
+    height: auto;
+    margin-left: 5px;
+}
+  
+button.username {
+    background: none;
+    border: none;
+    color: white;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
 }
 
 #dropdown-arrow {
@@ -80,10 +133,32 @@ body {
     margin-left: 5px;
 }
 
-.main {
-    font-size: 24px; /* Adjust the font size as needed */
+.main, .sub {
+    font-size: 24px;
 }
 
-.sub {
-    font-size: 24px; /* Adjust the font size as needed */
+.account{
+    display: flex;
+    align-items: center;
+}
+
+.login-link {
+    margin-right: 10px;
+    text-decoration: none;
+    color: inherit;
+}
+  
+#user-icon {
+    width: 20px;
+    height: auto;
+}
+
+.login-icon, .logout-icon {
+    width: 25px;
+    height: auto;
+}
+
+.login-span {
+    font-size: 15px;
+    margin-right: 5px;
 }

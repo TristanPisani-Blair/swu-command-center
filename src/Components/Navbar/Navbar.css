@@ -36,15 +36,17 @@ body {
 
 .nav-menu li {
     margin-right: 20px;
-}
-
-.nav-menu li {
     position: relative;
     color: white;
     text-decoration: none;
 }
 
 .nav-menu a{
+    color: white;
+    text-decoration: none;
+}
+
+.nav-menu a:hover {
     text-decoration: none;
 }
 
@@ -93,13 +95,14 @@ body {
     color: white;
     cursor: pointer;
     margin-right: 20px;
-  }
+}
   
 .auth-buttons {
     display: flex;
     align-items: center;
-  }
+}
   
+.auth-buttons .username {
 .auth-buttons .username {
     margin-right: 10px;
   }
@@ -108,8 +111,9 @@ body {
     width: 20px;
     height: auto;
     margin-left: 5px;
-  }
+}
   
+button.username {
 button.username {
     background: none;
     border: none;
@@ -117,6 +121,7 @@ button.username {
     cursor: pointer;
     display: flex;
     align-items: center;
+}
 }
 
 #dropdown-arrow {
@@ -131,12 +136,8 @@ button.username {
     margin-left: 5px;
 }
 
-.main {
-    font-size: 24px; /* Adjust the font size as needed */
-}
-
-.sub {
-    font-size: 24px; /* Adjust the font size as needed */
+.main, .sub {
+    font-size: 24px;
 }
 
 .account{
@@ -148,9 +149,19 @@ button.username {
     margin-right: 10px;
     text-decoration: none;
     color: inherit;
-  }
+}
   
 #user-icon {
+#user-icon {
     width: 20px;
+}
+
+.login-icon, .logout-icon {
+    width: 25px;
     height: auto;
+}
+
+.login-span {
+    font-size: 15px;
+    margin-right: 5px;
 }

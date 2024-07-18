@@ -118,7 +118,7 @@ body{
     font-size: 18px;
 }
 
-.blog-publisher{
+.blog-author{
     padding-right: 10px;
 }
 
@@ -127,12 +127,12 @@ body{
 }
 
 .blogs-rightNav{
+    grid-column: 3;
     position: fixed;
     font-size: 18px;
     font-weight: 500;
     font-family: 'Open Sans Condensed', sans-serif;
     padding: 15px;
-    grid-column: 3;
     padding-right: 50px;
     right: 0;
 }
@@ -232,6 +232,7 @@ body{
     position: relative;
     left: 50%;
     transform: translateX(-50%);
+    margin-top: 20px;
     padding-bottom: 20px;
     background-color: #2196F3;
     color: white;
@@ -245,4 +246,13 @@ body{
 
 .blog-modal-content button:hover {
     background-color: #0b7dda;
+}
+
+.blog-modal-content input, .blog-modal-content textarea{
+    font-family: 'Red Hat Display', sans-serif;
+    font-size: 15px;
+}
+
+.blog-separator {
+    margin-left: 10px;
 }

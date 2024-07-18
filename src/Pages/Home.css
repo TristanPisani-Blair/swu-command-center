@@ -247,3 +247,69 @@
         height: auto;
     }
 }
+
+/* Modal styles */
+.username-modal {
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+  
+.username-modal-content {
+    position: relative;
+    width: 95%;
+    max-width: 500px;
+    padding: 20px;
+    border-radius: 20px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    background-color: #010715;
+    color: white;
+}
+
+.username-modal-content h2{
+    font-family: 'Open Sans Condensed', sans-serif;
+    margin-bottom: 20px;
+}
+  
+.username-input {
+    font-family: 'Red Hat Display', sans-serif;
+    font-size: 15px;
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+
+.username-submit-button-container {
+    display: flex;
+    justify-content: center;
+}
+  
+.username-submit-button {
+    padding: 8px 20px;
+    border: none;
+    border-radius: 5px;
+    background-color: #2196F3;
+    color: white;
+    cursor: pointer;
+    font-family: 'Red Hat Display', sans-serif;
+    font-size: 15px;
+}
+  
+.username-submit-button:hover {
+    background-color: #1976D2;
+}
+
+.error-message {
+    margin-bottom: 20px;
+    text-align: center;
+}

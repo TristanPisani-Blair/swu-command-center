@@ -54,7 +54,7 @@ To use SWU Command Center:
 3. Open Terminal.
 4. Install dependencies using `npm install express`.
 5. After making changes, run `npm start` in Terminal.
-6. Open http://localhost:3000 to view it in your browser.
+6. Open localhost:5000 to view it in your browser.
 
 ## Hosting
 

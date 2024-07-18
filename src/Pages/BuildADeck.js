@@ -20,6 +20,7 @@ const BuildADeck = () => {
     sideBoard: [],
   });
   const [error, setError] = useState(null);
+  const [filteredCards, setFilteredCards] = useState([]);
 
   useEffect(() => {
     const fetchDeck = async () => {
@@ -55,6 +56,7 @@ const BuildADeck = () => {
         const data = await response.json();
         if (data.data && Array.isArray(data.data)) {
           setCards(data.data);
+          setFilteredCards(data.data); // Initialize filtered cards with all cards
         } else {
           throw new Error('API response does not contain a "data" array');
         }
@@ -65,9 +67,29 @@ const BuildADeck = () => {
     fetchCards();
   }, []);
 
-  const addCardToDeck = (card) => {
+  useEffect(() => {
+    filterCards();
+  }, [deck.leader, deck.base]);
+
+  const filterCards = () => {
+    let filtered = cards;
+
+    if (!deck.leader) {
+      filtered = cards.filter(card => card.type === 'Leader');
+    } else if (!deck.base) {
+      filtered = cards.filter(card => card.type === 'Base');
+    } else {
+      filtered = cards.filter(card => card.type !== 'Leader' && card.type !== 'Base');
+    }
+
+    setFilteredCards(filtered);
+  };
+
+  const addCardToDeck = (card, toSideBoard = false) => {
     setDeck((prevDeck) => {
       let newDeck = { ...prevDeck };
+      let board = toSideBoard ? newDeck.sideBoard : newDeck.mainBoard;
+      let otherBoard = toSideBoard ? newDeck.mainBoard : newDeck.sideBoard;
 
       if (card.type === 'Leader') {
         if (prevDeck.leader) {
@@ -82,53 +104,77 @@ const BuildADeck = () => {
         }
         newDeck.base = card;
       } else {
-        const mainBoard = [...prevDeck.mainBoard];
-        const existingCard = mainBoard.find((c) => c.Name === card.Name);
+        const existingCardInBoard = board.find((c) => c.Name === card.Name);
+        const existingCardInOtherBoard = otherBoard.find((c) => c.Name === card.Name);
+        const totalCopies = (existingCardInBoard?.count || 0) + (existingCardInOtherBoard?.count || 0);
 
-        if (existingCard) {
-          existingCard.count = (existingCard.count || 1) + 1;
-        } else {
-          mainBoard.push({ ...card, count: 1 });
+        if (totalCopies >= 3) {
+          alert('You cannot have more than 3 copies of a single card in the deck.');
+          return prevDeck;
         }
-        newDeck.mainBoard = mainBoard;
+
+        if (existingCardInBoard) {
+          existingCardInBoard.count = (existingCardInBoard.count || 1) + 1;
+        } else {
+          board.push({ ...card, count: 1 });
+        }
       }
 
       return newDeck;
     });
   };
 
-  const removeCardFromDeck = (card) => {
+  const removeCardFromDeck = (card, fromSideBoard = false) => {
     setDeck((prevDeck) => {
       let newDeck = { ...prevDeck };
+      let board = fromSideBoard ? newDeck.sideBoard : newDeck.mainBoard;
 
       if (card.type === 'Leader' && prevDeck.leader && prevDeck.leader.Name === card.Name) {
         newDeck.leader = null;
       } else if (card.type === 'Base' && prevDeck.base && prevDeck.base.Name === card.Name) {
         newDeck.base = null;
       } else {
-        const mainBoard = prevDeck.mainBoard
+        board = board
           .map((c) => (c.Name === card.Name ? { ...c, count: c.count - 1 } : c))
           .filter((c) => c.count > 0);
-        newDeck.mainBoard = mainBoard;
+        if (fromSideBoard) {
+          newDeck.sideBoard = board;
+        } else {
+          newDeck.mainBoard = board;
+        }
       }
 
       return newDeck;
     });
   };
 
-  const countCardOccurrences = (cards) => {
-    const cardCount = {};
-    cards.forEach((card) => {
-      if (cardCount[card.Name]) {
-        cardCount[card.Name]++;
-      } else {
-        cardCount[card.Name] = 1;
-      }
-    });
-    return cardCount;
-  };
+  const moveCardBetweenBoards = (card, toSideBoard) => {
+    setDeck((prevDeck) => {
+      let newDeck = { ...prevDeck };
+      let sourceBoard = toSideBoard ? newDeck.mainBoard : newDeck.sideBoard;
+      let targetBoard = toSideBoard ? newDeck.sideBoard : newDeck.mainBoard;
 
-  const cardCount = countCardOccurrences(deck.mainBoard);
+      const cardInSourceBoard = sourceBoard.find((c) => c.Name === card.Name);
+
+      if (cardInSourceBoard) {
+        cardInSourceBoard.count -= 1;
+        if (cardInSourceBoard.count === 0) {
+          sourceBoard = sourceBoard.filter((c) => c.Name !== card.Name);
+        }
+        const cardInTargetBoard = targetBoard.find((c) => c.Name === card.Name);
+        if (cardInTargetBoard) {
+          cardInTargetBoard.count += 1;
+        } else {
+          targetBoard.push({ ...card, count: 1 });
+        }
+      }
+
+      newDeck.mainBoard = toSideBoard ? sourceBoard : targetBoard;
+      newDeck.sideBoard = toSideBoard ? targetBoard : sourceBoard;
+
+      return newDeck;
+    });
+  };
 
   const calculateTotalPrice = () => {
     return deck.mainBoard.reduce((total, card) => {
@@ -169,6 +215,7 @@ const BuildADeck = () => {
                   <li key={index}>
                     {card.Name} {card.count > 1 && `x${card.count}`}
                     <button onClick={() => removeCardFromDeck(card)}>Remove</button>
+                    <button onClick={() => moveCardBetweenBoards(card, true)}>Move to Sideboard</button>
                   </li>
                 ))}
               </ul>
@@ -179,7 +226,8 @@ const BuildADeck = () => {
                 {deck.sideBoard.map((card, index) => (
                   <li key={index}>
                     {card.Name} {card.count > 1 && `x${card.count}`}
-                    <button onClick={() => removeCardFromDeck(card)}>Remove</button>
+                    <button onClick={() => removeCardFromDeck(card, true)}>Remove</button>
+                    <button onClick={() => moveCardBetweenBoards(card, false)}>Move to Mainboard</button>
                   </li>
                 ))}
               </ul>
@@ -196,34 +244,37 @@ const BuildADeck = () => {
 
           {error && <div className="error">{error}</div>}
 
-          <div className="card-list">
-            {cards.map((card, index) => {
+          <ul className="card-list">
+            {filteredCards.map((card, index) => {
               const isHorizontal = card.type === 'Leader' || card.type === 'Base';
               return (
-                <div key={card.id || index} className={`card-item ${isHorizontal ? 'horizontal' : ''}`}>
-                  {card.FrontArt ? (
-                    <>
-                      <img
-                        src={card.FrontArt}
-                        alt={card.Name}
-                        className="card-image"
-                        onError={(e) => { e.target.style.display = 'none'; }}
-                      />
-                    </>
-                  ) : (
-                    <div className="placeholder-image"></div>
-                  )}
-                  {card.Name && <h2>{card.Name}</h2>}
-                  {card.aspects && <p>Aspect: {card.aspects.join(', ')}</p>}
-                  {card.type && <p>Type: {card.type}</p>}
-                  {card.cost !== undefined && <p>Cost: {card.cost}</p>}
-                  {card.set && <p>Set: {card.set}</p>}
-                  {card.MarketPrice && <p>Price: ${card.MarketPrice}</p>}
-                  <button onClick={() => addCardToDeck(card)}>Add to Deck</button>
-                </div>
+                <li key={index}>
+                  <div className={`card-item ${isHorizontal ? 'horizontal' : ''}`}>
+                    {card.FrontArt ? (
+                      <>
+                        <img
+                          src={card.FrontArt}
+                          alt={card.Name}
+                          className="card-image"
+                          onError={(e) => { e.target.style.display = 'none'; }}
+                        />
+                      </>
+                    ) : (
+                      <div className="placeholder-image"></div>
+                    )}
+                    {card.Name && <h2>{card.Name}</h2>}
+                    {card.aspects && <p>Aspect: {card.aspects.join(', ')}</p>}
+                    {card.type && <p>Type: {card.type}</p>}
+                    {card.cost !== undefined && <p>Cost: {card.cost}</p>}
+                    {card.set && <p>Set: {card.set}</p>}
+                    {card.MarketPrice && <p>Price: ${card.MarketPrice}</p>}
+                    <button onClick={() => addCardToDeck(card)}>Add to Deck</button>
+                    <button onClick={() => addCardToDeck(card, true)}>Add to Sideboard</button>
+                  </div>
+                </li>
               );
             })}
-          </div>
+          </ul>
         </div>
       </div>
       <Footer />

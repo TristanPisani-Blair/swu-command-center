@@ -156,7 +156,7 @@ const Account = () => {
       <div>
         <Navbar />
 
-        <div className="container" class="wrapper">
+        <div className="container" class="account-wrapper">
           <div className="account-settings-header">
             <h1>Account Settings</h1>
               <div>

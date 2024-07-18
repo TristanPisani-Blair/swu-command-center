@@ -1,19 +1,16 @@
-const { MongoClient } = require('mongodb');
+const mongoose = require('mongoose');
+require('dotenv').config({ path: '../.env' });
 
-const uri = process.env.MONGODB_URI;
-const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
+const dbURI = process.env.MONGODB_URI;
 
-client.connect(err => {
-  if (err) throw err;
-  console.log('Connected to MongoDB');
-  
-  const db = client.db('SWUCC_Users');
-  const usersCollection = db.collection('Users');
+if (!dbURI) {
+  console.error('MongoDB connection string is missing in .env file.');
+  process.exit(1);
+}
 
-  // Creates indexes
-  usersCollection.createIndex({ userId: 1 });
-  usersCollection.createIndex({ email: 1 });
-  usersCollection.createIndex({ userId: 1, "decks.name": 1 });
-});
-
-module.exports = client;
+mongoose.connect(dbURI, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true
+})
+  .then(() => console.log('MongoDB connected...'))
+  .catch(err => console.error('MongoDB connection error:', err));

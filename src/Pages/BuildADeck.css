@@ -1,0 +1,98 @@
+@import url('https://fonts.googleapis.com/css2?family=Red+Hat+Display:wght@400;500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans+Condensed:wght@300&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.deck-builder-wrapper {
+  display: flex;
+  padding: 20px;
+}
+
+.deck-builder-leftNav {
+  flex: 1;
+  padding-right: 20px;
+}
+
+.cardlist-body {
+  flex: 2;
+}
+
+.deck-details {
+  background: #f9f9f9;
+  padding: 15px;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.deck-details h2 {
+  margin-top: 0;
+}
+
+.deck-details ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.deck-details li {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.save-deck-button {
+  padding: 10px 20px;
+  font-size: 16px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.save-deck-button:hover {
+  background-color: #0056b3;
+}
+
+.card-list {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.card-item {
+  margin: 10px;
+  padding: 10px;
+  background: #fff;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  text-align: center;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.card-item img {
+  max-width: 100px;
+  height: auto;
+}
+
+.card-item button {
+  margin-top: 10px;
+  padding: 5px 10px;
+  font-size: 14px;
+  background-color: #28a745;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.card-item button:hover {
+  background-color: #218838;
+}
+
+.error {
+  color: #dc3545;
+  font-size: 16px;
+}

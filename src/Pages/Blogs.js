@@ -178,7 +178,7 @@ const Blogs = () => {
     return (
       <div>
         <Navbar />
-        <div className="container" class="wrapper">
+        <div className="container" class="blogs-wrapper">
           <div className="blogs-leftNav">
             <ul>
               <li><a onClick={() => handleFilterClick('allBlogs')}>All Blogs</a></li>

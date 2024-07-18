@@ -8,13 +8,16 @@ import BlogPage from './Pages/BlogPage';
 import Account from './Pages/Account';
 /* import Navbar from './Components/Navbar'; */
 import CardDatabase from './Pages/CardDatabase';
-import BuildADeck from './Pages/Build-A-Deck';
 import CardList from './Pages/CardList';
+import DeckPage from './Pages/DeckPage';
+import MyDecks from './Pages/MyDecks';
+import BuildADeck from './Pages/BuildADeck';
+import Navbar from './Components/Navbar/Navbar';
+import Footer from './Components/Footer/Footer';
 import { useAuth0 } from '@auth0/auth0-react';
-import { BrowserRouter, Route, Routes } from 'react-router-dom'; // URL router
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
 function App() {
-
   const { loginWithRedirect, logout, isAuthenticated } = useAuth0();
 
   return (
@@ -29,10 +32,13 @@ function App() {
       <Route path="/blog/:author/:title" element={<BlogPage/>} />
       <Route path="/account" element={<Account/>} />
       <Route path="/cardlist" element={<CardList/>} />
-      <Route path="/card-database" element={<CardDatabase/>} />
+      <Route path="/card-database" element={<CardDatabase />} />
       <Route path="/card-list" element={<CardList />} />
       <Route path="/build-a-deck" element={<BuildADeck />} />
+      <Route path="/build-a-deck/:deckId" element={<BuildADeck />} />
       <Route path="/test" element={<test/>}/>
+      <Route path="/my-decks" element={<MyDecks />} />
+      <Route path="/deck/:deckId" element={<DeckPage />} />
     </Routes>
     </div>
   </BrowserRouter>

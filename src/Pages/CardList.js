@@ -17,7 +17,6 @@ const CardList = () => {
         const data = await response.json();
         console.log('API response:', data);
 
-        
         if (data.data && Array.isArray(data.data)) {
           setCards(data.data);
           console.log('Fetched cards:', data.data);
@@ -36,7 +35,7 @@ const CardList = () => {
   return (
     <div>
       <Navbar />
-      <div className="wrapper">
+      <div className="cardlist-wrapper">
         <div className="cardlist-leftNav">
           <ul>
             <li><a href="/collection">My Collection</a></li>
@@ -76,6 +75,7 @@ const CardList = () => {
                   {card.type && <p>Type: {card.type}</p>}
                   {card.cost !== undefined && <p>Cost: {card.cost}</p>}
                   {card.set && <p>Set: {card.set}</p>}
+                  {card.MarketPrice && <p>Price: ${card.MarketPrice}</p>} {/* New line for market price */}
                 </div>
               );
             })}

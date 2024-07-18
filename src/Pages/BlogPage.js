@@ -197,7 +197,7 @@ const BlogPage = () => {
     return (
       <div>
         <Navbar />
-        <div className="container" class="wrapper">
+        <div className="container" class="blogpage-wrapper">
           <div className="blog-page-leftNav">
             <ul>
               <li><a href="/blogs">All Blogs</a></li>

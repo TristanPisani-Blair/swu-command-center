@@ -27,7 +27,7 @@ const Collection = () => {
       <div>
         <Navbar />
 
-        <div className="container" class="wrapper">
+        <div className="container" class="collection-wrapper">
           <div className="collection-leftNav">
             <ul>
               <li><a href="/Collection">My Collection</a></li>

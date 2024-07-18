@@ -13,7 +13,7 @@ body{
     margin-top: 110px;
 }
 
-.wrapper{
+.blogs-wrapper{
     display: grid;
     grid-template-columns: 150px auto 200px;
 }

@@ -4,13 +4,12 @@ const session = require('express-session');
 const passport = require('passport');
 const path = require('path');
 
+const mongoose = require('mongoose');
 const cors = require('cors');
 const bodyParser = require('body-parser');
 const blogRoutes = require('./routes/blog');
 
-const authRoutes = require('./routes/auth');
-const deckRoutes = require('./routes/cards');  // Assuming cards.js handles deck routes
-const userRoutes = require('./routes/users');
+const deckRoutes = require('./routes (Express)/deck');
 
 const app = express();
 
@@ -76,8 +75,7 @@ app.get('/', (req, res) => {
   res.send('Welcome to the Deck Builder App!');
 });
 
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 4000;
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
-

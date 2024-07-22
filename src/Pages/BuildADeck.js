@@ -268,8 +268,10 @@ const BuildADeck = () => {
                     {card.cost !== undefined && <p>Cost: {card.cost}</p>}
                     {card.set && <p>Set: {card.set}</p>}
                     {card.MarketPrice && <p>Price: ${card.MarketPrice}</p>}
-                    <button onClick={() => addCardToDeck(card)}>Add to Deck</button>
-                    <button onClick={() => addCardToDeck(card, true)}>Add to Sideboard</button>
+                    <div className='bd-buttons'>
+                      <button onClick={() => addCardToDeck(card)}>Add to Deck</button>
+                      <button onClick={() => addCardToDeck(card, true)}>Add to Sideboard</button>
+                    </div>
                   </div>
                 </li>
               );

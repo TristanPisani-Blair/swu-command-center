@@ -59,7 +59,7 @@ const Navbar = () => {
             <div className="dropdown-content">
               <Link to="/collection">My Collection</Link>
               <Link to="/build-a-deck">Build a Deck</Link>
-              <Link to="/collection/all-cards">All Cards</Link>
+              <Link to="/cardlist">All Cards</Link>
             </div>
           </li>
           <li className="dropdown">

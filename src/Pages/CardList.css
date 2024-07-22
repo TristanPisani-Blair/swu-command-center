@@ -15,7 +15,7 @@
 
 .cardlist-wrapper {
     display: grid;
-    grid-template-columns: 150px auto;
+    grid-template-columns: 150px auto 150px;
 }
 
 .cardlist-leftNav {
@@ -50,14 +50,16 @@
     font-size: 30px;
 }
 
-.card-list {
+.cl-card-list {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
     gap: 20px;
     margin-top: 20px;
+    width: 100%;
+    justify-content: space-between;
 }
 
-.card-item {
+.cl-card-item {
     background-color: #f9f9f9;
     border: 1px solid #ddd;
     border-radius: 8px;
@@ -66,42 +68,45 @@
     flex-direction: column;
     align-items: center;
     text-align: center;
+
+    height: 300px; /* Fixed height for uniform card size */
+    width: 150px; /* Fixed width for uniform card size */
+    overflow: hidden; /* Hide overflow content */
 }
 
-.card-item img {
+.cl-card-item img {
     width: 100%;
     height: auto;
     border-radius: 8px;
 }
 
-.card-item.horizontal img {
+.cl-card-item.horizontal img {
     transform: rotate(90deg);
     width: auto;
     height: 100%;
-    max-width: 300px;
-    max-height: 200px;
-    object-fit: contain;
 }
 
-.card-item h2 {
+.cl-card-item h2 {
     font-size: 20px;
     margin-top: 10px;
     margin-bottom: 10px;
+
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    white-space: normal;
 }
 
-.card-item p {
+.cl-card-item p {
     font-size: 16px;
     margin-bottom: 5px;
 }
 
-
-.placeholder-image {
+.cl-placeholder-image {
     width: 100%;
     height: 200px; 
     background-color: #ccc;
     border-radius: 8px;
 }
-
 
 .error {
     color: red;
@@ -109,14 +114,32 @@
     text-align: center;
 }
 
-.card-item p {
+.cl-card-item p {
     font-size: 16px;
     margin-bottom: 5px;
 }
 
-.card-item p.price {
+.cl-card-item p.price {
     font-size: 18px;
     font-weight: bold;
     color: #2c3e50;
     margin-top: 10px;
+}
+
+/* Cards List Items*/
+
+.cl-card-image-div{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 130px;
+    max-width: 200px;
+    margin-bottom: 10px;
+}
+
+.cl-card-info{
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    white-space: normal;
+    max-width: 100%;
 }

@@ -32,11 +32,24 @@ body{
     list-style: none;
     margin-bottom: 10px;
     text-decoration: none;
+    cursor: pointer;
 }
 
 .blogs-leftNav a{
     color: #000000;
     text-decoration: none;
+}
+
+.blogs-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.add-post-button {
+    width: 28px;
+    height: 28px;
+    cursor: pointer;
 }
 
 .blogs-body{

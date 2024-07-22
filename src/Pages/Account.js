@@ -275,6 +275,9 @@ const Account = () => {
               <li>
                 <a href="https://www.flaticon.com/free-icons/down-arrow" title="down arrow icons">Down arrow icons created by feen - Flaticon</a>
               </li>
+              <li>
+              <a href="https://www.flaticon.com/free-icons/add-post" title="add post icons">Add post icons created by Icon Hubs - Flaticon</a>
+              </li>
             </ul>
           </div>
         </div>

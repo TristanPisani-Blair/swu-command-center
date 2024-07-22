@@ -6,6 +6,7 @@ import './Blogs.css';
 import Navbar from '../Components/Navbar/Navbar';
 import Footer from '../Components/Footer/Footer';
 import BlogList from "./BlogList";
+import addPostBTN from "../Components/Assets/add-post.png";
 
 const Blogs = () => {
   const [showModal, setShowModal] = useState(false);
@@ -16,6 +17,7 @@ const Blogs = () => {
   const [sortBy, setSortBy] = useState('');
   const [error, setError] = useState('');
   const [username, setUsername] = useState('');
+  const [loading, setLoading] = useState(true);
   const { user, isAuthenticated } = useAuth0();
   const location = useLocation();
   const navigate = useNavigate();
@@ -52,17 +54,19 @@ const Blogs = () => {
   const fetchBlogs = async () => {
     try {
       const response = await axios.get('http://localhost:4000/public-blogs');
-      setBlogs(response.data);
+      let fetchedBlogs = response.data;
+
+      return fetchedBlogs;
     } catch (error) {
       console.error('Error fetching blogs:', error);
+      setLoading(false);
+      return [];
     }
   };
 
-  const handleSort = (option) => {
-    console.log('Sorting by:', option);
-
+  const handleSort = (option, blogsToSort) => {
     // Create a copy of the original data
-    const sortedBlogs = [...blogs];
+    let sortedBlogs = [...blogsToSort];
 
     // Sort the blogs array based on the selected option
     if (option === 'newest') {
@@ -73,12 +77,12 @@ const Blogs = () => {
       sortedBlogs.sort((a, b) => b.commentCount - a.commentCount); // Sort by most comments
     }
 
-    setBlogs(() => [...sortedBlogs]);
+    return sortedBlogs;
   };
 
   // Function to handle filtering of blogs
   const handleFilter = async (filter) => {
-    console.log("Username: ", username);
+    setLoading(true);
 
     try {
       let filteredBlogs = [];
@@ -96,9 +100,12 @@ const Blogs = () => {
         filteredBlogs = response.data;
       }
 
-      setBlogs([...filteredBlogs]);
+      const sortedBlogs = handleSort(sortBy, filteredBlogs);
+      setBlogs(sortedBlogs);
+      setLoading(false);
     } catch (error) {
       console.error('Error filtering blogs:', error);
+      setLoading(false);
     }
   };
 
@@ -171,9 +178,27 @@ const Blogs = () => {
 
   // Fetch blog data from the database on component mount
   useEffect(() => {
-    fetchBlogs();
+    const queryParams = new URLSearchParams(location.search);
+    const filter = queryParams.get('filter');
+
+    const initializeBlogs = async () => {
+      setLoading(true);
+
+      let fetchedBlogs = await fetchBlogs();
+
+      if (filter) {
+        await handleFilter(filter);
+      } else {
+        const sortedBlogs = handleSort(sortBy, fetchedBlogs);
+        setBlogs(sortedBlogs);
+      }
+
+      setLoading(false);
+    };
+
+    initializeBlogs();
     fetchUserSettings();
-  }, []);
+  }, [location.search]);
 
     return (
       <div>
@@ -189,11 +214,15 @@ const Blogs = () => {
           </div>
           
           <div className="blogs-body">
-            <h1>Blogs</h1>
+            <div className="blogs-header">
+              <h1>Blogs</h1>
+              <img src={addPostBTN} alt="Add Post" onClick={handleNewBlogPostClick} className="add-post-button"/>            </div>
             <div>
               <hr className="divider" />
             </div>
-            <BlogList blogs={blogs} />
+            {!loading && (
+              <BlogList blogs={blogs} />
+            )}
           </div>
 
           <div className="blogs-rightNav">

@@ -32,7 +32,7 @@ const Collection = () => {
             <ul>
               <li><a href="/Collection">My Collection</a></li>
               <li><a href="#BuildADeck">Build A Deck</a></li>
-              <li><a href="/CardList">Card List</a></li>
+              <li><a href="/CardList">All Cards</a></li>
             </ul>
           </div>
 

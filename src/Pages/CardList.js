@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from 'react-router-dom';
 import './CardList.css';
 import Navbar from '../Components/Navbar/Navbar';
 import Footer from '../Components/Footer/Footer';
-import searchIMG from '../Components/Assets/search.png';
 
 const CardList = () => {
   const [cards, setCards] = useState([]);
   const [error, setError] = useState(null);
   const [search, setSearch] = useState('');
+  const [sortOption, setSortOption] = useState('');
   const [showSortingOptions, setShowSortingOptions] = useState(false);
   const [showFilteringOptions, setShowFilteringOptions] = useState(false);
   const [selectedFilters, setSelectedFilters] = useState([]);
@@ -16,6 +17,7 @@ const CardList = () => {
   const [showCostChoices, setShowCostChoices] = useState(false);
   const [showSetChoices, setShowSetChoices] = useState(false);
 
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchCards = async () => {
@@ -50,9 +52,35 @@ const CardList = () => {
     }
   };
 
+  // Search function to filter cards by user input
   const filteredCards = cards.filter(card =>
     search.trim() === '' || card.Name.toLowerCase().includes(search.toLowerCase())
   );
+
+  // Sort functions
+  const sortCards = (cards) => {
+    switch (sortOption) {
+      case 'name-asc':
+        return cards.sort((a, b) => a.Name.localeCompare(b.Name));
+      case 'name-desc':
+        return cards.sort((a, b) => b.Name.localeCompare(a.Name));
+      case 'number-asc':
+        return cards.sort((a, b) => a.Number - b.Number);
+      case 'number-desc':
+        return cards.sort((a, b) => b.Number - a.Number);
+      default:
+        return cards;
+    }
+  };
+
+  // List of cards sorted
+  const sortedAndFilteredCards = sortCards(filteredCards);
+
+  const handleCardClick = (card) => {
+    const cardNumber = encodeURIComponent(card.Number);
+    const cardName = encodeURIComponent(card.Name);
+    navigate(`/card/${cardNumber}/${cardName}`);
+  };
   
   return (
     <div>
@@ -79,10 +107,7 @@ const CardList = () => {
                 placeholder="Search for a card"
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
-              />              
-              <button type="button" className="cl-search-button">
-                <img src={searchIMG} alt="Search" className="cl-search" />
-              </button>
+              />
             </div>    
           </div>
 
@@ -92,13 +117,14 @@ const CardList = () => {
                   Sort By ▼
               </p>
               {showSortingOptions && (
-                <div className={`cl-sorting-options ${showSortingOptions ? 'open' : ''}`}>                  <ul>
-                    <li>Card Name (A-Z)</li>
-                    <li>Card Name (Z-A)</li>
-                    <li>Card Number (Ascending)</li>
-                    <li>Card Number (Descending)</li>
-                  </ul>
-                </div>
+                <div className={`cl-sorting-options ${showSortingOptions ? 'open' : ''}`}>
+                <ul>
+                  <li onClick={() => setSortOption('name-asc')}>Card Name (A-Z)</li>
+                  <li onClick={() => setSortOption('name-desc')}>Card Name (Z-A)</li>
+                  <li onClick={() => setSortOption('number-asc')}>Card Number (Ascending)</li>
+                  <li onClick={() => setSortOption('number-desc')}>Card Number (Descending)</li>
+                </ul>
+              </div>
               )}
             </div>
 
@@ -230,10 +256,14 @@ const CardList = () => {
           {error && <div className="error">{error}</div>}
 
           <div className="cl-card-list">
-              {filteredCards.map((card, index) => {
+              {sortedAndFilteredCards.map((card, index) => {
                 const isHorizontal = card.type === 'Leader' || card.type === 'Base';
                 return (
-                  <div key={card.id || index} className={`cl-card-item ${isHorizontal ? 'horizontal' : ''}`}>
+                  <div 
+                    key={card.id || index} 
+                    className={`cl-card-item ${isHorizontal ? 'horizontal' : ''}`}
+                    onClick={() => handleCardClick(card)}
+                    >
                     <div className="cl-card-image-div">
                     {card.FrontArt ? (
                       <>

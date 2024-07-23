@@ -131,3 +131,24 @@
   max-width: 200px;
   margin-bottom: 10px;
 }
+
+/* Search, sort, and filter */
+.bd-search{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.bd-search-bar{
+  display: flex;
+  flex-direction: row;
+}
+
+.bd-search-bar input{
+  background-color: #D9D9D9;
+  border: 2px black;
+  border-radius: 15px;
+  padding: 10px;
+  font-size: 18px;
+  width: 450px;
+}

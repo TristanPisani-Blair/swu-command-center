@@ -21,6 +21,15 @@ const BuildADeck = () => {
   });
   const [error, setError] = useState(null);
   const [filteredCards, setFilteredCards] = useState([]);
+  const [search, setSearch] = useState('');
+  const [sortOption, setSortOption] = useState('');
+  const [showSortingOptions, setShowSortingOptions] = useState(false);
+  const [showFilteringOptions, setShowFilteringOptions] = useState(false);
+  const [selectedFilters, setSelectedFilters] = useState([]);
+  const [showAspectChoices, setShowAspectChoices] = useState(false);
+  const [showTypeChoices, setShowTypeChoices] = useState(false);
+  const [showCostChoices, setShowCostChoices] = useState(false);
+  const [showSetChoices, setShowSetChoices] = useState(false);
 
   useEffect(() => {
     const fetchDeck = async () => {
@@ -195,6 +204,38 @@ const BuildADeck = () => {
     }
   };
 
+  const handleCheckboxChange = (itemName) => {
+    if (selectedFilters.includes(itemName)) {
+        setSelectedFilters(selectedFilters.filter(filter => filter !== itemName));
+    } else {
+        setSelectedFilters([...selectedFilters, itemName]);
+    }
+  };
+
+  // Search function to filter cards by user input
+  const searchFilteredCards = cards.filter(card =>
+    search.trim() === '' || card.Name.toLowerCase().includes(search.toLowerCase())
+  );
+
+  // Sort functions
+  const sortCards = (cards) => {
+    switch (sortOption) {
+      case 'name-asc':
+        return cards.sort((a, b) => a.Name.localeCompare(b.Name));
+      case 'name-desc':
+        return cards.sort((a, b) => b.Name.localeCompare(a.Name));
+      case 'number-asc':
+        return cards.sort((a, b) => a.Number - b.Number);
+      case 'number-desc':
+        return cards.sort((a, b) => b.Number - a.Number);
+      default:
+        return cards;
+    }
+  };
+
+  // List of cards sorted
+  const sortedAndFilteredCards = sortCards(searchFilteredCards);
+
   return (
     <div>
       <Navbar />
@@ -236,16 +277,170 @@ const BuildADeck = () => {
           </div>
         </div>
 
-        <div className="cardlist-body">
+        <div className="builddeck-body">
           <h1>Available Cards</h1>
           <div>
             <hr className="divider" />
           </div>
 
+          <div className="bd-search">
+            <div className="bd-search-bar">
+              <input type="text" 
+                id="bd-card-search" 
+                placeholder="Search for a card"
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+              />
+            </div>    
+          </div>
+
+          <div className="bd-sortfilter">
+            <div className="bd-sortby">
+              <p className="bd-clickable" onClick={() => setShowSortingOptions(!showSortingOptions)}>
+                  Sort By ▼
+              </p>
+              {showSortingOptions && (
+                <div className={`bd-sorting-options ${showSortingOptions ? 'open' : ''}`}>
+                <ul>
+                  <li onClick={() => setSortOption('name-asc')}>Card Name (A-Z)</li>
+                  <li onClick={() => setSortOption('name-desc')}>Card Name (Z-A)</li>
+                  <li onClick={() => setSortOption('number-asc')}>Card Number (Ascending)</li>
+                  <li onClick={() => setSortOption('number-desc')}>Card Number (Descending)</li>
+                </ul>
+              </div>
+              )}
+            </div>
+
+            <div className="bd-filterby">
+              <p className="bd-clickable" onClick={() => setShowFilteringOptions(!showFilteringOptions)}>
+                  Filter By ▼
+              </p>
+              {showFilteringOptions && (
+                <div className="bd-filtering-options">
+                  <ul>
+                    <li className="bd-clickable" onClick={() => setShowAspectChoices(!showAspectChoices)}>Aspect ▼</li>
+                      {showAspectChoices && (
+                        <div className="bd-aspect-options">
+                            <li>
+                              <input type="checkbox" id="aggression" value="Aggression" onChange={() => handleCheckboxChange('Aggression')} />
+                              <label htmlFor="aggression">Aggression</label>
+                            </li>
+                            <li>
+                              <input type="checkbox" id="command" value="Command" onChange={() => handleCheckboxChange('Command')} />
+                              <label htmlFor="command">Command</label>
+                            </li>
+                            <li>
+                              <input type="checkbox" id="cunning" value="Cunning" onChange={() => handleCheckboxChange('Cunning')} />
+                              <label htmlFor="cunning">Cunning</label>
+                            </li>
+                            <li>
+                              <input type="checkbox" id="heroism" value="Heroism" onChange={() => handleCheckboxChange('Heroism')} />
+                              <label htmlFor="heroism">Heroism</label>
+                            </li>
+                            <li>
+                              <input type="checkbox" id="vigilance" value="Vigilance" onChange={() => handleCheckboxChange('Vigilance')} />
+                              <label htmlFor="vigilance">Vigilance</label>
+                            </li>
+                            <li>
+                              <input type="checkbox" id="villainy" value="Villainy" onChange={() => handleCheckboxChange('Villainy')} />
+                              <label htmlFor="villainy">Villainy</label>
+                            </li>
+                        </div>
+                      )}
+
+                    <li className="bd-clickable" onClick={() => setShowTypeChoices(!showTypeChoices)}>Type ▼</li>
+                      {showTypeChoices && (
+                        <div className="bd-type-options">
+                            <li>
+                              <input type="checkbox" id="base" value="Base" onChange={() => handleCheckboxChange('Base')} />
+                              <label htmlFor="base">Base</label>
+                            </li>
+                            <li>
+                              <input type="checkbox" id="event" value="Event" onChange={() => handleCheckboxChange('Event')} />
+                              <label htmlFor="event">Event</label>
+                            </li>
+                            <li>
+                              <input type="checkbox" id="leader" value="Leader" onChange={() => handleCheckboxChange('Leader')} />
+                              <label htmlFor="leader">Leader</label>
+                            </li>
+                            <li>
+                              <input type="checkbox" id="token-upgrade" value="Token Upgrade" onChange={() => handleCheckboxChange('Token Upgrade')} />
+                              <label htmlFor="token-upgrade">Token Upgrade</label>
+                            </li>
+                            <li>
+                              <input type="checkbox" id="unit" value="Unit" onChange={() => handleCheckboxChange('Unit')} />
+                              <label htmlFor="unit">Unit</label>
+                            </li>
+                            <li>
+                              <input type="checkbox" id="upgrade" value="Upgrade" onChange={() => handleCheckboxChange('Upgrade')} />
+                              <label htmlFor="upgrade">Upgrade</label>
+                            </li>
+                        </div>
+                      )}
+
+                    <li className="bd-clickable" onClick={() => setShowCostChoices(!showCostChoices)}>Cost ▼</li>
+                      {showCostChoices && (
+                          <div className="cl-cost-options">
+                            <li>
+                              <input type="checkbox" id="zero" value="Zero" onChange={() => handleCheckboxChange('Zero')} />
+                              <label htmlFor="zero">0</label>
+                            </li>
+                            <li>
+                              <input type="checkbox" id="one" value="One" onChange={() => handleCheckboxChange('One')} />
+                              <label htmlFor="one">1</label>
+                            </li>
+                            <li>
+                              <input type="checkbox" id="two" value="Two" onChange={() => handleCheckboxChange('Two')} />
+                              <label htmlFor="two">2</label>
+                            </li>
+                            <li>
+                              <input type="checkbox" id="three" value="Three" onChange={() => handleCheckboxChange('Three')} />
+                              <label htmlFor="three">3</label>
+                            </li>
+                            <li>
+                              <input type="checkbox" id="four" value="Four" onChange={() => handleCheckboxChange('Four')} />
+                              <label htmlFor="four">4</label>
+                            </li>
+                            <li>
+                              <input type="checkbox" id="five" value="Five" onChange={() => handleCheckboxChange('Five')} />
+                              <label htmlFor="five">5</label>
+                            </li>
+                              <li>
+                              <input type="checkbox" id="six" value="Six" onChange={() => handleCheckboxChange('Six')} />
+                              <label htmlFor="six">6</label>
+                            </li>
+                            <li>
+                              <input type="checkbox" id="seven" value="Seven" onChange={() => handleCheckboxChange('Seven')} />
+                              <label htmlFor="seven">7</label>
+                            </li>
+                          </div>
+                      )}
+
+                    <li className="bd-clickable" onClick={() => setShowSetChoices(!showSetChoices)}>Set ▼</li>
+                      {showSetChoices && (
+                        <div className="cl-set-options">
+                            <li>
+                              <input type="checkbox" id="shadows-of-the-galaxy" value="Shadows of the Galaxy" onChange={() => handleCheckboxChange('Shadows of the Galaxy')} />
+                              <label htmlFor="shadows-of-the-galaxy">Shadows of the Galaxy</label>
+                            </li>
+                            <li>
+                              <input type="checkbox" id="spark-of-rebellion" value="Spark of Rebellion" onChange={() => handleCheckboxChange('Spark of Rebellion')} />
+                              <label htmlFor="spark-of-rebellion">Spark of Rebellion</label>
+                            </li>
+                        </div>
+                      )}
+                  </ul>
+                </div>
+              )}
+
+            </div>
+          </div>
+
+
           {error && <div className="error">{error}</div>}
 
           <ul className="card-list">
-            {filteredCards.map((card, index) => {
+            {sortedAndFilteredCards.map((card, index) => {
               const isHorizontal = card.type === 'Leader' || card.type === 'Base';
               return (
                 <li key={index}>

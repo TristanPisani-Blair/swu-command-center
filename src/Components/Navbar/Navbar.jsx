@@ -12,10 +12,12 @@ const Navbar = () => {
   const { loginWithRedirect, logout, isAuthenticated, user } = useAuth0();
   const [username, setUsername] = useState('');
 
+  {/*
   console.log('isAuthenticated:', isAuthenticated);
   if (isAuthenticated) {
     console.log('User:', user);
   }
+  */}
 
   useEffect(() => {
     const fetchUsername = async () => {

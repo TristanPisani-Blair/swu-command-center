@@ -9,6 +9,7 @@ import Account from './Pages/Account';
 /* import Navbar from './Components/Navbar'; */
 import CardDatabase from './Pages/CardDatabase';
 import CardList from './Pages/CardList';
+import CardPage from './Pages/CardPage';
 import DeckPage from './Pages/DeckPage';
 import MyDecks from './Pages/MyDecks';
 import BuildADeck from './Pages/BuildADeck';
@@ -34,6 +35,7 @@ function App() {
       <Route path="/cardlist" element={<CardList/>} />
       <Route path="/card-database" element={<CardDatabase />} />
       <Route path="/card-list" element={<CardList />} />
+      <Route path="/card/:number/:name" element={<CardPage/>} />
       <Route path="/build-a-deck" element={<BuildADeck />} />
       <Route path="/build-a-deck/:deckId" element={<BuildADeck />} />
       <Route path="/test" element={<test/>}/>

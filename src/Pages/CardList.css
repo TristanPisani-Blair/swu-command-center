@@ -158,21 +158,6 @@
     flex-direction: row;
 }
 
-.cl-search-button {
-    background-color: transparent;
-    border: none;
-    padding: 0;
-    cursor: pointer;
-}
-
-.cl-search-button img {
-    width: 30px;
-    height: 30px;
-    border: none;
-    background-color: transparent;
-    margin-left: 10px;
-}
-
 .cl-search-bar input{
     background-color: #D9D9D9;
     border: 2px black;

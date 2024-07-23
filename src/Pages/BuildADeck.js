@@ -250,6 +250,7 @@ const BuildADeck = () => {
               return (
                 <li key={index}>
                   <div className={`card-item ${isHorizontal ? 'horizontal' : ''}`}>
+                  <div className="bd-card-image-div">
                     {card.FrontArt ? (
                       <>
                         <img
@@ -262,15 +263,18 @@ const BuildADeck = () => {
                     ) : (
                       <div className="placeholder-image"></div>
                     )}
-                    {card.Name && <h2>{card.Name}</h2>}
-                    {card.aspects && <p>Aspect: {card.aspects.join(', ')}</p>}
-                    {card.type && <p>Type: {card.type}</p>}
-                    {card.cost !== undefined && <p>Cost: {card.cost}</p>}
-                    {card.set && <p>Set: {card.set}</p>}
-                    {card.MarketPrice && <p>Price: ${card.MarketPrice}</p>}
-                    <div className='bd-buttons'>
-                      <button onClick={() => addCardToDeck(card)}>Add to Deck</button>
-                      <button onClick={() => addCardToDeck(card, true)}>Add to Sideboard</button>
+                    </div>
+                    <div className="bd-card-info">
+                      {card.Name && <h2>{card.Name}</h2>}
+                      {card.Aspects && <p>Aspect: {card.Aspects.join(', ')}</p>}
+                      {card.Type && <p>Type: {card.Type}</p>}
+                      {card.Cost !== undefined && <p>Cost: {card.Cost}</p>}
+                      {card.Set && <p>Set: {card.Set}</p>}
+                      {card.MarketPrice && <p>Price: ${card.MarketPrice}</p>}
+                      <div className='bd-buttons'>
+                        <button onClick={() => addCardToDeck(card)}>Add to Deck</button>
+                        <button onClick={() => addCardToDeck(card, true)}>Add to Sideboard</button>
+                      </div>
                     </div>
                   </div>
                 </li>

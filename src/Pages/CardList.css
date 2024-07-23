@@ -50,6 +50,7 @@
     font-size: 30px;
 }
 
+/* Cards List Items*/
 .cl-card-list {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
@@ -68,16 +69,15 @@
     flex-direction: column;
     align-items: center;
     text-align: center;
-
-    height: 300px; /* Fixed height for uniform card size */
-    width: 150px; /* Fixed width for uniform card size */
-    overflow: hidden; /* Hide overflow content */
+    height: 325px;
+    width: 200px;
 }
 
 .cl-card-item img {
     width: 100%;
     height: auto;
     border-radius: 8px;
+    object-fit: contain;
 }
 
 .cl-card-item.horizontal img {
@@ -90,7 +90,6 @@
     font-size: 20px;
     margin-top: 10px;
     margin-bottom: 10px;
-
     word-wrap: break-word;
     overflow-wrap: break-word;
     white-space: normal;
@@ -114,6 +113,27 @@
     text-align: center;
 }
 
+.cl-card-image-div{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 250px;
+    width: 100%;
+    margin-bottom: 10px;
+    min-height: 225px;
+}
+
+.cl-card-info{
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    white-space: normal;
+    max-width: 100%;
+    height: 100%;
+}
+
 .cl-card-item p {
     font-size: 16px;
     margin-bottom: 5px;
@@ -126,20 +146,132 @@
     margin-top: 10px;
 }
 
-/* Cards List Items*/
-
-.cl-card-image-div{
+/* Sort and Filter */
+.cl-search{
     display: flex;
-    justify-content: center;
+    flex-direction: column;
     align-items: center;
-    min-height: 130px;
-    max-width: 200px;
+}
+
+.cl-search-bar{
+    display: flex;
+    flex-direction: row;
+}
+
+.cl-search-button {
+    background-color: transparent;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+}
+
+.cl-search-button img {
+    width: 30px;
+    height: 30px;
+    border: none;
+    background-color: transparent;
+    margin-left: 10px;
+}
+
+.cl-search-bar input{
+    background-color: #D9D9D9;
+    border: 2px black;
+    border-radius: 15px;
+    padding: 10px;
+    font-size: 18px;
+    width: 450px;
+}
+
+.cl-sortfilter{
+    display: flex;
+    flex-direction: row;
+    font-size: 18px;
+    justify-content: center;
+    gap: 200px;
+    width: 100%;
+    max-height: none;
+    transition: max-height 0.3s ease-out;
+}
+
+.cl-sortby, .cl-filterby{
+    position: relative;
     margin-bottom: 10px;
 }
 
-.cl-card-info{
-    word-wrap: break-word;
-    overflow-wrap: break-word;
-    white-space: normal;
-    max-width: 100%;
+.cl-sortby p, .cl-filterby p{
+    cursor: pointer;
+    font-size: 18px;
+}
+
+/*
+.cl-sorting-options, .cl-filtering-options, 
+.cl-filtering-choices{
+    display: flex;
+    position: absolute;
+    top: 20px;
+    text-decoration: none;
+    z-index: 1000;
+}
+*/
+
+.cl-sorting-options, .cl-filtering-options {
+    overflow: hidden;
+    max-height: 0;
+    transition: max-height 0.3s ease-out;
+    padding: 0 10px;
+}
+
+.cl-sorting-options.open, .cl-filtering-options.open {
+    max-height: fit-content;
+    transition: max-height 0.5s ease-in;
+}
+
+.cl-sorting-options ul, .cl-filtering-options ul, 
+.cl-filtering-choices ul{
+    position: absolute;
+    width: 300px;
+    padding-left: 0;
+    list-style-type: none;
+    margin-top: 10px;
+}
+
+.cl-sorting-options, .cl-filtering-options, 
+.cl-filtering-choices ul:active{
+    display: block;
+}
+
+.cl-sorting-options, .cl-filtering-options, 
+.cl-filtering-choices li{
+    margin-bottom: 10px;
+    cursor: pointer;
+}
+
+.cl-aspect-options, .cl-type-options, 
+.cl-cost-options, .cl-set-options{
+    padding-left: 15px;
+}
+
+.cl-aspect-options input[type="checkbox"], 
+.cl-type-options input[type="checkbox"], 
+.cl-cost-options input[type="checkbox"], 
+.cl-set-options input[type="checkbox"]{
+    margin-right: 10px;
+    appearance: none;
+    width: 15px;
+    height: 15px;
+    border: 1px solid #000000;
+    border-radius: 2px;
+    cursor: pointer;
+}
+
+.cl-aspect-options input[type="checkbox"]:checked, 
+.cl-type-options input[type="checkbox"]:checked, 
+.cl-cost-options input[type="checkbox"]:checked, 
+.cl-set-options input[type="checkbox"]:checked{
+    background-color:#2196F3
+}
+
+.cl-search-bar {
+    margin-top: 15px;
+    margin-bottom: 15px;
 }

@@ -156,6 +156,8 @@
 .cl-search-bar{
     display: flex;
     flex-direction: row;
+    margin-top: 15px;
+    margin-bottom: 15px;
 }
 
 .cl-search-bar input{
@@ -170,93 +172,6 @@
 .cl-sortfilter{
     display: flex;
     flex-direction: row;
-    font-size: 18px;
-    justify-content: center;
-    gap: 200px;
-    width: 100%;
-    max-height: none;
-    transition: max-height 0.3s ease-out;
-}
-
-.cl-sortby, .cl-filterby{
-    position: relative;
-    margin-bottom: 10px;
-}
-
-.cl-sortby p, .cl-filterby p{
-    cursor: pointer;
-    font-size: 18px;
-}
-
-/*
-.cl-sorting-options, .cl-filtering-options, 
-.cl-filtering-choices{
-    display: flex;
-    position: absolute;
-    top: 20px;
-    text-decoration: none;
-    z-index: 1000;
-}
-*/
-
-.cl-sorting-options, .cl-filtering-options {
-    overflow: hidden;
-    max-height: 0;
-    transition: max-height 0.3s ease-out;
-    padding: 0 10px;
-}
-
-.cl-sorting-options.open, .cl-filtering-options.open {
-    max-height: fit-content;
-    transition: max-height 0.5s ease-in;
-}
-
-.cl-sorting-options ul, .cl-filtering-options ul, 
-.cl-filtering-choices ul{
-    position: absolute;
-    width: 300px;
-    padding-left: 0;
-    list-style-type: none;
-    margin-top: 10px;
-}
-
-.cl-sorting-options, .cl-filtering-options, 
-.cl-filtering-choices ul:active{
-    display: block;
-}
-
-.cl-sorting-options, .cl-filtering-options, 
-.cl-filtering-choices li{
-    margin-bottom: 10px;
-    cursor: pointer;
-}
-
-.cl-aspect-options, .cl-type-options, 
-.cl-cost-options, .cl-set-options{
-    padding-left: 15px;
-}
-
-.cl-aspect-options input[type="checkbox"], 
-.cl-type-options input[type="checkbox"], 
-.cl-cost-options input[type="checkbox"], 
-.cl-set-options input[type="checkbox"]{
-    margin-right: 10px;
-    appearance: none;
-    width: 15px;
-    height: 15px;
-    border: 1px solid #000000;
-    border-radius: 2px;
-    cursor: pointer;
-}
-
-.cl-aspect-options input[type="checkbox"]:checked, 
-.cl-type-options input[type="checkbox"]:checked, 
-.cl-cost-options input[type="checkbox"]:checked, 
-.cl-set-options input[type="checkbox"]:checked{
-    background-color:#2196F3
-}
-
-.cl-search-bar {
-    margin-top: 15px;
-    margin-bottom: 15px;
+    gap: 100px;
+    margin: 0 auto;
 }

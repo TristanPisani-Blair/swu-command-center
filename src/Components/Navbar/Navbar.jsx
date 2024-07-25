@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import axios from 'axios';
 import { useAuth0 } from '@auth0/auth0-react';
+import { useNavigate } from 'react-router-dom';
+import { v4 as uuidv4 } from 'uuid';
 import './Navbar.css';
 import logo from '../Assets/command-center-logo.png';
 import arrow from '../Assets/down-arrow.png';
@@ -11,6 +13,7 @@ import loginicon from '../Assets/login.png'
 const Navbar = () => {
   const { loginWithRedirect, logout, isAuthenticated, user } = useAuth0();
   const [username, setUsername] = useState('');
+  const navigate = useNavigate();
 
   {/*
   console.log('isAuthenticated:', isAuthenticated);
@@ -39,6 +42,11 @@ const Navbar = () => {
     fetchUsername();
   }, [isAuthenticated, user]);
 
+  const createNewDeck = () => {
+    const newDeckId = uuidv4();  // Generate a new unique ID for the new deck
+    navigate(`/build-a-deck/${newDeckId}`);  // Navigate to the BuildADeck page with the new deck ID
+  };
+
   return (
     <div className='navbar'>
       <div className="nav-logo">
@@ -60,8 +68,8 @@ const Navbar = () => {
             </Link>
             <div className="dropdown-content">
               <Link to="/collection">My Collection</Link>
-              <Link to="/build-a-deck">Build a Deck</Link>
-              <Link to="/cardlist">All Cards</Link>
+              <a onClick={createNewDeck}>Build a Deck</a>
+              <Link to="/all-cards">All Cards</Link>
             </div>
           </li>
           <li className="dropdown">

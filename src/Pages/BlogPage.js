@@ -186,10 +186,6 @@ const BlogPage = () => {
     }
   };
 
-  if (!isAuthenticated) {
-    return <p>User not logged in.</p>;
-  }
-
   if (!blogPost) {
     return <p>Loading...</p>;
   }

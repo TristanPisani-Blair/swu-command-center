@@ -82,6 +82,7 @@ body {
     text-decoration: none;
     color: white;
     font-size: 15px;
+    cursor: pointer;
 }
 
 .dropdown:hover .dropdown-content {

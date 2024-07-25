@@ -32,7 +32,7 @@ function App() {
       <Route path="/blogs" element={<Blogs/>} />
       <Route path="/blog/:author/:title" element={<BlogPage/>} />
       <Route path="/account" element={<Account/>} />
-      <Route path="/cardlist" element={<CardList/>} />
+      <Route path="/all-cards" element={<CardList/>} />
       <Route path="/card-database" element={<CardDatabase />} />
       <Route path="/card-list" element={<CardList />} />
       <Route path="/card/:number/:name" element={<CardPage/>} />

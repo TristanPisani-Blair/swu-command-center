@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useAuth0 } from '@auth0/auth0-react';
 import axios from 'axios';
@@ -13,6 +13,8 @@ const Blogs = () => {
   const [blogTitle, setBlogTitle] = useState('');
   const [blogContent, setBlogContent] = useState('');
   const [blogs, setBlogs] = useState([]);
+  const [isPublic, setIsPublic] = useState(true);
+  const [allowComments, setAllowComments] = useState(true);
   const [userSettings, setUserSettings] = useState({});
   const [sortBy, setSortBy] = useState('');
   const [error, setError] = useState('');
@@ -40,6 +42,7 @@ const Blogs = () => {
     fetchUsername();
   }, [isAuthenticated, user]);
 
+  /*
   // Fetch user settings
   const fetchUserSettings = async () => {
     try {
@@ -49,12 +52,16 @@ const Blogs = () => {
       console.error('Error fetching user settings:', error);
     }
   };
+  */
 
   // Fetch blog data from the database
-  const fetchBlogs = async () => {
+  const fetchBlogs = useCallback(async () => {
     try {
       const response = await axios.get('http://localhost:4000/public-blogs');
       let fetchedBlogs = response.data;
+
+      // Filter out private blogs
+      fetchedBlogs = fetchedBlogs.filter(blog => blog.isPublic);
 
       return fetchedBlogs;
     } catch (error) {
@@ -62,7 +69,7 @@ const Blogs = () => {
       setLoading(false);
       return [];
     }
-  };
+  }, []);
 
   const handleSort = (option, blogsToSort) => {
     // Create a copy of the original data
@@ -154,9 +161,9 @@ const Blogs = () => {
       author: username,
       commentCount: 0,
       comments: [],
-      isNews: false,
-      isPublic: true,
-      allowComments: true
+      isNews: username === 'CommandCenterDev',
+      isPublic,
+      allowComments
     };
 
     console.log("New Blog Post:", newBlogPost);
@@ -170,6 +177,14 @@ const Blogs = () => {
       setBlogs([...blogs, response.data]);
 
       handleCloseModal();
+
+      // Re-fetch the blogs and filter out private blogs
+      let fetchedBlogs = await fetchBlogs();
+      fetchedBlogs = fetchedBlogs.filter(blog => blog.isPublic);
+
+      // Update the state with the new list of blogs
+      const sortedBlogs = handleSort(sortBy, fetchedBlogs);
+      setBlogs(sortedBlogs);
     } catch (error) {
       console.error("There was an error saving the blog post.", error);
       setError("There was an error saving the blog post.");
@@ -197,7 +212,6 @@ const Blogs = () => {
     };
 
     initializeBlogs();
-    fetchUserSettings();
   }, [location.search]);
 
     return (
@@ -254,6 +268,35 @@ const Blogs = () => {
                   value={blogContent}
                   onChange={(e) => setBlogContent(e.target.value)}>
                 </textarea>
+
+                <div className="blog-options">
+                  <div className="option-item">
+                    <p>Public Blog</p>
+                    <label htmlFor="is-public" className="blogs-switch">
+                      <input
+                        type="checkbox"
+                        id="is-public"
+                        checked={isPublic}
+                        onChange={(e) => setIsPublic(e.target.checked)}
+                      />
+                      <span className="blogs-slider"></span>
+                    </label>
+                  </div>
+
+                  <div className="option-item">
+                  <p>Allow Comments</p>
+                    <label htmlFor="allow-comments" className="blogs-switch">
+                      <input
+                        type="checkbox"
+                        id="allow-comments"
+                        checked={allowComments}
+                        onChange={(e) => setAllowComments(e.target.checked)}
+                      />
+                      <span className="blogs-slider"></span>
+                    </label>
+                  </div>
+
+                </div>
 
                 {error && <p className="error-message">{error}</p>}
 

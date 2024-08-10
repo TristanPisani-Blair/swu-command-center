@@ -11,7 +11,12 @@ const CardList = () => {
   const [sortOption, setSortOption] = useState('');
   const [showSortingOptions, setShowSortingOptions] = useState(false);
   const [showFilteringOptions, setShowFilteringOptions] = useState(false);
-  const [selectedFilters, setSelectedFilters] = useState([]);
+  const [filters, setFilters] = useState({
+    aspects: [],
+    type: [],
+    cost: [],
+    set: []
+  });  const [filteredCards, setFilteredCards] = useState(cards);
   const [showAspectChoices, setShowAspectChoices] = useState(false);
   const [showTypeChoices, setShowTypeChoices] = useState(false);
   const [showCostChoices, setShowCostChoices] = useState(false);
@@ -44,18 +49,76 @@ const CardList = () => {
     fetchCards();
   }, []);
 
-  const handleCheckboxChange = (itemName) => {
-    if (selectedFilters.includes(itemName)) {
-        setSelectedFilters(selectedFilters.filter(filter => filter !== itemName));
-    } else {
-        setSelectedFilters([...selectedFilters, itemName]);
-    }
+  // Filter functions
+  const handleCheckboxChange = (category, value) => {
+    setFilters(prevFilters => {
+      // Get the current array of selected values for the category
+      const categoryArray = prevFilters[category] || [];
+
+      // Check if the value is already in the array
+      const isValueInArray = categoryArray.includes(value);
+  
+      // If it's already selected, remove it, otherwise add it
+      const updatedValues = isValueInArray 
+        ? categoryArray.filter(item => item !== value)
+        : [...categoryArray, value];
+  
+      return {
+        ...prevFilters,
+        [category]: updatedValues,
+      };
+    });
   };
 
-  // Search function to filter cards by user input
-  const filteredCards = cards.filter(card =>
-    search.trim() === '' || card.Name.toLowerCase().includes(search.toLowerCase())
-  );
+  const filterCards = () => {
+    let updatedCards = cards;
+
+    const normalizedFilters = {
+      aspects: filters.aspects.map(filter => filter.toLowerCase()),
+      type: filters.type.map(filter => filter.toLowerCase()),
+      cost: filters.cost.map(filter => filter.toLowerCase()),
+      set: filters.set.map(filter => filter.toLowerCase()),
+    };
+
+    // Filter by Aspect
+    if (normalizedFilters.aspects.length > 0) {
+      updatedCards = updatedCards.filter(card =>
+        card.Aspects && Array.isArray(card.Aspects)
+          ? card.Aspects.some(aspect => normalizedFilters.aspects.includes(aspect.toLowerCase()))
+          : false
+      );
+    }
+
+    // Filter by Type
+    if (normalizedFilters.type.length > 0) {
+      updatedCards = updatedCards.filter(card =>
+        card.Type && normalizedFilters.type.includes(card.Type.toLowerCase())
+      );
+    }
+
+    // Filter by Cost
+    if (normalizedFilters.cost.length > 0) {
+      updatedCards = updatedCards.filter(card =>
+        card.Cost !== undefined && normalizedFilters.cost.includes(card.Cost)
+      );
+    }
+
+    // Filter by Set
+    if (normalizedFilters.set.length > 0) {
+      updatedCards = updatedCards.filter(card =>
+        card.Set && normalizedFilters.set.includes(card.Set.toLowerCase())
+      );
+    }
+
+    // Filter by Search Input
+    if (search.trim() !== '') {
+      updatedCards = updatedCards.filter(card =>
+        card.Name.toLowerCase().includes(search.toLowerCase())
+      );
+    }
+
+    setFilteredCards(updatedCards);
+  };
 
   // Sort functions
   const sortCards = (cards) => {
@@ -73,6 +136,25 @@ const CardList = () => {
     }
   };
 
+  // Display sort and filtered by text
+  const getSortingText = () => {
+    if (!sortOption) return '';
+    
+    return sortOption.includes('name') 
+      ? `Sorted by: Card Name (${sortOption.includes('asc') ? 'A-Z' : 'Z-A'})`
+      : `Sorted by: Card Number (${sortOption.includes('asc') ? 'Ascending' : 'Descending'})`;
+  };
+  
+  const getFilteringText = () => {
+    const activeFilters = [];
+    if (filters.aspects.length > 0) activeFilters.push(`Aspect: ${filters.aspects.join(', ')}`);
+    if (filters.type.length > 0) activeFilters.push(`Type: ${filters.type.join(', ')}`);
+    if (filters.cost.length > 0) activeFilters.push(`Cost: ${filters.cost.join(', ')}`);
+    if (filters.set.length > 0) activeFilters.push(`Set: ${filters.set.join(', ')}`);
+  
+    return activeFilters.length > 0 ? `Filtered by: ${activeFilters.join(' | ')}` : '';
+  };
+
   // List of cards sorted
   const sortedAndFilteredCards = sortCards(filteredCards);
 
@@ -81,6 +163,11 @@ const CardList = () => {
     const cardName = encodeURIComponent(card.Name);
     navigate(`/card/${cardNumber}/${cardName}`);
   };
+
+  // Update filtered cards whenever filters or search input change
+  useEffect(() => {
+    filterCards();
+  }, [filters, search, cards]);
   
   return (
     <div>
@@ -132,125 +219,99 @@ const CardList = () => {
               <p className="cl-clickable" onClick={() => setShowFilteringOptions(!showFilteringOptions)}>
                   Filter By ▼
               </p>
+
               {showFilteringOptions && (
                 <div className="cl-filtering-options">
                   <ul>
+                    {/* Aspect Category */}
                     <li className="cl-clickable" onClick={() => setShowAspectChoices(!showAspectChoices)}>Aspect ▼</li>
-                      {showAspectChoices && (
-                        <div className="cl-aspect-options">
-                            <li>
-                              <input type="checkbox" id="aggression" value="Aggression" onChange={() => handleCheckboxChange('Aggression')} />
-                              <label htmlFor="aggression"> Aggression</label>
-                            </li>
-                            <li>
-                              <input type="checkbox" id="command" value="Command" onChange={() => handleCheckboxChange('Command')} />
-                              <label htmlFor="command"> Command</label>
-                            </li>
-                            <li>
-                              <input type="checkbox" id="cunning" value="Cunning" onChange={() => handleCheckboxChange('Cunning')} />
-                              <label htmlFor="cunning"> Cunning</label>
-                            </li>
-                            <li>
-                              <input type="checkbox" id="heroism" value="Heroism" onChange={() => handleCheckboxChange('Heroism')} />
-                              <label htmlFor="heroism"> Heroism</label>
-                            </li>
-                            <li>
-                              <input type="checkbox" id="vigilance" value="Vigilance" onChange={() => handleCheckboxChange('Vigilance')} />
-                              <label htmlFor="vigilance"> Vigilance</label>
-                            </li>
-                            <li>
-                              <input type="checkbox" id="villainy" value="Villainy" onChange={() => handleCheckboxChange('Villainy')} />
-                              <label htmlFor="villainy"> Villainy</label>
-                            </li>
-                        </div>
-                      )}
+                    {showAspectChoices && (
+                      <ul className="cl-aspect-options">
+                        {/* Aspect Checkbox Options */}
+                        {['Aggression', 'Command', 'Cunning', 'Heroism', 'Vigilance', 'Villainy'].map(option => (
+                          <li key={option}>
+                            <input 
+                              type="checkbox" 
+                              id={option.toLowerCase()} 
+                              value={option} 
+                              checked={filters.aspects.includes(option)}
+                              onChange={() => handleCheckboxChange('aspects', option)} 
+                            />
+                            <label htmlFor={option.toLowerCase()}>{option}</label>
+                          </li>
+                        ))}
+                      </ul>
+                    )}
 
+                    {/* Type Category */}
                     <li className="cl-clickable" onClick={() => setShowTypeChoices(!showTypeChoices)}>Type ▼</li>
-                      {showTypeChoices && (
-                        <div className="cl-type-options">
-                            <li>
-                              <input type="checkbox" id="base" value="Base" onChange={() => handleCheckboxChange('Base')} />
-                              <label htmlFor="base"> Base</label>
-                            </li>
-                            <li>
-                              <input type="checkbox" id="event" value="Event" onChange={() => handleCheckboxChange('Event')} />
-                              <label htmlFor="event"> Event</label>
-                            </li>
-                            <li>
-                              <input type="checkbox" id="leader" value="Leader" onChange={() => handleCheckboxChange('Leader')} />
-                              <label htmlFor="leader"> Leader</label>
-                            </li>
-                            <li>
-                              <input type="checkbox" id="token-upgrade" value="Token Upgrade" onChange={() => handleCheckboxChange('Token Upgrade')} />
-                              <label htmlFor="token-upgrade"> Token Upgrade</label>
-                            </li>
-                            <li>
-                              <input type="checkbox" id="unit" value="Unit" onChange={() => handleCheckboxChange('Unit')} />
-                              <label htmlFor="unit"> Unit</label>
-                            </li>
-                            <li>
-                              <input type="checkbox" id="upgrade" value="Upgrade" onChange={() => handleCheckboxChange('Upgrade')} />
-                              <label htmlFor="upgrade"> Upgrade</label>
-                            </li>
-                        </div>
-                      )}
+                    {showTypeChoices && (
+                      <ul className="cl-type-options">
+                        {/* Type Checkbox Options */}
+                        {['Base', 'Event', 'Leader', 'Token Upgrade', 'Unit', 'Upgrade'].map(option => (
+                          <li key={option}>
+                            <input 
+                              type="checkbox" 
+                              id={option.toLowerCase().replace(' ', '-')} 
+                              value={option} 
+                              checked={filters.type.includes(option)}
+                              onChange={() => handleCheckboxChange('type', option)} 
+                            />
+                            <label htmlFor={option.toLowerCase().replace(' ', '-')}>{option}</label>
+                          </li>
+                        ))}
+                      </ul>
+                    )}
 
+                    {/* Cost Category */}
                     <li className="cl-clickable" onClick={() => setShowCostChoices(!showCostChoices)}>Cost ▼</li>
-                      {showCostChoices && (
-                          <div className="cl-cost-options">
-                            <li>
-                              <input type="checkbox" id="zero" value="Zero" onChange={() => handleCheckboxChange('Zero')} />
-                              <label htmlFor="zero"> 0</label>
-                            </li>
-                            <li>
-                              <input type="checkbox" id="one" value="One" onChange={() => handleCheckboxChange('One')} />
-                              <label htmlFor="one"> 1</label>
-                            </li>
-                            <li>
-                              <input type="checkbox" id="two" value="Two" onChange={() => handleCheckboxChange('Two')} />
-                              <label htmlFor="two"> 2</label>
-                            </li>
-                            <li>
-                              <input type="checkbox" id="three" value="Three" onChange={() => handleCheckboxChange('Three')} />
-                              <label htmlFor="three"> 3</label>
-                            </li>
-                            <li>
-                              <input type="checkbox" id="four" value="Four" onChange={() => handleCheckboxChange('Four')} />
-                              <label htmlFor="four"> 4</label>
-                            </li>
-                            <li>
-                              <input type="checkbox" id="five" value="Five" onChange={() => handleCheckboxChange('Five')} />
-                              <label htmlFor="five"> 5</label>
-                            </li>
-                              <li>
-                              <input type="checkbox" id="six" value="Six" onChange={() => handleCheckboxChange('Six')} />
-                              <label htmlFor="six"> 6</label>
-                            </li>
-                            <li>
-                              <input type="checkbox" id="seven" value="Seven" onChange={() => handleCheckboxChange('Seven')} />
-                              <label htmlFor="seven"> 7</label>
-                            </li>
-                          </div>
-                      )}
+                    {showCostChoices && (
+                      <ul className="cl-cost-options">
+                        {/* Cost Checkbox Options */}
+                        {['0', '1', '2', '3', '4', '5', '6', '7'].map(option => (
+                          <li key={option}>
+                            <input 
+                              type="checkbox" 
+                              id={`cost-${option}`} 
+                              value={option} 
+                              checked={filters.cost.includes(option)}
+                              onChange={() => handleCheckboxChange('cost', option)} 
+                            />
+                            <label htmlFor={`cost-${option}`}>{option}</label>
+                          </li>
+                        ))}
+                      </ul>
+                    )}
 
+                    {/* Set Category */}
                     <li className="cl-clickable" onClick={() => setShowSetChoices(!showSetChoices)}>Set ▼</li>
-                      {showSetChoices && (
-                        <div className="cl-set-options">
-                            <li>
-                              <input type="checkbox" id="shadows-of-the-galaxy" value="Shadows of the Galaxy" onChange={() => handleCheckboxChange('Shadows of the Galaxy')} />
-                              <label htmlFor="shadows-of-the-galaxy"> Shadows of the Galaxy</label>
-                            </li>
-                            <li>
-                              <input type="checkbox" id="spark-of-rebellion" value="Spark of Rebellion" onChange={() => handleCheckboxChange('Spark of Rebellion')} />
-                              <label htmlFor="spark-of-rebellion"> Spark of Rebellion</label>
-                            </li>
-                        </div>
-                      )}
+                    {showSetChoices && (
+                      <ul className="cl-set-options">
+                        {/* Set Checkbox Options */}
+                        {['SOR', 'SHD'].map(option => (
+                          <li key={option}>
+                            <input 
+                              type="checkbox" 
+                              id={option.toLowerCase().replace(/ /g, '-')} 
+                              value={option} 
+                              checked={filters.set.includes(option)}
+                              onChange={() => handleCheckboxChange('set', option)} 
+                            />
+                            <label htmlFor={option.toLowerCase().replace(/ /g, '-')}>{option}</label>
+                          </li>
+                        ))}
+                      </ul>
+                    )}
                   </ul>
                 </div>
               )}
 
             </div>
+          </div>
+
+          <div className="cl-active-filters">
+            <p className="sorting-text">{getSortingText()}</p>
+            <p className="filtering-text">{getFilteringText()}</p>
           </div>
 
           {error && <div className="error">{error}</div>}

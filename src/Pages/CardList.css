@@ -147,20 +147,20 @@
 }
 
 /* Sort and Filter */
-.cl-search{
+.cl-search {
     display: flex;
     flex-direction: column;
     align-items: center;
 }
 
-.cl-search-bar{
+.cl-search-bar {
     display: flex;
     flex-direction: row;
     margin-top: 15px;
     margin-bottom: 15px;
 }
 
-.cl-search-bar input{
+.cl-search-bar input {
     background-color: #D9D9D9;
     border: 2px black;
     border-radius: 15px;
@@ -169,9 +169,75 @@
     width: 450px;
 }
 
-.cl-sortfilter{
+.cl-sortfilter {
     display: flex;
     flex-direction: row;
     gap: 100px;
     margin: 0 auto;
+}
+
+.cl-sorting-options {
+    cursor: pointer;
+}
+
+.cl-filtering-options li {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-left: 15px;
+}
+
+.cl-clickable {
+    cursor: pointer; 
+}
+
+.cl-filtering-options .cl-aspect-options,
+.cl-filtering-options .cl-type-options,
+.cl-filtering-options .cl-cost-options,
+.cl-filtering-options .cl-set-options {
+    margin-left: 15px;
+}
+
+.cl-filtering-options input[type="checkbox"] {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;  
+    margin-right: 10px;
+    width: 18px;
+    height: 15px;
+    background-color: #ffffff;
+    border: 1px solid #000;
+    border-radius: 4px;
+    cursor: pointer;
+    position: relative;
+    outline: none;  
+}
+
+.cl-filtering-options input[type="checkbox"]:checked {
+    background-color: #2196F3;
+}
+
+.cl-filtering-options input[type="checkbox"]::before {
+    display: block;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    background: transparent;
+    transform: translate(-50%, -50%);
+}
+
+.cl-active-filters {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 0;
+}
+  
+.sorting-text {
+    text-align: left;
+    flex: 1;
+}
+  
+.filtering-text {
+    text-align: right;
+    flex: 1;
 }

@@ -16,8 +16,8 @@ const BlogPage = () => {
   const [showCommentModal, setShowCommentModal] = useState(false);
   const [blogTitle, setBlogTitle] = useState("");
   const [blogContent, setBlogContent] = useState("");
-  const [isPublic, setIsPublic] = useState('');
-  const [allowComments, setAllowComments] = useState('');
+  const [isPublic, setIsPublic] = useState(true);
+  const [allowComments, setAllowComments] = useState(true);
   const [modalTitle, setModalTitle] = useState('');
   const [modalContent, setModalContent] = useState('');
   const [newComment, setNewComment] = useState('');

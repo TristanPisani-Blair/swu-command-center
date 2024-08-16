@@ -6,11 +6,11 @@ const path = require('path');
 const mongoose = require('mongoose');
 const cors = require('cors');
 const bodyParser = require('body-parser');
-const blogRoutes = require('./routes/blog');
+const blogRoutes = require('./routes (Express)/blog');
 const deckRoutes = require('./routes (Express)/deck');
-const authRoutes = require('./routes/auth');
-const deckRoutes = require('./routes/cards');  // Assuming cards.js handles deck routes
-const userRoutes = require('./routes/users');
+const authRoutes = require('./routes (Express)/auth');
+const cardRoutes = require('./routes (Express)/cards'); 
+const userRoutes = require('./routes (Express)/users');
 
 const app = express();
 
@@ -64,11 +64,6 @@ app.get('/api/cards/sor', (req, res) => {
   res.redirect('https://api.swu-db.com/cards/sor?format=json&pretty=true');
 });
 
-// Connect to MongoDB
-const dbOptions = {useNewUrlParser:true, useUnifiedTopology:true};
-mongoose.connect(process.env.MONGODB_URI, dbOptions)
-.then(() => console.log('DB connected.'))
-.catch(err => console.log('Error connecting to MongoDB.'));
 
 app.use((req, res, next) => {
   console.log(req.headers);

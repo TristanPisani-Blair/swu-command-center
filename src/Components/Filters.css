@@ -1,0 +1,19 @@
+.filters {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .filter-group {
+    margin-bottom: 15px;
+  }
+  
+  .filter-group label {
+    font-weight: bold;
+    display: block;
+    margin-bottom: 5px;
+  }
+  
+  .filter-group input[type="checkbox"] {
+    margin-right: 10px;
+  }
+  

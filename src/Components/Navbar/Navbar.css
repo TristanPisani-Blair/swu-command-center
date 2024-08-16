@@ -102,10 +102,11 @@ body {
     align-items: center;
 }
   
-.auth-buttons .username {
+
 .auth-buttons .username {
     margin-right: 10px;
   }
+  
   
 #user-icon {
     width: 20px;
@@ -113,7 +114,7 @@ body {
     margin-left: 5px;
 }
   
-button.username {
+
 button.username {
     background: none;
     border: none;
@@ -122,7 +123,7 @@ button.username {
     display: flex;
     align-items: center;
 }
-}
+
 
 #dropdown-arrow {
     width: 12px;
@@ -151,7 +152,7 @@ button.username {
     color: inherit;
 }
   
-#user-icon {
+
 #user-icon {
     width: 20px;
 }

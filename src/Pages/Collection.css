@@ -13,184 +13,84 @@ body{
     margin-top: 110px;
 }
 
-.wrapper{
-    display: grid;
-    grid-template-columns: 150px auto;
-}
-
-.collection-leftNav{
-    position: fixed;
-    font-size: 18px;
-    font-weight: 500;
-    font-family: 'Open Sans Condensed', sans-serif;
-    padding: 15px;
-    grid-column: 1;
-    padding-left: 20px;
-}
-
-.collection-leftNav li{
-    list-style: none;
+.filters {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px;
+  }
+  
+  .filter-category {
     margin-bottom: 10px;
-    text-decoration: none;
-}
-
-.collection-leftNav a{
-    color: #000000;
-    text-decoration: none;
-}
-
-.collection-body{
-    grid-column: 2;
+  }
+  
+  .filter-option {
     display: flex;
-    flex-direction: column;
-    padding: 15px;
-}
-
-.collection-body h1{
-    font-family: 'Open Sans Condensed', sans-serif;
-    font-size: 30px;
-}
-
-.collection-search{
-    display: flex;
-    flex-direction: column;
     align-items: center;
-}
-
-.collection-value{
-    font-size: 20px;
-    margin-bottom: 15px;
-}
-
-.search-bar{
-    display: flex;
-    flex-direction: row;
-}
-
-.search-button {
-    background-color: transparent;
-    border: none;
-    padding: 0;
-    cursor: pointer;
-}
-
-.search-button img {
-    width: 30px;
-    height: 30px;
-    border: none;
-    background-color: transparent;
-    margin-left: 10px;
-}
-
-.search-bar input{
-    background-color: #D9D9D9;
-    border: 2px black;
-    border-radius: 15px;
-    padding: 10px;
-    font-size: 18px;
-    width: 450px;
-}
-
-.collection-view{
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    margin-top: 15px;
-    margin-bottom: 15px;
-}
-
-.collection-view p{
-    font-size: 15px;
-    margin-right: 15px;
-}
-
-.collection-form-group-checkbox{
-    display: flex;
-    flex-direction: row;
-}
-
-.collection-form-group-checkbox input{
-    appearance: none;
-    width: 18px;
-    height: 18px;
-    border-radius: 20px;
-    outline: none;
+  }
+  
+  .filter-option input {
     margin-right: 10px;
-    background-color: #D9D9D9;
-}
-
-.collection-form-group-checkbox input:checked {
-    background-color: #2196F3;
-}
-
-.collection-sortfilter{
+  }
+  
+  /* src/components/CardItem.css */
+  .card-list {
     display: flex;
-    flex-direction: row;
-    font-size: 18px;
-    justify-content: center;
-    gap: 200px;
+    flex-wrap: wrap;
+    gap: 20px;
+  }
+  
+  .card-item {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    width: 200px;
+  }
+  
+  .card-img img {
     width: 100%;
-}
-
-.sortby, .filterby{
-    position: relative;
-}
-
-.sortby p, .filterby p{
-    cursor: pointer;
-    font-size: 18px;
-}
-
-.sorting-options, .filtering-options, 
-.filtering-choices{
+    height: auto;
+  }
+  
+  .card-info {
+    padding: 10px;
+  }
+  
+  .card-info h3 {
+    font-size: 1.2em;
+    margin: 0 0 10px;
+  }
+  
+  .card-info p {
+    margin: 5px 0;
+  }
+  
+  /* src/components/Collection.css */
+  .container {
     display: flex;
-    position: absolute;
-    top: 20px;
-    text-decoration: none;
-    z-index: 1000;
-}
-
-.sorting-options ul, .filtering-options ul, 
-.filtering-choices ul{
-    position: absolute;
-    width: 300px;
-    padding-left: 0;
-    list-style-type: none;
-    margin-top: 10px;
-}
-
-.sorting-options, .filtering-options, 
-.filtering-choices ul:active{
-    display: block;
-}
-
-.sorting-options, .filtering-options, 
-.filtering-choices li{
-    margin-bottom: 10px;
-    cursor: pointer;
-}
-
-.aspect-options, .type-options, 
-.cost-options, .set-options{
-    padding-left: 15px;
-}
-
-.aspect-options input[type="checkbox"], 
-.type-options input[type="checkbox"], 
-.cost-options input[type="checkbox"], 
-.set-options input[type="checkbox"]{
-    margin-right: 10px;
-    appearance: none;
-    width: 15px;
-    height: 15px;
-    border: 1px solid #000000;
-    border-radius: 2px;
-    cursor: pointer;
-}
-
-.aspect-options input[type="checkbox"]:checked, 
-.type-options input[type="checkbox"]:checked, 
-.cost-options input[type="checkbox"]:checked, 
-.set-options input[type="checkbox"]:checked{
-    background-color:#2196F3
-}
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .collection-body {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-width: 1200px;
+    padding: 20px;
+  }
+  
+  .collection-search {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    margin-bottom: 20px;
+  }
+  
+  .search-bar input {
+    width: 100%;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+  }

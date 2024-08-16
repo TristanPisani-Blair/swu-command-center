@@ -16,7 +16,8 @@ const CardList = () => {
     type: [],
     cost: [],
     set: []
-  });  const [filteredCards, setFilteredCards] = useState(cards);
+  });  
+  const [filteredCards, setFilteredCards] = useState(cards);
   const [showAspectChoices, setShowAspectChoices] = useState(false);
   const [showTypeChoices, setShowTypeChoices] = useState(false);
   const [showCostChoices, setShowCostChoices] = useState(false);
@@ -310,8 +311,35 @@ const CardList = () => {
           </div>
 
           <div className="cl-active-filters">
-            <p className="sorting-text">{getSortingText()}</p>
-            <p className="filtering-text">{getFilteringText()}</p>
+            <div className="sorting-text-container">
+              <p className="sorting-text">{getSortingText()}</p>
+              {sortOption && (
+                <button 
+                  className="clear-button" 
+                  onClick={() => {
+                    setSortOption('name-asc');
+                    setTimeout(() => {
+                      setSortOption('');
+                    }, 0);
+                  }}
+                >
+                  X
+                </button>
+              )}
+            </div>
+            <div className="filtering-text-container">
+              <p className="filtering-text">{getFilteringText()}</p>
+              {(filters.aspects.length > 0 || filters.type.length > 0 || filters.cost.length > 0 || filters.set.length > 0) && (
+                <button className="clear-button" onClick={() => setFilters({
+                  aspects: [],
+                  type: [],
+                  cost: [],
+                  set: []
+                })}>
+                  X
+                </button>
+              )}
+            </div>          
           </div>
 
           {error && <div className="error">{error}</div>}

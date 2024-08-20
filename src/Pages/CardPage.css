@@ -1,0 +1,110 @@
+@import url('https://fonts.googleapis.com/css2?family=Red+Hat+Display:wght@400;500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans+Condensed:wght@300&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.body {
+    font-family: 'Red Hat Display', sans-serif;
+    margin-bottom: 60px;
+    margin-top: 110px;
+}
+
+.cardpage-wrapper {
+    display: grid;
+    grid-template-columns: 150px auto 150px;
+}
+
+.cardpage-leftNav {
+    position: fixed;
+    font-size: 18px;
+    font-weight: 500;
+    font-family: 'Open Sans Condensed', sans-serif;
+    padding: 15px;
+    grid-column: 1;
+    padding-left: 20px;
+}
+
+.cardpage-leftNav li {
+    list-style: none;
+    margin-bottom: 10px;
+    text-decoration: none;
+}
+
+.cardpage-leftNav a {
+    color: #000000;
+}
+
+.cardpage-body {
+    grid-column: 2;
+    display: flex;
+    flex-direction: column;
+    padding: 15px;
+    font-family: 'Red Hat Display', sans-serif;
+}
+
+.cp-info-section {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.cp-card-image {
+    max-width: 100%;
+    max-height: 350px; 
+    height: auto;
+    display: block;
+}
+
+.cp-market-price {
+    margin-top: 20px;
+    font-size: 20px;;
+}
+
+.cp-info-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 15px;
+}
+
+.cp-card-info {
+    background-color: #D9D9D9;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 15px;
+    text-align: center;
+    width: fit-content;
+    margin-top: 20px;
+    padding-left: 100px;
+    padding-right: 100px;
+    text-wrap: nowrap;
+}
+
+.cp-front-text {
+    max-width: 500px;
+    text-wrap: pretty;
+    margin: 0 auto;
+}
+
+.cp-card-info p {
+    font-size: 18px;
+    font-weight: 500;
+}
+
+.card-info-sides {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 125px;
+    padding-left: 30px;
+    padding-right: 30px;
+    padding-top: 15px;
+}
+
+.card-right-info, .card-left-info {
+    text-align: left;
+}

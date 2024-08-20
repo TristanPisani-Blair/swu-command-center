@@ -13,10 +13,9 @@ body{
     margin-top: 110px;
 }
 
-.wrapper{
+.blogpage-wrapper{
     display: grid;
-    grid-template-columns: 150px auto 200px;
-    padding-right: 200px;
+    grid-template-columns: 200px auto 200px;
 }
 
 .blog-page-leftNav{

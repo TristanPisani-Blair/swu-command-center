@@ -124,7 +124,7 @@ const Home = () => {
                   </Link>
                 </div>
                 <div className="all-cards-box">
-                  <Link to="/allcards">
+                  <Link to="/all-cards">
                     <div className="all-cards-box-contents">
                       <img src={trooper} alt="all-cards" />
                       <p>Explore Cards</p>

@@ -13,9 +13,7 @@ const Account = () => {
   const [newUsername, setNewUsername] = useState('');
   const [error, setError] = useState('');
   const [publicDecks, setPublicDecks] = useState(true);
-  const [publicBlogs, setPublicBlogs] = useState(true);
   const [commentsOnDecks, setCommentsOnDecks] = useState(true);
-  const [commentsOnBlogs, setCommentsOnBlogs] = useState(true);
   const [usernameError, setUsernameError] = useState('');
   const [refreshNavbar, setRefreshNavbar] = useState(false);
 
@@ -35,9 +33,7 @@ const Account = () => {
             params: { email: user.email }
           });
           setPublicDecks(settingsResponse.data.publicDecks);
-          setPublicBlogs(settingsResponse.data.publicBlogs);
           setCommentsOnDecks(settingsResponse.data.commentsOnDecks);
-          setCommentsOnBlogs(settingsResponse.data.commentsOnBlogs);
         }
       } catch (error) {
         console.error('Error fetching user data:', error);
@@ -114,49 +110,17 @@ const Account = () => {
     updateUserSettings({ publicDecks: newValue });
   };
 
-  const handlePublicBlogsChange = async () => {
-    const newValue = !publicBlogs;
-    setPublicBlogs(newValue);
-    updateUserSettings({ publicBlogs: newValue });
-
-    try {
-      await axios.patch('http://localhost:4000/update-public-blogs', {
-          username,
-          isPublic: newValue
-      });
-    } catch (error) {
-        console.error('Error updating blog settings:', error);
-        setError('Failed to update blog settings.');
-    }
-  };
-
   const handleCommentsOnDecksChange = () => {
     const newValue = !commentsOnDecks;
     setCommentsOnDecks(newValue);
     updateUserSettings({ commentsOnDecks: newValue });
   };
 
-  const handleCommentsOnBlogsChange = async () => {
-    const newValue = !commentsOnBlogs;
-    setCommentsOnBlogs(newValue);
-    updateUserSettings({ commentsOnBlogs: newValue });
-
-    try {
-      await axios.patch('http://localhost:4000/update-public-blog-comments', {
-          username,
-          allowComments: newValue
-      });
-    } catch (error) {
-        console.error('Error updating blog settings:', error);
-        setError('Failed to update blog settings.');
-    }
-  };
-
     return (
       <div>
         <Navbar />
 
-        <div className="container" class="wrapper">
+        <div className="container" class="account-wrapper">
           <div className="account-settings-header">
             <h1>Account Settings</h1>
               <div>
@@ -176,16 +140,8 @@ const Account = () => {
 
               <div className="setting-item">
                 <p>Public decks</p>
-                  <label  className="switch">
-                    <input type="checkbox" checked={publicDecks} onChange={handlePublicDecksChange} />
-                    <span className="slider"></span>
-                  </label>
-              </div>
-
-              <div className="setting-item">
-                <p>Public blogs</p>
                   <label className="switch">
-                    <input type="checkbox" checked={publicBlogs} onChange={handlePublicBlogsChange} />
+                    <input type="checkbox" checked={publicDecks} onChange={handlePublicDecksChange} />
                     <span className="slider"></span>
                   </label>
               </div>
@@ -194,14 +150,6 @@ const Account = () => {
                 <p>Allow comments on decks</p>
                   <label className="switch">
                     <input type="checkbox" checked={commentsOnDecks} onChange={handleCommentsOnDecksChange} />
-                    <span className="slider"></span>
-                  </label>
-              </div>
-
-              <div className="setting-item">
-                <p>Allow comments on blogs</p>
-                  <label className="switch">
-                    <input type="checkbox" checked={commentsOnBlogs} onChange={handleCommentsOnBlogsChange} />
                     <span className="slider"></span>
                   </label>
               </div>
@@ -274,6 +222,9 @@ const Account = () => {
               </li>
               <li>
                 <a href="https://www.flaticon.com/free-icons/down-arrow" title="down arrow icons">Down arrow icons created by feen - Flaticon</a>
+              </li>
+              <li>
+              <a href="https://www.flaticon.com/free-icons/add-post" title="add post icons">Add post icons created by Icon Hubs - Flaticon</a>
               </li>
             </ul>
           </div>

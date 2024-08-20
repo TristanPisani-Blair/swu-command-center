@@ -82,6 +82,7 @@ body {
     text-decoration: none;
     color: white;
     font-size: 15px;
+    cursor: pointer;
 }
 
 .dropdown:hover .dropdown-content {
@@ -150,7 +151,6 @@ button.username {
   
 #user-icon {
     width: 20px;
-    height: auto;
 }
 
 .login-icon, .logout-icon {

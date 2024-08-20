@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import axios from 'axios';
 import { useAuth0 } from '@auth0/auth0-react';
+import { useNavigate } from 'react-router-dom';
+import { v4 as uuidv4 } from 'uuid';
 import './Navbar.css';
 import logo from '../Assets/command-center-logo.png';
 import arrow from '../Assets/down-arrow.png';
@@ -11,11 +13,14 @@ import loginicon from '../Assets/login.png'
 const Navbar = () => {
   const { loginWithRedirect, logout, isAuthenticated, user } = useAuth0();
   const [username, setUsername] = useState('');
+  const navigate = useNavigate();
 
+  {/*
   console.log('isAuthenticated:', isAuthenticated);
   if (isAuthenticated) {
     console.log('User:', user);
   }
+  */}
 
   useEffect(() => {
     const fetchUsername = async () => {
@@ -37,8 +42,12 @@ const Navbar = () => {
     fetchUsername();
   }, [isAuthenticated, user]);
 
-  return (
+  const createNewDeck = () => {
+    const newDeckId = uuidv4();  // Generate a new unique ID for the new deck
+    navigate(`/build-a-deck/${newDeckId}`);  // Navigate to the BuildADeck page with the new deck ID
+  };
 
+  return (
     <div className='navbar'>
       <div className="nav-logo">
         <img src={logo} alt='SWU Command Center Logo' />
@@ -51,18 +60,23 @@ const Navbar = () => {
         <ul className="nav-menu">
           <li><Link to="/home">Home</Link></li>
           <li><Link to="/how-to-play">How to Play</Link></li>
-          <li className="dropdown"><Link to="/collection">
-            Collection
-            <img id="dropdown-arrow" src={arrow} alt="Drop Down Arrow" /></Link>
+          <li><Link to="/my-decks">My Decks</Link></li>
+          <li className="dropdown">
+            <Link to="/collection">
+              Collection
+              <img id="dropdown-arrow" src={arrow} alt="Drop Down Arrow" />
+            </Link>
             <div className="dropdown-content">
               <Link to="/collection">My Collection</Link>
-              <Link to="/collection/build-a-deck">Build a Deck</Link>
-              <Link to="/collection/all-cards">All Cards</Link>
+              <a onClick={createNewDeck}>Build a Deck</a>
+              <Link to="/all-cards">All Cards</Link>
             </div>
           </li>
-          <li className="dropdown"><Link to="/blogs">
-            Blogs
-            <img id="dropdown-arrow" src={arrow} alt="Drop Down Arrow" /></Link>
+          <li className="dropdown">
+            <Link to="/blogs">
+              Blogs
+              <img id="dropdown-arrow" src={arrow} alt="Drop Down Arrow" />
+            </Link>
             <div className="dropdown-content">
               <Link to="/blogs?filter=news">News</Link>
               <Link to="/blogs?filter=allBlogs">Explore</Link>

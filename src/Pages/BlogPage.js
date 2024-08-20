@@ -16,6 +16,8 @@ const BlogPage = () => {
   const [showCommentModal, setShowCommentModal] = useState(false);
   const [blogTitle, setBlogTitle] = useState("");
   const [blogContent, setBlogContent] = useState("");
+  const [isPublic, setIsPublic] = useState(true);
+  const [allowComments, setAllowComments] = useState(true);
   const [modalTitle, setModalTitle] = useState('');
   const [modalContent, setModalContent] = useState('');
   const [newComment, setNewComment] = useState('');
@@ -94,6 +96,8 @@ const BlogPage = () => {
   const handleEditClick = () => {
     setModalTitle(blogPost.title);
     setModalContent(blogPost.content);
+    setIsPublic(blogPost.isPublic);
+    setAllowComments(blogPost.allowComments);
     setShowEditModal(true);
   };
 
@@ -162,8 +166,14 @@ const BlogPage = () => {
 
   const handleSaveChanges = async () => {
     try {
-      const updatedBlogPost = { title: modalTitle, content: modalContent };
+      const updatedBlogPost = { 
+        title: modalTitle, 
+        content: modalContent,
+        isPublic: isPublic,
+        allowComments: allowComments };
+
       const response = await axios.patch(`http://localhost:4000/blogs/${blogPost._id}`, updatedBlogPost);
+      
       if (response.status === 200) {
         setBlogPost(response.data);
         setShowEditModal(false);
@@ -186,10 +196,6 @@ const BlogPage = () => {
     }
   };
 
-  if (!isAuthenticated) {
-    return <p>User not logged in.</p>;
-  }
-
   if (!blogPost) {
     return <p>Loading...</p>;
   }
@@ -197,7 +203,7 @@ const BlogPage = () => {
     return (
       <div>
         <Navbar />
-        <div className="container" class="wrapper">
+        <div className="container" class="blogpage-wrapper">
           <div className="blog-page-leftNav">
             <ul>
               <li><a href="/blogs">All Blogs</a></li>
@@ -269,11 +275,39 @@ const BlogPage = () => {
           <div className="edit-modal-content">
             <span className="close" onClick={handleCloseEditModal}>&times;</span>
             <h2>Edit Blog Post</h2>
-            <label htmlFor="edit-title">Title:</label>
+            <label htmlFor="edit-title">Title</label>
             <input id="edit-title" type="text" value={modalTitle} onChange={(e) => setModalTitle(e.target.value)} />
-            <label htmlFor="edit-content">Content:</label>
+            <label htmlFor="edit-content">Blog Post</label>
             <textarea id="edit-content" value={modalContent} onChange={(e) => setModalContent(e.target.value)} />
             
+            <div className="blog-options">
+              <div className="option-item">
+                <p>Public Blog</p>
+                <label htmlFor="is-public" className="blogs-switch">
+                  <input
+                    type="checkbox"
+                    id="is-public"
+                    checked={isPublic}
+                    onChange={(e) => setIsPublic(e.target.checked)}
+                  />
+                  <span className="blogs-slider"></span>
+                </label>
+              </div>
+
+              <div className="option-item">
+                <p>Allow Comments</p>
+                <label htmlFor="allow-comments" className="blogs-switch">
+                  <input
+                    type="checkbox"
+                    id="allow-comments"
+                    checked={allowComments}
+                    onChange={(e) => setAllowComments(e.target.checked)}
+                  />
+                  <span className="blogs-slider"></span>
+                </label>
+              </div>
+            </div>
+
             {error && <p className="error-message">{error}</p>}
 
             <div className="edit-modal-buttons">

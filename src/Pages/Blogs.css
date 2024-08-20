@@ -13,7 +13,7 @@ body{
     margin-top: 110px;
 }
 
-.wrapper{
+.blogs-wrapper{
     display: grid;
     grid-template-columns: 150px auto 200px;
 }
@@ -32,11 +32,24 @@ body{
     list-style: none;
     margin-bottom: 10px;
     text-decoration: none;
+    cursor: pointer;
 }
 
 .blogs-leftNav a{
     color: #000000;
     text-decoration: none;
+}
+
+.blogs-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.add-post-button {
+    width: 28px;
+    height: 28px;
+    cursor: pointer;
 }
 
 .blogs-body{
@@ -248,11 +261,89 @@ body{
     background-color: #0b7dda;
 }
 
-.blog-modal-content input, .blog-modal-content textarea{
+.blog-modal-content input, 
+.blog-modal-content textarea{
     font-family: 'Red Hat Display', sans-serif;
     font-size: 15px;
 }
 
 .blog-separator {
     margin-left: 10px;
+}
+
+/* Options switches */
+.blog-options {
+    display: flex;
+    flex-direction: column;
+}
+
+.option-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-left: 125px;
+    padding-right: 125px;
+}
+
+.option-item p {
+    margin: 0;
+    padding-right: 10px;
+    font-size: 15px;
+}
+
+.blogs-switch {
+    position: relative;
+    display: inline-block;
+    width: 50px;
+    height: 25px;
+    background-color: #ccc;
+    border-radius: 25px;
+    transition: 0.4s;
+    cursor: pointer;
+    margin-left: 10px; 
+}
+  
+.blogs-switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+  
+.blogs-slider {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    border-radius: 25px;
+    transition: 0.4s;
+}
+
+.blogs-slider::before{
+    content: "";
+    position: absolute;
+    width: 21px;
+    height: 21px;
+    left: 2px;
+    bottom: 2px;
+    background-color: white;
+    border-radius: 50%;
+    transition: 0.4s;
+}
+
+.blogs-switch input:checked + .blogs-slider {
+    background-color: #2196F3;
+}
+  
+.blogs-switch input:checked + .blogs-slider::before {
+    transform: translateX(25px);
+}
+
+label {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    width: 100%;
+    justify-content: space-between;
 }

@@ -11,7 +11,7 @@ const HowToPlay = () => {
           <Navbar />
       
         <div className="container" class="wrapper">
-          <div className="leftNav">
+          <div className="htp-leftNav">
             <ul>
               <li><a href="#Rules">Rules</a></li>
               <li><a href="#Setup">Setup</a></li>
@@ -93,7 +93,7 @@ const HowToPlay = () => {
               </div>
             </div>
 
-            <div className="rightNav">
+            <div className="htp-rightNav">
               <p className="jumpTo">Jump to:</p>
               <ul>
                 <li><a href="#Game Setup">Game Setup</a></li>

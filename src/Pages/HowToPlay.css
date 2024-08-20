@@ -19,14 +19,14 @@ body{
     grid-auto-rows: auto 1fr auto;
 }
 
-.leftNav, .rightNav {
+.htp-leftNav, .rightNav {
     position: fixed;
     font-size: 18px;
     font-weight: 500;
     color: black;
 }
 
-.leftNav{
+.htp-leftNav{
     font-family: 'Open Sans Condensed', sans-serif;
     padding: 15px;
     grid-column: 1;
@@ -34,7 +34,7 @@ body{
     padding-left: 20px;
 }
 
-.rightNav{
+.htp-rightNav{
     font-family: 'Open Sans Condensed', sans-serif;
     padding: 15px;
     padding-left: 30px;
@@ -49,7 +49,7 @@ body{
     color: black;
 }
 
-.leftNav li, .rightNav li{
+.htp-leftNav li, .htp-rightNav li{
     text-decoration: none;
     list-style: none;
     margin-bottom: 10px;

@@ -27,12 +27,14 @@ const BlogPage = () => {
   const [userSettings, setUserSettings] = useState({});
   const navigate = useNavigate();
 
+  const apiUrl = process.env.REACT_APP_API_BASE_URL || 'http://localhost:4000';
+
   // Fetch username
   useEffect(() => {
     const fetchUsername = async () => {
       try {
         if (isAuthenticated && user) {
-          const response = await axios.get('http://localhost:4000/get-username', {
+          const response = await axios.get(`${apiUrl}/get-username`, {
             params: { email: user.email }
           });
           setUsername(response.data.username);
@@ -49,7 +51,7 @@ const BlogPage = () => {
   useEffect(() => {
     const fetchUserSettings = async () => {
       try {
-        const response = await axios.get('http://localhost:4000/user-settings');
+        const response = await axios.get(`${apiUrl}/user-settings`);
         setUserSettings(response.data);
       } catch (error) {
         console.error('Error fetching user settings:', error);
@@ -65,7 +67,7 @@ const BlogPage = () => {
       try {
         const encodedAuthor = encodeURIComponent(author);
         const encodedTitle = encodeURIComponent(title);
-        const response = await axios.get(`http://localhost:4000/blogs/${encodedAuthor}/${encodedTitle}`);
+        const response = await axios.get(`${apiUrl}/blogs/${encodedAuthor}/${encodedTitle}`);
         setBlogPost(response.data);
       } catch (error) {
         console.error('Error fetching blog post:', error);
@@ -151,7 +153,7 @@ const BlogPage = () => {
     console.log("New Comment:", comment);
 
     try {
-      const response = await axios.post(`http://localhost:4000/blogs/${blogPost._id}/comments`, comment);
+      const response = await axios.post(`${apiUrl}/blogs/${blogPost._id}/comments`, comment);
       if (response.status === 200) {
         setBlogPost(response.data);
         setShowCommentModal(false);
@@ -172,7 +174,7 @@ const BlogPage = () => {
         isPublic: isPublic,
         allowComments: allowComments };
 
-      const response = await axios.patch(`http://localhost:4000/blogs/${blogPost._id}`, updatedBlogPost);
+      const response = await axios.patch(`${apiUrl}/blogs/${blogPost._id}`, updatedBlogPost);
       
       if (response.status === 200) {
         setBlogPost(response.data);
@@ -188,7 +190,7 @@ const BlogPage = () => {
 
   const handleDelete = async () => {
     try {
-      await axios.delete(`http://localhost:4000/blogs/${blogPost._id}`);
+      await axios.delete(`${apiUrl}/blogs/${blogPost._id}`);
       navigate('/blogs');
     } catch (error) {
       console.error("There was an error deleting the blog post.", error);

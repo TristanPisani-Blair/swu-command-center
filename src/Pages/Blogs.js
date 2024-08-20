@@ -24,12 +24,14 @@ const Blogs = () => {
   const location = useLocation();
   const navigate = useNavigate();
 
+  const apiUrl = process.env.REACT_APP_API_BASE_URL || 'http://localhost:4000';
+
   // Fetch username
   useEffect(() => {
     const fetchUsername = async () => {
       try {
         if (isAuthenticated && user) {
-          const response = await axios.get('http://localhost:4000/get-username', {
+          const response = await axios.get(`${apiUrl}/get-username`, {
             params: { email: user.email }
           });
           setUsername(response.data.username);
@@ -42,22 +44,10 @@ const Blogs = () => {
     fetchUsername();
   }, [isAuthenticated, user]);
 
-  /*
-  // Fetch user settings
-  const fetchUserSettings = async () => {
-    try {
-      const response = await axios.get('http://localhost:4000/user-settings');
-      setUserSettings(response.data);
-    } catch (error) {
-      console.error('Error fetching user settings:', error);
-    }
-  };
-  */
-
   // Fetch blog data from the database
   const fetchBlogs = useCallback(async () => {
     try {
-      const response = await axios.get('http://localhost:4000/public-blogs');
+      const response = await axios.get(`${apiUrl}/public-blogs`);
       let fetchedBlogs = response.data;
 
       // Filter out private blogs
@@ -95,13 +85,13 @@ const Blogs = () => {
       let filteredBlogs = [];
 
       if (filter === 'news') {
-        const response = await axios.get('http://localhost:4000/public-blogs');
+        const response = await axios.get(`${apiUrl}/public-blogs`);
         filteredBlogs = response.data.filter(blog => blog.isNews === true);
       } else if (filter === 'allBlogs') {
-        const response = await axios.get('http://localhost:4000/public-blogs');
+        const response = await axios.get(`${apiUrl}/public-blogs`);
         filteredBlogs = response.data;
       } else if (filter === 'myBlogs' && isAuthenticated) {
-        const response = await axios.get('http://localhost:4000/get-blogs-by-author', {
+        const response = await axios.get(`${apiUrl}/get-blogs-by-author`, {
           params: { author: username }
         });
         filteredBlogs = response.data;
@@ -170,7 +160,7 @@ const Blogs = () => {
 
     try {
       // Send the new blog post to the server
-      const response = await axios.post('http://localhost:4000/blogs', newBlogPost);
+      const response = await axios.post(`${apiUrl}/blogs`, newBlogPost);
       console.log("Response from server:", response.data);
 
       // Add the new blog post to the state

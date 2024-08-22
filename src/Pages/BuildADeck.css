@@ -13,10 +13,15 @@
 }
 
 .deck-builder-leftNav {
-  flex: 1;
-  padding-right: 20px;
+  position: sticky;
+  top: 0;
+  overflow-y: auto;
+  max-height: 600px;
+  padding: 0px;
+  width: 325px;
+  background-color: #f9f9f9; /* Or whatever background you prefer */
+  border-right: 1px solid #ddd; /* Add a border to separate it from the rest */
 }
-
 .builddeck-body {
   flex: 2;
 }
@@ -24,11 +29,12 @@
 /* Side nav for deck info */
 .deck-details {
   background: #f9f9f9;
+  top: 40px;
   padding: 40px;
   border-radius: 5px;
   box-shadow: 0 5px 4px rgba(0,0,0,0.1);
   flex: 2;
-  width: 300%;
+  width: 300px;
 }
 
 .deck-details h2 {

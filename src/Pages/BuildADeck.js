@@ -193,7 +193,7 @@ const BuildADeck = () => {
       let newDeck = { ...prevDeck };
       let board = toSideBoard ? newDeck.sideBoard : newDeck.mainBoard;
       let otherBoard = toSideBoard ? newDeck.mainBoard : newDeck.sideBoard;
-
+  
       if (card.Type === 'Leader' || card.type === 'Leader') {
         if (prevDeck.leader) {
           alert('Only one leader is allowed per deck.');
@@ -206,26 +206,34 @@ const BuildADeck = () => {
           return prevDeck;
         }
         newDeck.base = card;
-      } else {
+      }       
+      else {
+        // Check if the card exists in the current board
         const existingCardInBoard = board.find((c) => c.Name === card.Name);
+        // Check if the card exists in the other board (to prevent more than 3 copies overall)
         const existingCardInOtherBoard = otherBoard.find((c) => c.Name === card.Name);
         const totalCopies = (existingCardInBoard?.count || 0) + (existingCardInOtherBoard?.count || 0);
-
+  
+        // Restrict to a maximum of 3 copies overall
         if (totalCopies >= 3) {
           alert('You cannot have more than 3 copies of a single card in the deck.');
           return prevDeck;
         }
-
+  
+        // If card exists in the current board, increment the count
         if (existingCardInBoard) {
-          existingCardInBoard.count = (existingCardInBoard.count || 1) + 1;
+          existingCardInBoard.count += 1;
         } else {
+          // Otherwise, add the card with a count of 1
           board.push({ ...card, count: 1 });
         }
       }
-
+  
+      // Return the updated deck
       return newDeck;
     });
   };
+
 
   const removeCardFromDeck = (card, fromSideBoard = false) => {
     setDeck((prevDeck) => {
@@ -358,7 +366,7 @@ const BuildADeck = () => {
             <div>Leader: {deck.leader ? deck.leader.Name : 'No leader selected'}</div>
             <div>Base: {deck.base ? deck.base.Name : 'No base selected'}</div>
             <div>
-              <h3>Main Board ({deck.mainBoard.length})</h3>
+              <h3>Main Board ({deck.mainBoard.reduce((total, card) => total + card.count, 0)})</h3>
               <ul>
                 {deck.mainBoard.map((card, index) => (
                   <li key={index}>
@@ -370,7 +378,7 @@ const BuildADeck = () => {
               </ul>
             </div>
             <div>
-              <h3>Sideboard ({deck.sideBoard.length})</h3>
+              <h3>Sideboard ({deck.sideBoard.reduce((total, card) => total + card.count, 0)})</h3>
               <ul>
                 {deck.sideBoard.map((card, index) => (
                   <li key={index}>
@@ -387,10 +395,6 @@ const BuildADeck = () => {
 
 
         <div className="builddeck-body">
-          <h1>Available Cards</h1>
-          <div>
-            <hr className="divider" />
-          </div>
 
           <div className="bd-search">
             <div className="bd-search-bar">

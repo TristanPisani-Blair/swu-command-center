@@ -49,10 +49,27 @@ const CardPage = () => {
         }
     }, [cards, number, name]);
 
+    // Find 10 random cards of the same type to display
     useEffect(() => {
       if (card && card.Type) {
-          const related = cards.filter(c => c.Type === card.Type && c.Number !== card.Number).slice(0, 10);
-          setRelatedCards(related);
+        // Filter cards based on type and exclude the current card
+        const filteredCards = cards.filter(c => c.Type === card.Type && c.Number !== card.Number);
+  
+        const shuffleArray = (array) => {
+          let currentIndex = array.length, randomIndex;
+          while (currentIndex !== 0) {
+            randomIndex = Math.floor(Math.random() * currentIndex);
+            currentIndex--;
+            [array[currentIndex], array[randomIndex]] = [array[randomIndex], array[currentIndex]];
+          }
+          return array;
+        };
+  
+        const shuffledCards = shuffleArray(filteredCards);
+  
+        const randomCards = shuffledCards.slice(0, 10);
+  
+        setRelatedCards(randomCards);
       }
     }, [card, cards]);
 
@@ -144,7 +161,6 @@ const CardPage = () => {
                               <div className="related-cards-wrapper">
                                 <div className="related-cards-container" ref={scrollContainerRef}>
                                   {relatedCards.map((relatedCard, index) => {
-                                    // Determine if card type is horizontal
                                     const isHorizontal = relatedCard.type === 'Leader' || relatedCard.type === 'Base';
 
                                     return (

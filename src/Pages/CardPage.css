@@ -173,7 +173,7 @@
     flex-direction: column;
     align-items: center;
     text-align: center;
-    height: 325px;
+    height: 350px;
     width: 200px;
     display: inline-block;
 }
@@ -189,6 +189,16 @@
     transform: rotate(90deg);
     width: auto;
     height: 100%;
+}
+
+.related-card-image-div{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 250px;
+    width: 100%;
+    margin-bottom: 10px;
+    min-height: 225px;
 }
 
 .related-card h2 {

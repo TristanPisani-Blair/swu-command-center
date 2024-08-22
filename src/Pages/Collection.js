@@ -108,9 +108,9 @@ const Collection = () => {
         <div className="container" class="collection-wrapper">
           <div className="collection-leftNav">
             <ul>
-              <li><a href="/Collection">My Collection</a></li>
-              <li><a href="#BuildADeck">Build A Deck</a></li>
-              <li><a href="/CardList">All Cards</a></li>
+              <li><a href="/collection">My Collection</a></li>
+              <li><a href="/build-a-deck">Build A Deck</a></li>
+              <li><a href="/all-cards">All Cards</a></li>
             </ul>
           </div>
 

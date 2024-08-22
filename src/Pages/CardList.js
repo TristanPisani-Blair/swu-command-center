@@ -177,8 +177,8 @@ const CardList = () => {
         <div className="cardlist-leftNav">
           <ul>
             <li><a href="/collection">My Collection</a></li>
-            <li><a href="/test">Build A Deck</a></li>
-            <li><a href="/cardlist">All Cards</a></li>
+            <li><a href="/build-a-deck">Build A Deck</a></li>
+            <li><a href="/all-cards">All Cards</a></li>
           </ul>
         </div>
 

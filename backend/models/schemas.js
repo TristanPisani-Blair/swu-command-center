@@ -28,9 +28,22 @@ const commentSchema = new Schema({
     date: { type: Date, default: Date.now },
 });
 
+const deckSchema = new mongoose.Schema({
+    deckId: { type: String, required: true },
+    userId: { type: String, required: true },
+    deckName: { type: String, required: true },
+    leader: Object,
+    base: Object,
+    mainBoard: Array,
+    sideBoard: Array,
+    createdAt: { type: Date, default: Date.now },
+    updatedAt: { type: Date, default: Date.now }
+});
+
 const Users = mongoose.model('Users', userSchema, 'Users');
 const Blogs = mongoose.model('Blogs', blogSchema, 'Blogs');
 const Comments = mongoose.model('Comments', commentSchema, 'Comments');
-const mySchemas = {'Users':Users, 'Blogs':Blogs, 'Comments':Comments};
+const Decks = mongoose.model('Decks', deckSchema, 'Decks');
+const mySchemas = {'Users':Users, 'Blogs':Blogs, 'Comments':Comments, 'Decks':Decks};
 
 module.exports = mySchemas;

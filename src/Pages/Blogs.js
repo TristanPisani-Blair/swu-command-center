@@ -15,7 +15,6 @@ const Blogs = () => {
   const [blogs, setBlogs] = useState([]);
   const [isPublic, setIsPublic] = useState(true);
   const [allowComments, setAllowComments] = useState(true);
-  const [userSettings, setUserSettings] = useState({});
   const [sortBy, setSortBy] = useState('');
   const [error, setError] = useState('');
   const [username, setUsername] = useState('');
@@ -41,18 +40,6 @@ const Blogs = () => {
 
     fetchUsername();
   }, [isAuthenticated, user]);
-
-  /*
-  // Fetch user settings
-  const fetchUserSettings = async () => {
-    try {
-      const response = await axios.get('http://localhost:4000/user-settings');
-      setUserSettings(response.data);
-    } catch (error) {
-      console.error('Error fetching user settings:', error);
-    }
-  };
-  */
 
   // Fetch blog data from the database
   const fetchBlogs = useCallback(async () => {

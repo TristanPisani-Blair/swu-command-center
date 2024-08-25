@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useAuth0 } from '@auth0/auth0-react';
 import axios from 'axios';
-import { Form, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 import './Home.css';
 import Navbar from '../Components/Navbar/Navbar';
 import Footer from '../Components/Footer/Footer';
@@ -13,8 +13,6 @@ import trooper from '../Components/Assets/trooper2.png';
 
 const Home = () => {
   const { user, isAuthenticated } = useAuth0();
-  const [featuredDeckName, setFeaturedDeckName] = useState('Deck Name');
-  const [featuredDeckPublisherName, setFeaturedDeckPublisherName] = useState('Publisher Name');
   const [showUsernameModal, setShowUsernameModal] = useState(false);
   const [username, setUsername] = useState('');
   const [usernameError, setUsernameError] = useState('');
@@ -68,14 +66,47 @@ const Home = () => {
     }
   };
 
-  const updateFeaturedDeck = (newDeckName) => {
-    setFeaturedDeckName(newDeckName);
-  };
+  // Fetch data for featured decks
+  const [featuredDeck, setFeaturedDeck] = useState({
+    deckName: '',
+    userID: '',
+    image: ''
+  });
 
-  const updateFeaturedDeckPublisher = (newPublisherName) => {
-    setFeaturedDeckPublisherName(newPublisherName);
-  };
+  useEffect(() => {
+    const fetchDecks = async () => {
+      try {
+        const response = await axios.get('http://localhost:4000/decks');
 
+        // Check if data is an array and has elements
+        if (Array.isArray(response.data) && response.data.length > 0) {
+          // Shuffle and select a random deck
+          const shuffledDecks = response.data.sort(() => 0.5 - Math.random());
+          const randomDeck = shuffledDecks[0]; // Get the first deck after shuffle
+
+          // Get the first card image from the deck
+          const firstCard = randomDeck.mainBoard[0] || randomDeck.sideBoard[0];
+          const cardImage = firstCard ? firstCard.FrontArt : {featuredeckimg};
+
+          setFeaturedDeck({
+            deckName: randomDeck.deckName,
+            userID: randomDeck.userID,
+            image: randomDeck.cardImage
+          });
+
+          console.log('Featured Deck:', {
+            deckName: randomDeck.deckName,
+            userID: randomDeck.userId,
+            image: cardImage
+          });
+        }
+      } catch (error) {
+        console.error("Error fetching decks:", error);
+      }
+    };
+
+    fetchDecks();
+  }, []);
 
     return (
       <div>
@@ -86,11 +117,15 @@ const Home = () => {
               <div className="banner-contents-background">
                 <div className="banner-left">
                   <h2>Featured Decks</h2>
-                  <h1 className="featured-deck-name">{featuredDeckName}</h1>
-                  <p className="featured-deck-publisher-name">{featuredDeckPublisherName}</p>
+                  <h1 className="featured-deck-name">{featuredDeck.deckName || 'Deck Name'}</h1>
+                  <p className="featured-deck-publisher-name">{featuredDeck.publisherName || 'Publisher Name'}</p>
                 </div>
                 <div className="banner-right">
-                  <img src={featuredeckimg} alt="Featured Deck"></img>
+                  {featuredDeck.image ? (
+                    <img src={featuredDeck.image} alt="Featured Deck" />
+                  ) : (
+                    <img src={featuredeckimg} />
+                  )}            
                 </div>
               </div>
             </div>

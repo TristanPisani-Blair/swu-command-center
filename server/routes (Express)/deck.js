@@ -72,4 +72,15 @@ router.delete('/:userId/:deckId', async (req, res) => {
   }
 });
 
+// Get all decks
+router.get('/decks', async (req, res) => {
+  try {
+    const decks = await Deck.find();
+    res.status(200).json(decks);
+  } catch (error) {
+    console.error('Error fetching decks:', error);
+    res.status(500).json({ error: 'Error fetching decks.', details: error.message });
+  }
+});
+
 module.exports = router;

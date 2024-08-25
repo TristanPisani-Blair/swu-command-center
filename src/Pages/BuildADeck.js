@@ -570,6 +570,7 @@ const BuildADeck = () => {
                     <button onClick={() => addCardToDeck(card)}>Add to Deck</button>
                     <button onClick={() => addCardToDeck(card, true)}>Add to Sideboard</button>
                   </div>
+                  </div>
                 </li>
               );
             })}

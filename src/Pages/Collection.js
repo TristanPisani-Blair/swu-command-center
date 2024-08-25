@@ -339,64 +339,6 @@ useEffect(() => {
               )}
 
             </div>
-
-            <div className="cl-active-filters">
-              <div className="sorting-text-container">
-                <p className="sorting-text">{getSortingText()}</p>
-                {sortOption && (
-                  <button className="clear-button" onClick={() => setSortOption('')}>
-                    X
-                  </button>
-                )}
-              </div>
-              <div className="filtering-text-container">
-                <p className="filtering-text">{getFilteringText()}</p>
-                {(filters.aspects.length > 0 || filters.type.length > 0 || filters.cost.length > 0 || filters.set.length > 0) && (
-                  <button className="clear-button" onClick={() => setFilters({
-                    aspects: [],
-                    type: [],
-                    cost: [],
-                    set: []
-                  })}>
-                    X
-                  </button>
-                )}
-              </div>          
-            </div>
-
-            {error && <div className="error">{error}</div>}
-
-            <div className="cl-card-list">
-                {sortedAndFilteredCards.map((card, index) => {
-                  const isHorizontal = card.type === 'Leader' || card.type === 'Base';
-                  return (
-                    <div 
-                      key={card.id || index} 
-                      className={`cl-card-item ${isHorizontal ? 'horizontal' : ''}`}
-                      onClick={() => handleCardClick(card)}
-                      >
-                      <div className="cl-card-image-div">
-                      {card.FrontArt ? (
-                        <>
-                          <img
-                            src={card.FrontArt}
-                            alt={card.Name}
-                            className="cl-card-image"
-                            onError={(e) => { e.target.style.display = 'none'; }}
-                          />
-                        </>
-                      ) : (
-                        <div className="cl-placeholder-image"></div>
-                      )}
-                      </div>
-                      <div className="cl-card-info">
-                        {card.Name && <h2>{card.Name}</h2>}
-                      </div>
-                    </div>
-                  );
-                })}
-            </div>
-
           </div>
 
           <div className="col-active-filters">

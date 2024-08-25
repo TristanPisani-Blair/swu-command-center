@@ -13,10 +13,15 @@
 }
 
 .deck-builder-leftNav {
-  flex: 1;
-  padding-right: 20px;
+  position: sticky;
+  top: 0;
+  overflow-y: auto;
+  max-height: 1000px;
+  padding: 0px;
+  width: 325px;
+  background-color: #f9f9f9; /* Or whatever background you prefer */
+  border-right: 0px solid #ddd; /* Add a border to separate it from the rest */
 }
-
 .builddeck-body {
   flex: 2;
 }
@@ -24,9 +29,12 @@
 /* Side nav for deck info */
 .deck-details {
   background: #f9f9f9;
-  padding: 15px;
+  top: 40px;
+  padding: 40px;
   border-radius: 5px;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  box-shadow: 0 5px 4px rgba(0,0,0,0.1);
+  flex: 2;
+  width: 300px;
 }
 
 .deck-details h2 {
@@ -66,10 +74,10 @@
 }
 
 .bd-search-bar{
-    display: flex;
-    flex-direction: row;
-    margin-top: 15px;
-    margin-bottom: 15px;
+  display: flex;
+  flex-direction: row;
+  margin-top: 15px;
+  margin-bottom: 15px;
 }
 
 .bd-search-bar input{
@@ -84,10 +92,26 @@
 .bd-sortfilter {
   display: flex;
   flex-direction: row;
-  justify-content: center;
-  gap: 50px;
+  justify-content: center; /* Center the entire container */
+  gap: 20px; /* Adjust this value to control the space between the menus */
   margin: 0 auto;
+  width: fit-content; /* Ensures the container doesn't stretch the full width */
 }
+
+.bd-sortby, .bd-filterby {
+  display: flex;
+  flex-direction: column; /* Aligns the options vertically */
+  align-items: center; /* Center the content within each menu */
+}
+
+.bd-sortby p, .bd-filterby p {
+  margin: 0;
+  padding: 10px;
+  cursor: pointer;
+  background: #f1f1f1; /* Optional: Background color for the clickable area */
+  border-radius: 5px;
+}
+
 
 /* Card list */
 .card-list {
@@ -95,6 +119,7 @@
   grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
   gap: 20px;
   margin-top: 20px;
+  margin-left: 200px;
   width: 100%;
   justify-content: space-between;
 }
@@ -127,11 +152,15 @@
   height: auto;
 }
 
+.card-item:hover img {
+  transform: scale(1.2); /* Scale the image by 1.2x on hover */
+}
+
 .card-item button {
   margin-top: 10px;
   padding: 5px 10px;
   font-size: 14px;
-  background-color: #28a745;
+  background-color: #080bc2;
   color: white;
   border: none;
   border-radius: 5px;

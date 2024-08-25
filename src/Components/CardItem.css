@@ -1,0 +1,42 @@
+.card-item {
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    width: 200px;
+    margin: 10px;
+    text-align: center;
+  }
+  
+  .card-img img {
+    width: 100%;
+    height: auto;
+  }
+  
+  .card-info {
+    padding: 10px;
+  }
+  
+  .card-info h3 {
+    font-size: 1.2em;
+    margin: 0 0 10px;
+  }
+  
+  .card-info p {
+    margin: 5px 0;
+  }
+  
+  .card-info button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .card-info button:hover {
+    background-color: #0056b3;
+  }
+  

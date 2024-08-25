@@ -355,7 +355,7 @@ const BuildADeck = () => {
   return (
     <div>
       <Navbar />
-      <div className="deck-builder-wrapper">
+      <div className="wrapper">
         <div className="deck-builder-leftNav">
         <div>
         <div
@@ -548,7 +548,6 @@ const BuildADeck = () => {
               return (
                 <li key={index}>
                   <div className={`card-item ${isHorizontal ? 'horizontal' : ''}`}>
-                  <div className="bd-card-image-div">
                     {card.FrontArt ? (
                       <>
                         <img
@@ -569,7 +568,6 @@ const BuildADeck = () => {
                     {card.MarketPrice && <p>Price: ${card.MarketPrice}</p>}
                     <button onClick={() => addCardToDeck(card)}>Add to Deck</button>
                     <button onClick={() => addCardToDeck(card, true)}>Add to Sideboard</button>
-                  </div>
                   </div>
                 </li>
               );

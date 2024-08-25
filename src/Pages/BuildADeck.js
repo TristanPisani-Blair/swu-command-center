@@ -357,11 +357,26 @@ const BuildADeck = () => {
       <Navbar />
       <div className="wrapper">
         <div className="deck-builder-leftNav">
-          <h2>Your Deck</h2>
+        <div>
+        <div
+          contentEditable
+          className="editable-deck-name"
+          onBlur={(e) => {
+            const newName = e.target.innerText.trim();
+            if (newName !== deck.deckName && newName !== "") {
+              setDeck({ ...deck, deckName: newName });
+            }
+          }}
+          suppressContentEditableWarning={true}
+          onInput={(e) => {
+            const text = e.target.innerText;
+            e.target.innerText = text; // Ensure the text is updated correctly
+          }}
+        >
+          {deck.deckName || "Your Deck"}
+        </div>
+      </div>
           <div className="deck-details">
-            <div>
-              Deck Name: <input type="text" value={deck.deckName} onChange={(e) => setDeck({ ...deck, deckName: e.target.value })} />
-            </div>
             <div>Total Price: ${calculateTotalPrice()}</div>
             <div>Leader: {deck.leader ? deck.leader.Name : 'No leader selected'}</div>
             <div>Base: {deck.base ? deck.base.Name : 'No base selected'}</div>

@@ -409,7 +409,7 @@ router.post('/new-deck', async (req, res) => {
 });
 
 // Get all decks for a user
-router.get('/', async (req, res) => {
+router.get('/:userId', async (req, res) => {
   try {
     const userId = req.query.userId;
     const decks = await schemas.Decks.find({ userId });

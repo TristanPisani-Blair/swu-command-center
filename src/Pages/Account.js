@@ -226,6 +226,21 @@ const Account = () => {
               <li>
               <a href="https://www.flaticon.com/free-icons/add-post" title="add post icons">Add post icons created by Icon Hubs - Flaticon</a>
               </li>
+              <li>
+                <a href="https://www.flaticon.com/free-icons/cancel" title="cancel icons">Cancel icons created by Freepik - Flaticon</a>
+              </li>
+              <li>
+                <a href="https://www.flaticon.com/free-icons/ui" title="ui icons">Move down icons created by vectaicon - Flaticon</a>
+              </li>
+              <li>
+                <a href="https://www.flaticon.com/free-icons/move-up" title="move up icons">Move up icons created by vectaicon - Flaticon</a>
+              </li>
+              <li>
+                <br />
+              </li>
+              <li>
+                <p>SWU Command Center is developed by Tristan Pisani-Blair and Krista Stevens as part of their Capstone Project at Full Sail University.</p>
+              </li>
             </ul>
           </div>
         </div>

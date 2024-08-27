@@ -6,10 +6,13 @@ import './BuildADeck.css';
 import Navbar from '../Components/Navbar/Navbar';
 import Footer from '../Components/Footer/Footer';
 import { useAuth0 } from '@auth0/auth0-react';
+import removeIcon from '../Components/Assets/remove.png';
+import moveDown from '../Components/Assets/move-down.png';
+import moveUp from '../Components/Assets/move-up.png';
 
 const BuildADeck = () => {
   const { deckId } = useParams();
-  const { user } = useAuth0();
+  const { user, isAuthenticated } = useAuth0();
   const [cards, setCards] = useState([]);
   const [deck, setDeck] = useState({
     deckId: deckId,
@@ -31,13 +34,33 @@ const BuildADeck = () => {
     type: [],
     cost: [],
     set: []
-  });  const [filteredingCards, setFilteredingCards] = useState(cards);
+  });  
+  const [filteredingCards, setFilteredingCards] = useState(cards);
   const [showAspectChoices, setShowAspectChoices] = useState(false);
   const [showTypeChoices, setShowTypeChoices] = useState(false);
   const [showCostChoices, setShowCostChoices] = useState(false);
   const [showSetChoices, setShowSetChoices] = useState(false);
+  const [username, setUsername] = useState('');
 
   const navigate = useNavigate();
+
+  // Fetch username
+  useEffect(() => {
+    const fetchUsername = async () => {
+      try {
+        if (isAuthenticated && user) {
+          const response = await axios.get('http://localhost:4000/get-username', {
+            params: { email: user.email }
+          });
+          setUsername(response.data.username);
+        }
+      } catch (error) {
+        console.error('Error fetching username:', error);
+      }
+    };
+
+    fetchUsername();
+  }, [isAuthenticated, user]);
 
   useEffect(() => {
     const fetchDeck = async () => {
@@ -167,7 +190,6 @@ const BuildADeck = () => {
         return cards;
     }
   };
-  
 
   // Display sorting and filtering text
   const getSortingText = () => {
@@ -233,7 +255,6 @@ const BuildADeck = () => {
       return newDeck;
     });
   };
-
 
   const removeCardFromDeck = (card, fromSideBoard = false) => {
     setDeck((prevDeck) => {
@@ -309,10 +330,10 @@ const BuildADeck = () => {
     return !isNaN(totalPrice) ? totalPrice.toFixed(2) : '0.00';
   };
 
-
   const saveDeck = async () => {
+    console.log('Deck data being sent:', deck);
     try {
-      const response = await axios.post('http://localhost:4000/decks', deck, {
+      const response = await axios.post('http://localhost:4000/new-deck', deck, {
         headers: {
           'Content-Type': 'application/json',
         },
@@ -343,19 +364,16 @@ const BuildADeck = () => {
       };
     });
   };
-
     
   // Update filtered cards whenever filters, search input, or cards change
   useEffect(() => {
     filterCards();
   }, [filters, search, cards, deck.leader, deck.base, sortOption]);
-  
-
 
   return (
     <div>
       <Navbar />
-      <div className="wrapper">
+      <div className="deck-builder-wrapper">
         <div className="deck-builder-leftNav">
         <div>
         <div
@@ -386,8 +404,14 @@ const BuildADeck = () => {
                 {deck.mainBoard.map((card, index) => (
                   <li key={index}>
                     {card.Name} {card.count > 1 && `x${card.count}`}
-                    <button onClick={() => removeCardFromDeck(card)}>Remove</button>
-                    <button onClick={() => moveCardBetweenBoards(card, true)}>Move to Sideboard</button>
+                    <div className='deck-detail-buttons'>
+                      <button className="remove-button" onClick={() => removeCardFromDeck(card)}>
+                        <img src={removeIcon} alt="Remove" />
+                      </button>
+                      <button className="move-button" onClick={() => moveCardBetweenBoards(card, true)}>
+                        <img src={moveDown} alt="Move to Sideboard" />
+                      </button>
+                    </div>
                   </li>
                 ))}
               </ul>
@@ -398,8 +422,14 @@ const BuildADeck = () => {
                 {deck.sideBoard.map((card, index) => (
                   <li key={index}>
                     {card.Name} {card.count > 1 && `x${card.count}`}
-                    <button onClick={() => removeCardFromDeck(card, true)}>Remove</button>
-                    <button onClick={() => moveCardBetweenBoards(card, false)}>Move to Mainboard</button>
+                    <div className='deck-detail-buttons'>
+                      <button className="remove-button" onClick={() => removeCardFromDeck(card, true)}>
+                        <img src={removeIcon} alt="Remove" />
+                      </button>
+                      <button className="move-button" onClick={() => moveCardBetweenBoards(card, false)}>
+                        <img src={moveUp} alt="Move to Mainboard" />
+                      </button>
+                    </div>
                   </li>
                 ))}
               </ul>
@@ -537,8 +567,6 @@ const BuildADeck = () => {
             <p className="sorting-text">{getSortingText()}</p>
             <p className="filtering-text">{getFilteringText()}</p>
           </div>
-
-          {error && <div className="error">{error}</div>}
 
           {error && <div className="error">{error}</div>}
 

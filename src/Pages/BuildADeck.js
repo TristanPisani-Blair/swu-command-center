@@ -386,10 +386,6 @@ const BuildADeck = () => {
             }
           }}
           suppressContentEditableWarning={true}
-          onInput={(e) => {
-            const text = e.target.innerText;
-            e.target.innerText = text; // Ensure the text is updated correctly
-          }}
         >
           {deck.deckName || "Your Deck"}
         </div>

@@ -70,7 +70,7 @@ const Home = () => {
   const [featuredDeck, setFeaturedDeck] = useState({
     deckName: '',
     userID: '',
-    image: ''
+    image: featuredeckimg
   });
 
   useEffect(() => {
@@ -86,12 +86,12 @@ const Home = () => {
 
           // Get the first card image from the deck
           const firstCard = randomDeck.mainBoard[0] || randomDeck.sideBoard[0];
-          const cardImage = firstCard ? firstCard.FrontArt : {featuredeckimg};
+          const cardImage = firstCard.FrontArt;
 
           setFeaturedDeck({
             deckName: randomDeck.deckName,
             userID: randomDeck.userID,
-            image: randomDeck.cardImage
+            image: cardImage
           });
 
           console.log('Featured Deck:', {
@@ -118,14 +118,10 @@ const Home = () => {
                 <div className="banner-left">
                   <h2>Featured Decks</h2>
                   <h1 className="featured-deck-name">{featuredDeck.deckName || 'Deck Name'}</h1>
-                  <p className="featured-deck-publisher-name">{featuredDeck.publisherName || 'Publisher Name'}</p>
+                  <p className="featured-deck-publisher-name">{featuredDeck.userID || 'Publisher Name'}</p>
                 </div>
                 <div className="banner-right">
-                  {featuredDeck.image ? (
-                    <img src={featuredDeck.image} alt="Featured Deck" />
-                  ) : (
-                    <img src={featuredeckimg} />
-                  )}            
+                <img src={featuredDeck.image} alt="Featured Deck Card Image" />
                 </div>
               </div>
             </div>

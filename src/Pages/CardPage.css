@@ -162,6 +162,7 @@
     gap: 10px;
     overflow-x: auto;
     overflow: hidden;
+    cursor: pointer;
 }
   
 .related-card {

@@ -43,7 +43,7 @@ const deckSchema = new mongoose.Schema({
 const Users = mongoose.model('Users', userSchema, 'Users');
 const Blogs = mongoose.model('Blogs', blogSchema, 'Blogs');
 const Comments = mongoose.model('Comments', commentSchema, 'Comments');
-const Decks = mongoose.model('Decks', deckSchema, 'Decks');
-const mySchemas = {'Users':Users, 'Blogs':Blogs, 'Comments':Comments, 'Decks':Decks};
+const Deck = mongoose.model('Deck', deckSchema);
+const mySchemas = {'Users':Users, 'Blogs':Blogs, 'Comments':Comments, 'Deck':Deck};
 
 module.exports = mySchemas;

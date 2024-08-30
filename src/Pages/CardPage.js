@@ -46,6 +46,7 @@ const CardPage = () => {
             card.Number === decodeURIComponent(number) && card.Name === decodeURIComponent(name)
         );
         setCard(foundCard);
+        console.log('Card info:', foundCard);
         }
     }, [cards, number, name]);
 
@@ -96,12 +97,6 @@ const CardPage = () => {
     if (error) {
         return <div>Error: {error}</div>;
     }
-
-    {/*
-    if (!card) {
-        return <div>Loading...</div>;
-    }
-    */}
 
     return (
       <div>

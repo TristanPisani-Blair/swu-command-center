@@ -61,6 +61,7 @@ const Account = () => {
         });
 
         // Trigger Navbar refresh
+        // Not working :(
         setRefreshNavbar(prev => !prev);
 
       } else {

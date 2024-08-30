@@ -409,7 +409,7 @@ router.get('/decks', async (req, res) => {
 });
 
 // Get a single deck by user
-router.get('/:userId', async (req, res) => {
+router.get('decks/:userId', async (req, res) => {
   try {
     const userId = req.query.userId;
     const decks = await schemas.Deck.find({ userId });
@@ -420,7 +420,7 @@ router.get('/:userId', async (req, res) => {
 });
 
 // Get a single deck by ID
-router.get('/:userId/:deckId', async (req, res) => {
+router.get('decks/:userId/:deckId', async (req, res) => {
   try {
     const deck = await schemas.Deck.findOne({ userId: req.params.userId, deckId: req.params.deckId });
     if (!deck) {
@@ -433,7 +433,7 @@ router.get('/:userId/:deckId', async (req, res) => {
 });
 
 // Update a deck
-router.put('/:userId/:deckId', async (req, res) => {
+router.put('decks/:userId/:deckId', async (req, res) => {
   try {
     const deck = await schemas.Deck.findOneAndUpdate(
       { userId: req.params.userId, deckId: req.params.deckId },
@@ -450,7 +450,7 @@ router.put('/:userId/:deckId', async (req, res) => {
 });
 
 // Delete a deck
-router.delete('/:userId/:deckId', async (req, res) => {
+router.delete('decks/:userId/:deckId', async (req, res) => {
   try {
     const deck = await schemas.Deck.findOneAndDelete({ userId: req.params.userId, deckId: req.params.deckId });
     if (!deck) {
@@ -459,17 +459,6 @@ router.delete('/:userId/:deckId', async (req, res) => {
     res.json({ message: 'Deck deleted' });
   } catch (error) {
     res.status(500).json({ message: error.message });
-  }
-});
-
-// Get all decks
-router.get('/decks', async (req, res) => {
-  try {
-    const decks = await schemas.Deck.find();
-    res.status(200).json(decks);
-  } catch (error) {
-    console.error('Error fetching decks:', error);
-    res.status(500).json({ error: 'Error fetching decks.', details: error.message });
   }
 });
 
